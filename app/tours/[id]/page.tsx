@@ -469,7 +469,7 @@ export default function TourDetailPage({ params }: { params: { id: string } }) {
             </div>
 
             <Tabs defaultValue="overview" className="w-full">
-              <TabsList className="w-full flex ">
+              <TabsList className="w-full flex flex-wrap">
                 <TabsTrigger value="overview">Overview</TabsTrigger>
                 <TabsTrigger value="itinerary">Itinerary</TabsTrigger>
                 <TabsTrigger value="included">What's Included</TabsTrigger>
