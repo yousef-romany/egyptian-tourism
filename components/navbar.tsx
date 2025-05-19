@@ -42,11 +42,11 @@ export default function Navbar() {
       href: "/tours",
       dropdown: [
         { name: "All Tours", href: "/tours" },
-        { name: "Cairo & Pyramids", href: "/tours/cairo-pyramids" },
-        { name: "Luxor & Aswan", href: "/tours/luxor-aswan" },
-        { name: "Nile Cruises", href: "/tours/nile-cruises" },
-        { name: "Red Sea", href: "/tours/red-sea" },
-        { name: "Desert Adventures", href: "/tours/desert-adventures" },
+        // { name: "Cairo & Pyramids", href: "/tours/cairo-pyramids" },
+        // { name: "Luxor & Aswan", href: "/tours/luxor-aswan" },
+        // { name: "Nile Cruises", href: "/tours/nile-cruises" },
+        // { name: "Red Sea", href: "/tours/red-sea" },
+        // { name: "Desert Adventures", href: "/tours/desert-adventures" },
       ],
     },
     {

@@ -172,8 +172,9 @@ export default function ToursPage() {
       </section>
 
       <section className="container py-12">
-        <div className="grid md:grid-cols-[300px_1fr] gap-8">
-          <div className="bg-muted p-6 rounded-lg h-fit sticky top-24">
+        <div className="grid lg:grid-cols-1 md:grid-cols-1 gap-8">
+          
+          {/* <div className="bg-muted p-6 rounded-lg h-fit sticky top-24">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-xl font-bold">Filters</h2>
               <Button variant="ghost" size="sm" className="h-8 text-sm">
@@ -248,10 +249,11 @@ export default function ToursPage() {
             <Button variant="outline" size="sm" className="w-full mt-4">
               Apply Filters
             </Button>
-          </div>
+          </div> */}
 
           <div>
-            <div className="flex items-center justify-between mb-6">
+
+            {/* <div className="flex items-center justify-between mb-6">
               <h2 className="text-2xl font-bold">Available Tours</h2>
               <div className="flex items-center gap-2">
                 <span className="text-sm text-muted-foreground">Sort by:</span>
@@ -263,7 +265,7 @@ export default function ToursPage() {
                   <option>Rating</option>
                 </select>
               </div>
-            </div>
+            </div> */}
 
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {tours.map((tour) => (
@@ -315,7 +317,7 @@ export default function ToursPage() {
               ))}
             </div>
 
-            <div className="mt-8 flex justify-center">
+            {/* <div className="mt-8 flex justify-center">
               <div className="flex items-center gap-2">
                 <Button variant="outline" size="icon" disabled>
                   <ChevronLeft className="h-4 w-4" />
@@ -337,7 +339,7 @@ export default function ToursPage() {
                   <ChevronRight className="h-4 w-4" />
                 </Button>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </section>
@@ -520,7 +522,7 @@ export default function ToursPage() {
               <Button asChild size="lg" className="bg-egyptian-gold hover:bg-egyptian-gold-dark text-black">
                 <Link href="/book-now">Book Now</Link>
               </Button>
-              <Button asChild variant="outline" size="lg" className="border-white text-white hover:bg-white/10">
+              <Button asChild variant="ghost" size="lg">
                 <Link href="/contact">Contact Us</Link>
               </Button>
             </div>

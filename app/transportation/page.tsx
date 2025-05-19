@@ -232,7 +232,6 @@ export default function TransportationPage() {
                   {option.features.map((feature, index) => (
                     <li key={index} className="flex items-start gap-2 text-sm">
                       <Check className="h-4 w-4 text-egyptian-gold flex-shrink-0 mt-0.5" />
-                      <Check className="h-4 w-4 text-egyptian-gold flex-shrink-0 mt-0.5" />
                       <span>{feature}</span>
                     </li>
                   ))}
@@ -457,7 +456,7 @@ export default function TransportationPage() {
               <Button asChild size="lg" className="bg-egyptian-gold hover:bg-egyptian-gold-dark text-black">
                 <Link href="/transportation/book">Book Transportation</Link>
               </Button>
-              <Button asChild variant="outline" size="lg" className="border-white text-white hover:bg-white/10">
+              <Button asChild variant="ghost" size="lg">
                 <Link href="/contact">Contact for Custom Quote</Link>
               </Button>
             </div>
