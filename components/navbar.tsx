@@ -91,11 +91,11 @@ export default function Navbar() {
     >
       <div className="container mx-auto px-4 md:px-6">
         <div className="flex h-16 md:h-20 items-center justify-between">
-          <Link href="/" className="flex items-center gap-2 z-50">
+          <Link href="/" className="flex items-center justify-center gap-2 z-50">
               <Image
                 src={logo}
                 alt="Egydise Tours Logo"
-                className="object-contain max-w-[200px]"
+                className="object-contain max-w-[180px]"
               />
           </Link>
 
