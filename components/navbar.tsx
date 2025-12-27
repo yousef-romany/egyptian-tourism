@@ -11,6 +11,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 import logo from "@/public/logo.png"
 import ModeToggle from "./ModeToggle";
+import MegaMenu from "./mega-menu";
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -52,6 +53,10 @@ export default function Navbar() {
     {
       name: "Reviews",
       href: "/reviews",
+    },
+    {
+      name: "Blog",
+      href: "/blog",
     },
     {
       name: "History",
@@ -138,7 +143,7 @@ export default function Navbar() {
                   <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-egyptian-gold transition-all duration-300 group-hover:w-full" />
                 </Link>
 
-                {link.dropdown && (
+                {link.dropdown && link.name !== "Tours" && (
                   <AnimatePresence>
                     {activeDropdown === link.name && (
                       <motion.div
@@ -382,6 +387,20 @@ export default function Navbar() {
             </SheetContent>
           </Sheet>
         </div>
+      </div>
+
+      {/* Mega Menu for Tours */}
+      <div className="relative">
+        <AnimatePresence>
+          {activeDropdown === "Tours" && (
+            <div
+              onMouseEnter={() => setActiveDropdown("Tours")}
+              onMouseLeave={() => setActiveDropdown(null)}
+            >
+              <MegaMenu isOpen={true} />
+            </div>
+          )}
+        </AnimatePresence>
       </div>
     </header>
   );

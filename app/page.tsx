@@ -9,6 +9,9 @@ import Newsletter from "@/components/newsletter"
 import TourCarouselServer from "@/components/tour-carousel-server"
 import TransportationSection from "@/components/transportation-section"
 import ReviewsSection from "@/components/reviews-section"
+import TestimonialsCarousel from "@/components/testimonials-carousel"
+import StatsSection from "@/components/stats-section"
+import BlogPreview from "@/components/blog-preview"
 
 export default function Home() {
   return (
@@ -77,6 +80,10 @@ export default function Home() {
       </section>
 
       <HistoryTimeline />
+
+      <TestimonialsCarousel />
+
+      <StatsSection />
 
       <TransportationSection />
 
@@ -155,6 +162,8 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      <BlogPreview />
 
       <Newsletter />
 

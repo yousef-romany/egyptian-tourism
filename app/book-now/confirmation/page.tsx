@@ -1,5 +1,7 @@
 "use client"
 
+import { useEffect, useState } from "react"
+import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -7,17 +9,92 @@ import { CheckCircle, Download, Mail, Calendar, Users, MapPin, Phone, Home } fro
 import EgyptianDivider from "@/components/egyptian-divider"
 import Link from "next/link"
 
+interface BookingData {
+  firstName: string
+  lastName: string
+  email: string
+  phone: string
+  country: string
+  tourType: string
+  travelDate: string
+  numberOfTravelers: string
+  accommodation: string
+  specialRequests?: string
+  bookingRef: string
+  bookingId: number
+}
+
 export default function BookingConfirmationPage() {
-  // In a real application, this would come from the URL params or state management
-  const bookingRef = `EGY-${Date.now().toString().slice(-6)}`
+  const router = useRouter()
+  const [bookingData, setBookingData] = useState<BookingData | null>(null)
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    // Get booking data from sessionStorage
+    const storedData = sessionStorage.getItem('bookingData')
+
+    if (storedData) {
+      try {
+        const data = JSON.parse(storedData)
+        setBookingData(data)
+        // Clear the data after reading it
+        sessionStorage.removeItem('bookingData')
+      } catch (error) {
+        console.error('Failed to parse booking data:', error)
+        router.push('/book-now')
+      }
+    } else {
+      // No booking data found, redirect to booking page
+      router.push('/book-now')
+    }
+
+    setIsLoading(false)
+  }, [router])
+
+  if (isLoading || !bookingData) {
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-egyptian-gold mx-auto"></div>
+          <p className="mt-4 text-muted-foreground">Loading...</p>
+        </div>
+      </div>
+    )
+  }
+
+  // Convert tour type code to readable name
+  const getTourTypeName = (type: string) => {
+    const tourTypes: Record<string, string> = {
+      'pyramids': 'Pyramids & Cairo',
+      'luxor': 'Luxor & Aswan',
+      'nile': 'Nile Cruise',
+      'red-sea': 'Red Sea',
+      'desert': 'Desert Adventures',
+      'custom': 'Custom Tour'
+    }
+    return tourTypes[type] || type
+  }
+
+  // Convert accommodation code to readable name
+  const getAccommodationName = (type: string) => {
+    const accommodationTypes: Record<string, string> = {
+      'budget': 'Budget (3-star)',
+      'standard': 'Standard (4-star)',
+      'luxury': 'Luxury (5-star)',
+      'premium': 'Premium (5-star+)'
+    }
+    return accommodationTypes[type] || type
+  }
+
+  const bookingRef = bookingData.bookingRef
   const bookingDetails = {
-    name: "John Doe",
-    email: "john.doe@example.com",
-    phone: "+1 (555) 123-4567",
-    tourType: "Pyramids & Cairo",
-    travelDate: "2024-03-15",
-    numberOfTravelers: "2",
-    accommodation: "Luxury (5-star)",
+    name: `${bookingData.firstName} ${bookingData.lastName}`,
+    email: bookingData.email,
+    phone: bookingData.phone,
+    tourType: getTourTypeName(bookingData.tourType),
+    travelDate: bookingData.travelDate,
+    numberOfTravelers: bookingData.numberOfTravelers,
+    accommodation: getAccommodationName(bookingData.accommodation),
   }
 
   return (

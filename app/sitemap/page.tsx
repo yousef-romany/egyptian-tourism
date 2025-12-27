@@ -51,6 +51,8 @@ export default function SitemapPage() {
       links: [
         { name: "Book Now", href: "/book-now" },
         { name: "Reviews", href: "/reviews" },
+        { name: "Blog & Travel Guide", href: "/blog" },
+        { name: "Photo Gallery", href: "/gallery" },
         { name: "Transportation", href: "/transportation" },
         { name: "Transportation Booking", href: "/transportation/book" },
       ],

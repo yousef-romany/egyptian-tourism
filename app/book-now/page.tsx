@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -37,6 +38,7 @@ const bookingSchema = z.object({
 type BookingFormData = z.infer<typeof bookingSchema>
 
 export default function BookNowPage() {
+  const router = useRouter()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
 
@@ -52,15 +54,43 @@ export default function BookNowPage() {
 
   const onSubmit = async (data: BookingFormData) => {
     setIsSubmitting(true)
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 2000))
-    console.log("Booking data:", data)
-    setIsSubmitting(false)
-    setIsSubmitted(true)
-    reset()
 
-    // Reset success message after 5 seconds
-    setTimeout(() => setIsSubmitted(false), 5000)
+    try {
+      // Import strapi API
+      const strapiAPI = (await import('@/lib/api/strapi')).default
+
+      // Create booking in Strapi
+      const booking = await strapiAPI.bookings.create({
+        tourName: data.tourType,
+        customerName: `${data.firstName} ${data.lastName}`,
+        email: data.email,
+        phone: data.phone,
+        numberOfPeople: parseInt(data.numberOfTravelers),
+        tourDate: data.travelDate,
+        totalPrice: 0, // Will be calculated by admin
+        specialRequests: data.specialRequests || '',
+        nationality: data.country,
+      })
+
+      console.log("Booking created:", booking)
+
+      // Store booking data in sessionStorage for confirmation page
+      sessionStorage.setItem('bookingData', JSON.stringify({
+        ...data,
+        bookingRef: booking.bookingReference || `EGY-${booking.id}`,
+        bookingId: booking.id
+      }))
+
+      setIsSubmitting(false)
+
+      // Redirect to confirmation page
+      router.push('/book-now/confirmation')
+
+    } catch (error) {
+      console.error("Booking failed:", error)
+      setIsSubmitting(false)
+      alert("Booking failed. Please try again or contact us directly.")
+    }
   }
 
   return (

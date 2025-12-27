@@ -1,28 +1,55 @@
 "use client"
 
-import type React from "react"
-
 import { useState } from "react"
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import * as z from "zod"
+import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Send, CheckCircle } from "lucide-react"
+import { Send, CheckCircle, AlertCircle } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
 
+const newsletterSchema = z.object({
+  email: z
+    .string()
+    .min(1, "Email is required")
+    .email("Please enter a valid email address")
+    .toLowerCase()
+    .refine(
+      (email) => {
+        // Additional validation: no disposable email domains
+        const disposableDomains = ["tempmail.com", "throwaway.email", "guerrillamail.com"]
+        const domain = email.split("@")[1]
+        return !disposableDomains.includes(domain)
+      },
+      {
+        message: "Please use a permanent email address",
+      }
+    ),
+})
+
+type NewsletterFormData = z.infer<typeof newsletterSchema>
+
 export default function Newsletter() {
-  const [email, setEmail] = useState("")
-  const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsSubmitting(true)
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    reset,
+  } = useForm<NewsletterFormData>({
+    resolver: zodResolver(newsletterSchema),
+  })
 
+  const onSubmit = async (data: NewsletterFormData) => {
     // Simulate API call
     await new Promise((resolve) => setTimeout(resolve, 1500))
 
-    setIsSubmitting(false)
+    console.log("Newsletter subscription:", data)
     setIsSubmitted(true)
-    setEmail("")
+    reset()
 
     // Reset success message after 5 seconds
     setTimeout(() => {
@@ -55,65 +82,82 @@ export default function Newsletter() {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
-                className="bg-green-50 border border-green-200 rounded-lg p-4 flex items-center gap-3 justify-center"
+                className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-4 flex items-center gap-3 justify-center"
               >
                 <CheckCircle className="h-5 w-5 text-green-500" />
-                <p className="text-green-800">Thank you for subscribing to our newsletter!</p>
+                <p className="text-green-800 dark:text-green-400">Thank you for subscribing to our newsletter!</p>
               </motion.div>
             ) : (
               <motion.form
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
-                onSubmit={handleSubmit}
-                className="flex flex-col sm:flex-row gap-3"
+                onSubmit={handleSubmit(onSubmit)}
+                className="flex flex-col gap-3"
               >
-                <div className="relative flex-1">
-                  <Input
-                    type="email"
-                    placeholder="Your email address"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                    className="h-12 pl-4 pr-4 border-egyptian-gold/30 focus:border-egyptian-gold"
-                  />
+                <div className="flex flex-col sm:flex-row gap-3">
+                  <div className="relative flex-1">
+                    <Input
+                      type="email"
+                      placeholder="Your email address"
+                      {...register("email")}
+                      className={`h-12 pl-4 pr-4 border-egyptian-gold/30 focus:border-egyptian-gold ${
+                        errors.email ? "border-red-500 focus:border-red-500" : ""
+                      }`}
+                    />
+                  </div>
+                  <Button
+                    type="submit"
+                    className="h-12 px-6 bg-egyptian-gold hover:bg-egyptian-gold-dark text-black font-semibold"
+                    disabled={isSubmitting}
+                  >
+                    {isSubmitting ? (
+                      <span className="flex items-center gap-2">
+                        <svg
+                          className="animate-spin h-4 w-4"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                        >
+                          <circle
+                            className="opacity-25"
+                            cx="12"
+                            cy="12"
+                            r="10"
+                            stroke="currentColor"
+                            strokeWidth="4"
+                          ></circle>
+                          <path
+                            className="opacity-75"
+                            fill="currentColor"
+                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                          ></path>
+                        </svg>
+                        Subscribing...
+                      </span>
+                    ) : (
+                      <span className="flex items-center gap-2">
+                        <Send className="h-4 w-4" />
+                        Subscribe
+                      </span>
+                    )}
+                  </Button>
                 </div>
-                <Button
-                  type="submit"
-                  className="h-12 px-6 bg-egyptian-gold hover:bg-egyptian-gold-dark text-black"
-                  disabled={isSubmitting}
-                >
-                  {isSubmitting ? (
-                    <span className="flex items-center gap-2">
-                      <svg
-                        className="animate-spin h-4 w-4"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                      >
-                        <circle
-                          className="opacity-25"
-                          cx="12"
-                          cy="12"
-                          r="10"
-                          stroke="currentColor"
-                          strokeWidth="4"
-                        ></circle>
-                        <path
-                          className="opacity-75"
-                          fill="currentColor"
-                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                        ></path>
-                      </svg>
-                      Subscribing...
-                    </span>
-                  ) : (
-                    <span className="flex items-center gap-2">
-                      <Send className="h-4 w-4" />
-                      Subscribe
-                    </span>
+
+                {/* Error Message */}
+                <AnimatePresence>
+                  {errors.email && (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: "auto" }}
+                      exit={{ opacity: 0, height: 0 }}
+                      className="flex items-center gap-2 text-red-500 text-sm"
+                    >
+                      <AlertCircle className="h-4 w-4" />
+                      <p>{errors.email.message}</p>
+                    </motion.div>
                   )}
-                </Button>
+                </AnimatePresence>
               </motion.form>
             )}
           </AnimatePresence>
@@ -127,6 +171,3 @@ export default function Newsletter() {
     </section>
   )
 }
-
-import Link from "next/link"
-

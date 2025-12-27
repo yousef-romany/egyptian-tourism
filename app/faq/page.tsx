@@ -3,6 +3,7 @@ import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import { ChevronRight, Search } from "lucide-react"
 import EgyptianDivider from "@/components/egyptian-divider"
 import Newsletter from "@/components/newsletter"
@@ -199,22 +200,27 @@ export default function FAQPage() {
           </div>
 
           {Object.entries(faqCategories).map(([category, questions]) => (
-            <TabsContent key={category} value={category} className="space-y-4">
-              {questions.map((faq, index) => (
-                <Card key={index} className="border-egyptian-gold/20">
-                  <CardContent className="p-0">
-                    <details className="group">
-                      <summary className="flex cursor-pointer items-center justify-between p-6">
-                        <h3 className="font-medium text-lg">{faq.question}</h3>
-                        <ChevronRight className="h-5 w-5 text-egyptian-gold transition-transform group-open:rotate-90" />
-                      </summary>
-                      <div className="p-6 pt-0 text-muted-foreground">
-                        <p>{faq.answer}</p>
-                      </div>
-                    </details>
-                  </CardContent>
-                </Card>
-              ))}
+            <TabsContent key={category} value={category}>
+              <Accordion type="single" collapsible className="space-y-4">
+                {questions.map((faq, index) => (
+                  <AccordionItem
+                    key={index}
+                    value={`item-${index}`}
+                    className="border-0"
+                  >
+                    <Card className="border-egyptian-gold/20 hover:border-egyptian-gold/40 transition-colors">
+                      <CardContent className="p-0">
+                        <AccordionTrigger className="px-6 py-5 hover:no-underline hover:bg-egyptian-gold/5 transition-colors rounded-t-lg [&[data-state=open]]:bg-egyptian-gold/5">
+                          <h3 className="font-semibold text-lg text-left">{faq.question}</h3>
+                        </AccordionTrigger>
+                        <AccordionContent className="px-6 pb-5">
+                          <p className="text-muted-foreground leading-relaxed">{faq.answer}</p>
+                        </AccordionContent>
+                      </CardContent>
+                    </Card>
+                  </AccordionItem>
+                ))}
+              </Accordion>
             </TabsContent>
           ))}
         </Tabs>

@@ -2,9 +2,12 @@ import type React from "react"
 import "./globals.css";
 import { Inter } from "next/font/google"
 import { ThemeProvider } from "@/components/theme-provider"
+import { AuthProvider } from "@/contexts/auth-context"
 import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
 import { OrganizationJsonLd } from "@/components/tour-json-ld"
+import FloatingContactButton from "@/components/floating-contact-button"
+import Breadcrumb from "@/components/breadcrumb"
 
 const inter = Inter({
   subsets: ["latin"],
@@ -35,11 +38,15 @@ export default function RootLayout({
       </head>
       <body className={`${inter.variable} ${heading.variable} font-sans`}>
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
-          <div className="flex min-h-screen flex-col">
-            <Navbar />
-            <main className="flex-1">{children}</main>
-            <Footer />
-          </div>
+          <AuthProvider>
+            <div className="flex min-h-screen flex-col">
+              <Navbar />
+              <Breadcrumb />
+              <main className="flex-1">{children}</main>
+              <Footer />
+              <FloatingContactButton />
+            </div>
+          </AuthProvider>
         </ThemeProvider>
       </body>
     </html>

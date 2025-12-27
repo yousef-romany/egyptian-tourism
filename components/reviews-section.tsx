@@ -2,10 +2,10 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { getReviewsByPlatform } from "@/lib/data/reviews"
 import ReviewCard from "@/components/review-card"
 
-export default function ReviewsSection() {
-  const tripadvisorReviews = getReviewsByPlatform("tripadvisor")
-  const viatorReviews = getReviewsByPlatform("viator")
-  const klookReviews = getReviewsByPlatform("klook")
+export default async function ReviewsSection() {
+  const tripadvisorReviews = await getReviewsByPlatform("tripadvisor")
+  const viatorReviews = await getReviewsByPlatform("viator")
+  const klookReviews = await getReviewsByPlatform("klook")
 
   return (
     <Tabs defaultValue="tripadvisor" className="mt-12">

@@ -33,12 +33,12 @@ export default function ToursFilterClient({ tours }: ToursFilterClientProps) {
 
   // Extract unique values for filters
   const categories = useMemo(() => {
-    const unique = Array.from(new Set(tours.map(tour => tour.category)))
+    const unique = Array.from(new Set(tours.map(tour => tour.category).filter(Boolean)))
     return unique.sort()
   }, [tours])
 
   const locations = useMemo(() => {
-    const unique = Array.from(new Set(tours.map(tour => tour.location)))
+    const unique = Array.from(new Set(tours.map(tour => tour.location).filter(Boolean)))
     return unique.sort()
   }, [tours])
 
@@ -63,19 +63,19 @@ export default function ToursFilterClient({ tours }: ToursFilterClientProps) {
       if (searchQuery) {
         const query = searchQuery.toLowerCase()
         const matchesSearch =
-          tour.title.toLowerCase().includes(query) ||
-          tour.description.toLowerCase().includes(query) ||
-          tour.location.toLowerCase().includes(query)
+          tour.title?.toLowerCase().includes(query) ||
+          tour.description?.toLowerCase().includes(query) ||
+          tour.location?.toLowerCase().includes(query)
         if (!matchesSearch) return false
       }
 
       // Category filter
-      if (selectedCategories.length > 0 && !selectedCategories.includes(tour.category)) {
+      if (selectedCategories.length > 0 && (!tour.category || !selectedCategories.includes(tour.category))) {
         return false
       }
 
       // Location filter
-      if (selectedLocations.length > 0 && !selectedLocations.includes(tour.location)) {
+      if (selectedLocations.length > 0 && (!tour.location || !selectedLocations.includes(tour.location))) {
         return false
       }
 

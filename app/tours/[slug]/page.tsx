@@ -31,7 +31,7 @@ interface TourPageProps {
 
 // Generate static paths for all tours at build time
 export async function generateStaticParams() {
-  const slugs = getAllTourSlugs()
+  const slugs = await getAllTourSlugs()
 
   return slugs.map((slug) => ({
     slug: slug,
@@ -42,7 +42,7 @@ export async function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: TourPageProps): Promise<Metadata> {
-  const tour = getTourBySlug(params.slug)
+  const tour = await getTourBySlug(params.slug)
 
   if (!tour) {
     return {
@@ -68,14 +68,14 @@ export async function generateMetadata({
   }
 }
 
-export default function TourDetailPage({ params }: TourPageProps) {
-  const tour = getTourBySlug(params.slug)
+export default async function TourDetailPage({ params }: TourPageProps) {
+  const tour = await getTourBySlug(params.slug)
 
   if (!tour) {
     notFound()
   }
 
-  const relatedTours = getRelatedTours(params.slug, 3)
+  const relatedTours = await getRelatedTours(params.slug, 3)
   const images = tour.images || [tour.image]
 
   return (
@@ -146,17 +146,19 @@ export default function TourDetailPage({ params }: TourPageProps) {
               <p className="text-lg md:text-xl text-white/90 mb-8 leading-relaxed">{tour.description}</p>
               <div className="flex flex-col sm:flex-row gap-5">
                 <Button
+                  asChild
                   size="lg"
                   className="bg-gradient-to-r from-egyptian-gold to-egyptian-gold-dark hover:from-egyptian-gold-dark hover:to-egyptian-gold text-black font-bold text-lg px-8 py-7 shadow-2xl hover:shadow-egyptian-gold/50 transition-all duration-300"
                 >
-                  Book Now - {tour.price}
+                  <Link href="/book-now">Book Now - {tour.price}</Link>
                 </Button>
                 <Button
+                  asChild
                   size="lg"
                   variant="outline"
                   className="border-2 border-white text-white hover:bg-white hover:text-[#0c1e35] font-semibold text-lg px-8 py-7 transition-all duration-300"
                 >
-                  Contact Us
+                  <Link href="/contact">Contact Us</Link>
                 </Button>
               </div>
             </div>
@@ -350,11 +352,11 @@ export default function TourDetailPage({ params }: TourPageProps) {
                   <p className="text-base text-muted-foreground font-medium">per person</p>
                 </div>
 
-                <Button className="w-full mb-4 bg-gradient-to-r from-egyptian-gold to-egyptian-gold-dark hover:from-egyptian-gold-dark hover:to-egyptian-gold text-black font-bold text-lg py-7 shadow-xl hover:shadow-2xl transition-all duration-300">
-                  Book Now
+                <Button asChild className="w-full mb-4 bg-gradient-to-r from-egyptian-gold to-egyptian-gold-dark hover:from-egyptian-gold-dark hover:to-egyptian-gold text-black font-bold text-lg py-7 shadow-xl hover:shadow-2xl transition-all duration-300">
+                  <Link href="/book-now">Book Now</Link>
                 </Button>
-                <Button variant="outline" className="w-full border-2 border-egyptian-gold/50 hover:border-egyptian-gold hover:bg-egyptian-gold/10 font-semibold text-base py-6">
-                  Check Availability
+                <Button asChild variant="outline" className="w-full border-2 border-egyptian-gold/50 hover:border-egyptian-gold hover:bg-egyptian-gold/10 font-semibold text-base py-6">
+                  <Link href="/contact">Check Availability</Link>
                 </Button>
 
                 <EgyptianDivider className="my-8" />

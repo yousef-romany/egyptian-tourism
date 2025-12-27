@@ -59,11 +59,11 @@ export default function ReviewCard({
           <div className="flex items-center gap-4 mb-4">
             <Avatar>
               <AvatarImage src={avatar} alt={name} />
-              <AvatarFallback>{name.charAt(0)}</AvatarFallback>
+              <AvatarFallback>{name?.charAt(0) || '?'}</AvatarFallback>
             </Avatar>
             <div>
-              <div className="font-medium">{name}</div>
-              <div className="text-xs text-muted-foreground">{location}</div>
+              <div className="font-medium">{name || 'Anonymous'}</div>
+              <div className="text-xs text-muted-foreground">{location || 'Unknown'}</div>
             </div>
           </div>
           
@@ -83,9 +83,9 @@ export default function ReviewCard({
           
           <div className="relative">
             <p className={`text-sm text-muted-foreground ${!expanded && "line-clamp-3"}`}>
-              {content}
+              {content || 'No review content'}
             </p>
-            {content.length > 120 && (
+            {(content?.length || 0) > 120 && (
               <button 
                 onClick={() => setExpanded(!expanded)} 
                 className="text-xs font-medium text-[#d4af37] flex items-center gap-1 mt-2"

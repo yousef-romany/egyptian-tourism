@@ -75,6 +75,11 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/blog" className="text-white/70 hover:text-egyptian-gold transition-colors">
+                  Blog
+                </Link>
+              </li>
+              <li>
                 <Link href="/history" className="text-white/70 hover:text-egyptian-gold transition-colors">
                   Egyptian History
                 </Link>

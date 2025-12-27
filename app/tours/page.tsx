@@ -13,8 +13,8 @@ export const metadata = {
     "Explore our wide range of Egyptian tours, from the pyramids of Giza to the temples of Luxor and beyond.",
 }
 
-export default function ToursPage() {
-  const tours = getTours()
+export default async function ToursPage() {
+  const tours = await getTours()
 
   return (
     <div className="flex min-h-screen flex-col">
