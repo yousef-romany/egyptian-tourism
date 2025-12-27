@@ -1,0 +1,82 @@
+import type { Tour } from "@/lib/data/tours"
+
+interface TourJsonLdProps {
+  tour: Tour
+}
+
+export function TourJsonLd({ tour }: TourJsonLdProps) {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "TouristAttraction",
+    name: tour.title,
+    description: tour.description,
+    image: tour.images || [tour.image],
+    address: {
+      "@type": "Place",
+      name: tour.location,
+    },
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: tour.rating,
+      reviewCount: tour.reviews,
+      bestRating: 5,
+      worstRating: 1,
+    },
+    offers: {
+      "@type": "Offer",
+      price: tour.price.replace("$", ""),
+      priceCurrency: "USD",
+      availability: "https://schema.org/InStock",
+      validFrom: new Date().toISOString(),
+    },
+  }
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+    />
+  )
+}
+
+interface OrganizationJsonLdProps {
+  url?: string
+}
+
+export function OrganizationJsonLd({ url = "https://egydise-tours.com" }: OrganizationJsonLdProps) {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "TravelAgency",
+    name: "Egydise Tours",
+    description: "Award-winning Egyptian tour operator offering expert-guided tours to Egypt's most iconic destinations.",
+    url: url,
+    logo: `${url}/logo.png`,
+    image: `${url}/placeholder.svg?height=630&width=1200`,
+    telephone: "+20-xxx-xxx-xxxx",
+    email: "info@egydise-tours.com",
+    address: {
+      "@type": "PostalAddress",
+      addressCountry: "Egypt",
+      addressLocality: "Cairo",
+    },
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: 4.9,
+      reviewCount: 1200,
+      bestRating: 5,
+      worstRating: 1,
+    },
+    sameAs: [
+      "https://www.facebook.com/egydise",
+      "https://www.instagram.com/egydise",
+      "https://twitter.com/egydise",
+    ],
+  }
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+    />
+  )
+}

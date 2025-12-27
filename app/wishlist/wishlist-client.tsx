@@ -6,99 +6,36 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent } from "@/components/ui/card"
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Star, MapPin, Clock, Heart, Share2, Filter, Search, X } from "lucide-react"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Star, MapPin, Clock, Heart, Share2, Search, X } from "lucide-react"
 import { motion } from "framer-motion"
+import { useWishlist } from "@/hooks/use-wishlist"
 
 export default function WishlistClient() {
   const [searchQuery, setSearchQuery] = useState("")
   const [showSearch, setShowSearch] = useState(false)
+  const [activeCategory, setActiveCategory] = useState("all")
+  const { wishlist, removeFromWishlist, isLoaded } = useWishlist()
 
-  const wishlistItems = [
-    {
-      id: 1,
-      title: "Giza Pyramids & Sphinx",
-      image: "/placeholder.svg?height=300&width=400",
-      duration: "8 hours",
-      location: "Cairo",
-      price: "$89",
-      rating: 4.9,
-      reviews: 245,
-      category: "Historical",
-      dateAdded: "2 weeks ago",
-    },
-    {
-      id: 2,
-      title: "Luxor Hot Air Balloon",
-      image: "/placeholder.svg?height=300&width=400",
-      duration: "3 hours",
-      location: "Luxor",
-      price: "$120",
-      rating: 4.9,
-      reviews: 203,
-      category: "Adventure",
-      dateAdded: "1 month ago",
-    },
-    {
-      id: 3,
-      title: "Abu Simbel Temples",
-      image: "/placeholder.svg?height=300&width=400",
-      duration: "12 hours",
-      location: "Aswan",
-      price: "$140",
-      rating: 4.9,
-      reviews: 156,
-      category: "Historical",
-      dateAdded: "3 weeks ago",
-    },
-    {
-      id: 4,
-      title: "Nile Dinner Cruise",
-      image: "/placeholder.svg?height=300&width=400",
-      duration: "3 hours",
-      location: "Cairo",
-      price: "$65",
-      rating: 4.7,
-      reviews: 312,
-      category: "Cultural",
-      dateAdded: "2 days ago",
-    },
-    {
-      id: 5,
-      title: "Alexandria Day Trip",
-      image: "/placeholder.svg?height=300&width=400",
-      duration: "12 hours",
-      location: "Alexandria",
-      price: "$95",
-      rating: 4.6,
-      reviews: 178,
-      category: "Historical",
-      dateAdded: "1 week ago",
-    },
-    {
-      id: 6,
-      title: "Hurghada Snorkeling Trip",
-      image: "/placeholder.svg?height=300&width=400",
-      duration: "7 hours",
-      location: "Hurghada",
-      price: "$75",
-      rating: 4.7,
-      reviews: 289,
-      category: "Adventure",
-      dateAdded: "5 days ago",
-    },
-  ]
-
-  const filteredItems = wishlistItems.filter(
-    (item) =>
+  const filteredItems = wishlist.filter((item) => {
+    const matchesSearch =
       item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       item.location.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      item.category.toLowerCase().includes(searchQuery.toLowerCase()),
-  )
+      item.category.toLowerCase().includes(searchQuery.toLowerCase())
 
-  const removeFromWishlist = (id: number) => {
-    // In a real app, this would call an API to remove the item
-    console.log(`Removing item ${id} from wishlist`)
+    const matchesCategory =
+      activeCategory === "all" || item.category.toLowerCase() === activeCategory
+
+    return matchesSearch && matchesCategory
+  })
+
+  const getCategoryCount = (category: string) => {
+    if (category === "all") return wishlist.length
+    return wishlist.filter((item) => item.category.toLowerCase() === category).length
+  }
+
+  const handleRemove = (id: number) => {
+    removeFromWishlist(id)
   }
 
   return (
@@ -124,12 +61,12 @@ export default function WishlistClient() {
 
       <div className="container mt-8">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
-          <Tabs defaultValue="all" className="w-full md:w-auto">
+          <Tabs defaultValue="all" className="w-full md:w-auto" onValueChange={setActiveCategory}>
             <TabsList>
-              <TabsTrigger value="all">All ({wishlistItems.length})</TabsTrigger>
-              <TabsTrigger value="historical">Historical</TabsTrigger>
-              <TabsTrigger value="adventure">Adventure</TabsTrigger>
-              <TabsTrigger value="cultural">Cultural</TabsTrigger>
+              <TabsTrigger value="all">All ({getCategoryCount("all")})</TabsTrigger>
+              <TabsTrigger value="historical">Historical ({getCategoryCount("historical")})</TabsTrigger>
+              <TabsTrigger value="adventure">Adventure ({getCategoryCount("adventure")})</TabsTrigger>
+              <TabsTrigger value="cultural">Cultural ({getCategoryCount("cultural")})</TabsTrigger>
             </TabsList>
           </Tabs>
 
@@ -190,21 +127,19 @@ export default function WishlistClient() {
                   <Badge className="absolute top-3 right-3 bg-egyptian-gold text-black font-bold">{item.price}</Badge>
                   <div className="absolute top-3 left-3 flex gap-2">
                     <button
-                      onClick={() => removeFromWishlist(item.id)}
-                      className="h-8 w-8 rounded-full bg-white/80 flex items-center justify-center hover:bg-white transition-colors"
+                      onClick={() => handleRemove(item.id)}
+                      className="h-8 w-8 rounded-full bg-white/80 flex items-center justify-center hover:bg-white hover:scale-110 transition-all duration-200"
+                      aria-label="Remove from wishlist"
                     >
                       <Heart className="h-4 w-4 fill-red-500 text-red-500" />
                     </button>
-                    <button className="h-8 w-8 rounded-full bg-white/80 flex items-center justify-center hover:bg-white transition-colors">
+                    <button className="h-8 w-8 rounded-full bg-white/80 flex items-center justify-center hover:bg-white hover:scale-110 transition-all duration-200">
                       <Share2 className="h-4 w-4" />
                     </button>
                   </div>
-                  <div className="absolute bottom-3 left-3">
-                    <Badge className="bg-white/80 text-black text-xs">Added {item.dateAdded}</Badge>
-                  </div>
                 </div>
                 <CardContent className="p-4">
-                  <Link href={`/tours/${item.title.toLowerCase().replace(/\s+/g, "-")}`}>
+                  <Link href={`/tours/${item.slug}`}>
                     <h3 className="text-lg font-bold group-hover:text-egyptian-gold transition-colors">{item.title}</h3>
                   </Link>
                   <div className="flex items-center gap-1 mt-2 text-amber-500">
@@ -224,10 +159,10 @@ export default function WishlistClient() {
                   </div>
                   <div className="flex gap-2 mt-4">
                     <Button asChild className="flex-1 bg-egyptian-gold hover:bg-egyptian-gold-dark text-black">
-                      <Link href={`/tours/${item.title.toLowerCase().replace(/\s+/g, "-")}`}>View Details</Link>
+                      <Link href={`/tours/${item.slug}`}>View Details</Link>
                     </Button>
                     <Button asChild className="flex-1">
-                      <Link href={`/book-now?tour=${item.id}`}>Book Now</Link>
+                      <Link href="/book-now">Book Now</Link>
                     </Button>
                   </div>
                 </CardContent>
