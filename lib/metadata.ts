@@ -1,7 +1,13 @@
 import type { Metadata } from "next"
 
+const siteUrl = "https://egydisetours.com"
+
 export const defaultMetadata: Metadata = {
-  title: "Egydise Tours - Experience the Magic of Egypt",
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: "Egydise Tours - Experience the Magic of Egypt",
+    template: "%s | Egydise Tours"
+  },
   description:
     "Discover the wonders of Egypt with our award-winning tours. From the majestic pyramids to the serene Nile River. Expert guides, 5-star reviews.",
   keywords: [
@@ -14,6 +20,11 @@ export const defaultMetadata: Metadata = {
     "Egypt travel",
     "Valley of the Kings",
     "Egyptian history",
+    "Aswan tours",
+    "Red Sea diving",
+    "Egyptian museums",
+    "Sphinx tours",
+    "Temple of Karnak",
   ],
   authors: [{ name: "Egydise Tours" }],
   creator: "Egydise Tours",
@@ -23,17 +34,20 @@ export const defaultMetadata: Metadata = {
     address: false,
     telephone: false,
   },
+  alternates: {
+    canonical: siteUrl,
+  },
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://egydise-tours.com",
+    url: siteUrl,
     siteName: "Egydise Tours",
     title: "Egydise Tours - Experience the Magic of Egypt",
     description:
-      "Discover the wonders of Egypt with our award-winning tours. From the majestic pyramids to the serene Nile River.",
+      "Discover the wonders of Egypt with our award-winning tours. From the majestic pyramids to the serene Nile River. Expert guides, 5-star reviews.",
     images: [
       {
-        url: "/placeholder.svg?height=630&width=1200",
+        url: "/og-image.jpg",
         width: 1200,
         height: 630,
         alt: "Egydise Tours - Egyptian Tourism",
@@ -44,9 +58,10 @@ export const defaultMetadata: Metadata = {
     card: "summary_large_image",
     title: "Egydise Tours - Experience the Magic of Egypt",
     description:
-      "Discover the wonders of Egypt with our award-winning tours. From the majestic pyramids to the serene Nile River.",
-    images: ["/placeholder.svg?height=630&width=1200"],
+      "Discover the wonders of Egypt with our award-winning tours. From the majestic pyramids to the serene Nile River. Expert guides, 5-star reviews.",
+    images: ["/og-image.jpg"],
     creator: "@egydise",
+    site: "@egydise",
   },
   robots: {
     index: true,
@@ -60,29 +75,55 @@ export const defaultMetadata: Metadata = {
     },
   },
   icons: {
-    icon: "/logo.png",
-    apple: "/logo.png",
+    icon: [
+      { url: "/favicon.ico" },
+      { url: "/icon.png", type: "image/png", sizes: "32x32" },
+    ],
+    apple: "/apple-icon.png",
+    shortcut: "/favicon.ico",
   },
+  manifest: "/site.webmanifest",
+  category: "travel",
 }
 
 export function generatePageMetadata(
   title: string,
   description: string,
-  path: string = ""
+  path: string = "",
+  image?: string
 ): Metadata {
+  const url = `${siteUrl}${path}`
+  const ogImage = image || "/og-image.jpg"
+
   return {
-    title: `${title} - Egydise Tours`,
+    title,
     description,
+    alternates: {
+      canonical: url,
+    },
     openGraph: {
-      title: `${title} - Egydise Tours`,
+      title,
       description,
-      url: `https://egydise-tours.com${path}`,
+      url,
       type: "website",
+      siteName: "Egydise Tours",
+      locale: "en_US",
+      images: [
+        {
+          url: ogImage,
+          width: 1200,
+          height: 630,
+          alt: title,
+        },
+      ],
     },
     twitter: {
       card: "summary_large_image",
-      title: `${title} - Egydise Tours`,
+      title,
       description,
+      images: [ogImage],
+      creator: "@egydise",
+      site: "@egydise",
     },
   }
 }

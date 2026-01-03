@@ -134,34 +134,60 @@ export default function AboutPage() {
 
   return (
     <div className="flex min-h-screen flex-col">
-      <section className="relative bg-[#0c1e35] text-white py-20 md:py-28">
+      {/* Enhanced Hero Section */}
+      <section className="relative bg-gradient-to-br from-[#0c1e35] via-[#1a3a5f] to-[#0c1e35] text-white py-24 md:py-32 lg:py-40 overflow-hidden">
         <div className="absolute inset-0 z-0">
           <Image
             src="/placeholder.svg?height=600&width=1600"
             alt="Egyptian landscape"
             fill
-            className="object-cover opacity-30"
+            className="object-cover opacity-20"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[#0c1e35]/90"></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#0c1e35]/50 to-[#0c1e35]/95"></div>
         </div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,_rgba(212,175,55,0.15),transparent_70%)]"></div>
+
+        {/* Decorative elements */}
+        <div className="absolute top-10 right-10 w-40 h-40 border border-egyptian-gold/20 rounded-full animate-pulse"></div>
+        <div className="absolute bottom-20 left-10 w-32 h-32 bg-egyptian-gold/10 rounded-full blur-3xl animate-pulse delay-700"></div>
 
         <div className="container relative z-10">
-          <div className="max-w-2xl">
-            <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold mb-4">About Us</h1>
-            <p className="text-lg text-white/80 mb-6">
+          <div className="max-w-4xl mx-auto text-center">
+            <div className="inline-block mb-6">
+              <span className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-egyptian-gold/10 border border-egyptian-gold/30 text-egyptian-gold font-bold text-sm backdrop-blur-sm">
+                <Users className="h-4 w-4" />
+                Our Story
+              </span>
+            </div>
+            <h1 className="font-heading text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-extrabold mb-8 bg-gradient-to-r from-white via-egyptian-gold to-white bg-clip-text text-transparent leading-tight">
+              About Egydise Tours
+            </h1>
+            <p className="text-xl md:text-2xl lg:text-3xl text-white/90 mb-10 leading-relaxed max-w-3xl mx-auto">
               Discover the passionate team behind Egydise Tours and our commitment to creating unforgettable Egyptian
               experiences.
             </p>
-            <EgyptianDivider className="my-6" variant="elaborate" />
+            <EgyptianDivider className="my-10 bg-egyptian-gold/70 mx-auto" variant="elaborate" />
           </div>
         </div>
       </section>
 
-      <section className="container py-16">
-        <div className="grid md:grid-cols-2 gap-12 items-center">
+      {/* Enhanced Our Story Section */}
+      <section className="container py-20 md:py-28 relative overflow-hidden">
+        {/* Background decoration */}
+        <div className="absolute inset-0 -z-10">
+          <div className="absolute top-10 left-1/4 w-96 h-96 bg-egyptian-gold/5 rounded-full blur-3xl" />
+          <div className="absolute bottom-10 right-1/4 w-96 h-96 bg-egyptian-gold/5 rounded-full blur-3xl" />
+        </div>
+
+        <div className="grid md:grid-cols-2 gap-16 items-center">
           <div>
-            <h2 className="text-3xl font-heading font-bold mb-6">Our Story</h2>
-            <div className="space-y-4 text-muted-foreground">
+            <div className="inline-block mb-4">
+              <Badge className="bg-egyptian-gold/10 border border-egyptian-gold/20 text-egyptian-gold font-bold text-sm px-4 py-2">
+                Founded in 2005
+              </Badge>
+            </div>
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-heading font-extrabold mb-8 bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text">Our Story</h2>
+            <div className="space-y-6 text-muted-foreground text-lg leading-relaxed">
               <p>
                 Egydise Tours was founded in 2005 by Ahmed Hassan, an Egyptologist with a passion for sharing the
                 wonders of his homeland with travelers from around the world. What began as a small operation with just
@@ -181,42 +207,53 @@ export default function AboutPage() {
               </p>
             </div>
 
-            <div className="mt-8 flex flex-col sm:flex-row gap-4">
-              <div className="flex items-center gap-2">
-                <Badge className="h-8 w-8 rounded-full bg-egyptian-gold/10 p-2">
-                  <Users className="h-4 w-4 text-egyptian-gold" />
-                </Badge>
-                <span className="font-medium">10,000+ Happy Travelers</span>
+            <div className="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-6">
+              <div className="flex items-center gap-3 p-4 rounded-xl bg-egyptian-gold/5 border border-egyptian-gold/20 hover:bg-egyptian-gold/10 hover:border-egyptian-gold/40 transition-all duration-300 group">
+                <div className="h-12 w-12 rounded-full bg-egyptian-gold/10 flex items-center justify-center group-hover:bg-egyptian-gold/20 transition-colors">
+                  <Users className="h-6 w-6 text-egyptian-gold" />
+                </div>
+                <div>
+                  <div className="font-bold text-xl text-egyptian-gold">10,000+</div>
+                  <div className="text-sm text-muted-foreground">Happy Travelers</div>
+                </div>
               </div>
-              <div className="flex items-center gap-2">
-                <Badge className="h-8 w-8 rounded-full bg-egyptian-gold/10 p-2">
-                  <Award className="h-4 w-4 text-egyptian-gold" />
-                </Badge>
-                <span className="font-medium">Award-Winning Service</span>
+              <div className="flex items-center gap-3 p-4 rounded-xl bg-egyptian-gold/5 border border-egyptian-gold/20 hover:bg-egyptian-gold/10 hover:border-egyptian-gold/40 transition-all duration-300 group">
+                <div className="h-12 w-12 rounded-full bg-egyptian-gold/10 flex items-center justify-center group-hover:bg-egyptian-gold/20 transition-colors">
+                  <Award className="h-6 w-6 text-egyptian-gold" />
+                </div>
+                <div>
+                  <div className="font-bold text-xl text-egyptian-gold">Award</div>
+                  <div className="text-sm text-muted-foreground">Winning Service</div>
+                </div>
               </div>
-              <div className="flex items-center gap-2">
-                <Badge className="h-8 w-8 rounded-full bg-egyptian-gold/10 p-2">
-                  <Calendar className="h-4 w-4 text-egyptian-gold" />
-                </Badge>
-                <span className="font-medium">18+ Years Experience</span>
+              <div className="flex items-center gap-3 p-4 rounded-xl bg-egyptian-gold/5 border border-egyptian-gold/20 hover:bg-egyptian-gold/10 hover:border-egyptian-gold/40 transition-all duration-300 group">
+                <div className="h-12 w-12 rounded-full bg-egyptian-gold/10 flex items-center justify-center group-hover:bg-egyptian-gold/20 transition-colors">
+                  <Calendar className="h-6 w-6 text-egyptian-gold" />
+                </div>
+                <div>
+                  <div className="font-bold text-xl text-egyptian-gold">18+ Years</div>
+                  <div className="text-sm text-muted-foreground">Experience</div>
+                </div>
               </div>
             </div>
           </div>
-          <div className="relative">
-            <div className="absolute -top-4 -right-4 w-24 h-24 bg-egyptian-gold/10 rounded-full"></div>
-            <div className="absolute -bottom-4 -left-4 w-32 h-32 bg-egyptian-gold/10 rounded-full"></div>
+          <div className="relative group">
+            <div className="absolute -top-6 -right-6 w-32 h-32 bg-egyptian-gold/20 rounded-full blur-2xl group-hover:blur-3xl transition-all duration-500"></div>
+            <div className="absolute -bottom-6 -left-6 w-40 h-40 bg-egyptian-gold/20 rounded-full blur-2xl group-hover:blur-3xl transition-all duration-500"></div>
+            <div className="absolute inset-0 bg-gradient-to-br from-egyptian-gold/20 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
             <Image
               src="/placeholder.svg?height=600&width=500"
               alt="Egydise Tours team"
               width={500}
               height={600}
-              className="rounded-lg object-cover h-[500px] w-full relative z-10"
+              className="rounded-2xl object-cover h-[500px] w-full relative z-10 shadow-2xl border-2 border-egyptian-gold/20 group-hover:border-egyptian-gold/40 transition-all duration-500"
             />
           </div>
         </div>
       </section>
 
-      <section className="bg-muted py-16 relative overflow-hidden">
+      {/* Enhanced Our Values Section */}
+      <section className="bg-muted py-20 md:py-28 relative overflow-hidden">
         <div className="absolute inset-0 opacity-5 pointer-events-none">
           <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
             <pattern id="hieroglyphics-bg" patternUnits="userSpaceOnUse" width="20" height="20">
@@ -228,23 +265,29 @@ export default function AboutPage() {
         </div>
 
         <div className="container relative z-10">
-          <div className="text-center max-w-3xl mx-auto">
-            <h2 className="text-3xl font-heading font-bold mb-6">Our Values</h2>
-            <p className="text-muted-foreground mb-12">
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <div className="inline-block mb-4">
+              <Badge className="bg-egyptian-gold/10 border border-egyptian-gold/20 text-egyptian-gold font-bold text-sm px-4 py-2">
+                What We Stand For
+              </Badge>
+            </div>
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-heading font-extrabold mb-6">Our Core Values</h2>
+            <p className="text-lg text-muted-foreground leading-relaxed">
               At Egydise Tours, our core values guide everything we do, from planning your itinerary to ensuring every
               detail of your journey exceeds expectations.
             </p>
+            <EgyptianDivider className="my-8 mx-auto" />
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {values.map((value, index) => (
-              <Card key={index} className="border-egyptian-gold/20">
-                <CardContent className="p-6">
-                  <div className="h-12 w-12 rounded-full bg-egyptian-gold/10 flex items-center justify-center mb-4">
+              <Card key={index} className="border-2 border-egyptian-gold/20 hover:border-egyptian-gold hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 group">
+                <CardContent className="p-8 h-full">
+                  <div className="h-16 w-16 rounded-full bg-egyptian-gold/10 flex items-center justify-center mb-6 group-hover:bg-egyptian-gold/20 group-hover:scale-110 transition-all duration-300">
                     {value.icon}
                   </div>
-                  <h3 className="text-xl font-bold mb-2">{value.title}</h3>
-                  <p className="text-muted-foreground">{value.description}</p>
+                  <h3 className="text-2xl font-bold mb-4 group-hover:text-egyptian-gold transition-colors">{value.title}</h3>
+                  <p className="text-muted-foreground leading-relaxed">{value.description}</p>
                 </CardContent>
               </Card>
             ))}
@@ -252,10 +295,23 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="container py-16">
-        <div className="text-center max-w-3xl mx-auto mb-12">
-          <h2 className="text-3xl font-heading font-bold mb-6">Meet Our Team</h2>
-          <p className="text-muted-foreground">
+      {/* Enhanced Meet Our Team Section */}
+      <section className="container py-20 md:py-28 relative overflow-hidden">
+        {/* Background decoration */}
+        <div className="absolute inset-0 -z-10">
+          <div className="absolute top-10 left-1/3 w-96 h-96 bg-egyptian-gold/5 rounded-full blur-3xl" />
+          <div className="absolute bottom-10 right-1/3 w-96 h-96 bg-egyptian-gold/5 rounded-full blur-3xl" />
+        </div>
+
+        <div className="text-center max-w-3xl mx-auto mb-16">
+          <div className="inline-block mb-4">
+            <Badge className="bg-egyptian-gold/10 border border-egyptian-gold/20 text-egyptian-gold font-bold text-sm px-4 py-2">
+              <Users className="h-4 w-4 inline mr-2" />
+              Expert Team
+            </Badge>
+          </div>
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-heading font-extrabold mb-6">Meet Our Team</h2>
+          <p className="text-lg text-muted-foreground leading-relaxed">
             Our passionate team of Egyptologists, travel experts, and hospitality professionals is dedicated to creating
             unforgettable Egyptian experiences for our guests.
           </p>
@@ -264,26 +320,28 @@ export default function AboutPage() {
 
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
           {teamMembers.map((member, index) => (
-            <Card key={index} className="border-egyptian-gold/20 overflow-hidden group">
-              <div className="relative h-64">
+            <Card key={index} className="border-2 border-egyptian-gold/20 hover:border-egyptian-gold overflow-hidden group hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
+              <div className="relative h-64 overflow-hidden">
                 <Image
                   src={member.image || "/placeholder.svg"}
                   alt={member.name}
                   fill
-                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  className="object-cover transition-transform duration-500 group-hover:scale-110"
                 />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </div>
-              <CardContent className="p-6">
-                <h3 className="text-xl font-bold mb-1">{member.name}</h3>
-                <p className="text-egyptian-gold font-medium mb-3">{member.role}</p>
-                <p className="text-muted-foreground">{member.bio}</p>
+              <CardContent className="p-6 bg-gradient-to-b from-background to-background group-hover:from-egyptian-gold/5 group-hover:to-background transition-all duration-300">
+                <h3 className="text-xl font-bold mb-1 group-hover:text-egyptian-gold transition-colors">{member.name}</h3>
+                <p className="text-egyptian-gold font-semibold mb-3 text-sm uppercase tracking-wide">{member.role}</p>
+                <p className="text-muted-foreground text-sm leading-relaxed">{member.bio}</p>
               </CardContent>
             </Card>
           ))}
         </div>
       </section>
 
-      <section className="bg-[#0c1e35] text-white py-16 relative overflow-hidden">
+      {/* Enhanced Why Choose Section */}
+      <section className="bg-gradient-to-br from-[#0c1e35] via-[#1a3a5f] to-[#0c1e35] text-white py-20 md:py-28 relative overflow-hidden">
         <div className="absolute inset-0 opacity-10 pointer-events-none">
           <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
             <pattern id="pyramids-bg" patternUnits="userSpaceOnUse" width="20" height="20">
@@ -292,58 +350,65 @@ export default function AboutPage() {
             <rect width="100%" height="100%" fill="url(#pyramids-bg)" />
           </svg>
         </div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,_rgba(212,175,55,0.15),transparent_60%)]"></div>
 
         <div className="container relative z-10">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
+          <div className="grid md:grid-cols-2 gap-16 items-center">
             <div>
-              <h2 className="font-heading text-3xl font-bold mb-6 text-egyptian-gold">Why Choose Egydise Tours?</h2>
-              <div className="space-y-6">
-                <div className="flex items-start gap-4">
-                  <div className="mt-1">
+              <div className="inline-block mb-6">
+                <Badge className="bg-egyptian-gold/10 border border-egyptian-gold/30 text-egyptian-gold font-bold text-sm px-4 py-2 backdrop-blur-sm">
+                  <Award className="h-4 w-4 inline mr-2" />
+                  Why Choose Us
+                </Badge>
+              </div>
+              <h2 className="font-heading text-4xl md:text-5xl lg:text-6xl font-extrabold mb-8 text-egyptian-gold">Why Choose Egydise Tours?</h2>
+              <div className="space-y-8">
+                <div className="flex items-start gap-4 p-4 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 hover:border-egyptian-gold/30 transition-all duration-300 group">
+                  <div className="mt-1 h-10 w-10 rounded-full bg-egyptian-gold/10 flex items-center justify-center flex-shrink-0 group-hover:bg-egyptian-gold/20 transition-colors">
                     <CheckCircle className="h-6 w-6 text-egyptian-gold" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-bold mb-2">Expert Egyptologists</h3>
-                    <p className="text-white/70">
+                    <h3 className="text-xl md:text-2xl font-bold mb-3 text-white group-hover:text-egyptian-gold transition-colors">Expert Egyptologists</h3>
+                    <p className="text-white/80 leading-relaxed">
                       Our guides are certified Egyptologists with deep knowledge of Egyptian history, archaeology, and
                       culture, ensuring you receive accurate and fascinating insights.
                     </p>
                   </div>
                 </div>
 
-                <div className="flex items-start gap-4">
-                  <div className="mt-1">
+                <div className="flex items-start gap-4 p-4 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 hover:border-egyptian-gold/30 transition-all duration-300 group">
+                  <div className="mt-1 h-10 w-10 rounded-full bg-egyptian-gold/10 flex items-center justify-center flex-shrink-0 group-hover:bg-egyptian-gold/20 transition-colors">
                     <CheckCircle className="h-6 w-6 text-egyptian-gold" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-bold mb-2">Personalized Experiences</h3>
-                    <p className="text-white/70">
+                    <h3 className="text-xl md:text-2xl font-bold mb-3 text-white group-hover:text-egyptian-gold transition-colors">Personalized Experiences</h3>
+                    <p className="text-white/80 leading-relaxed">
                       We tailor each tour to your interests, ensuring you experience Egypt your way, whether you're
                       fascinated by ancient history, interested in local culture, or seeking adventure.
                     </p>
                   </div>
                 </div>
 
-                <div className="flex items-start gap-4">
-                  <div className="mt-1">
+                <div className="flex items-start gap-4 p-4 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 hover:border-egyptian-gold/30 transition-all duration-300 group">
+                  <div className="mt-1 h-10 w-10 rounded-full bg-egyptian-gold/10 flex items-center justify-center flex-shrink-0 group-hover:bg-egyptian-gold/20 transition-colors">
                     <CheckCircle className="h-6 w-6 text-egyptian-gold" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-bold mb-2">Exceptional Service</h3>
-                    <p className="text-white/70">
+                    <h3 className="text-xl md:text-2xl font-bold mb-3 text-white group-hover:text-egyptian-gold transition-colors">Exceptional Service</h3>
+                    <p className="text-white/80 leading-relaxed">
                       From your first inquiry to your return home, our dedicated team provides attentive service,
                       addressing your needs and ensuring a smooth, enjoyable journey.
                     </p>
                   </div>
                 </div>
 
-                <div className="flex items-start gap-4">
-                  <div className="mt-1">
+                <div className="flex items-start gap-4 p-4 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 hover:border-egyptian-gold/30 transition-all duration-300 group">
+                  <div className="mt-1 h-10 w-10 rounded-full bg-egyptian-gold/10 flex items-center justify-center flex-shrink-0 group-hover:bg-egyptian-gold/20 transition-colors">
                     <CheckCircle className="h-6 w-6 text-egyptian-gold" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-bold mb-2">Quality & Value</h3>
-                    <p className="text-white/70">
+                    <h3 className="text-xl md:text-2xl font-bold mb-3 text-white group-hover:text-egyptian-gold transition-colors">Quality & Value</h3>
+                    <p className="text-white/80 leading-relaxed">
                       We never compromise on quality, selecting the best accommodations, transportation, and experiences
                       while offering competitive prices and excellent value.
                     </p>
@@ -351,33 +416,45 @@ export default function AboutPage() {
                 </div>
               </div>
 
-              <div className="mt-8 flex items-center gap-4">
-                <div className="flex">
-                  {[1, 2, 3, 4, 5].map((_, i) => (
-                    <Star key={i} className="h-6 w-6 text-egyptian-gold fill-egyptian-gold" />
-                  ))}
-                </div>
-                <div>
-                  <span className="font-bold text-xl">4.9/5</span>
-                  <span className="text-white/70 ml-2">based on 1,200+ reviews</span>
+              <div className="mt-10 p-6 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10">
+                <div className="flex items-center gap-6">
+                  <div className="flex">
+                    {[1, 2, 3, 4, 5].map((_, i) => (
+                      <Star key={i} className="h-7 w-7 text-egyptian-gold fill-egyptian-gold" />
+                    ))}
+                  </div>
+                  <div>
+                    <div className="font-bold text-3xl text-egyptian-gold">4.9/5</div>
+                    <div className="text-white/80 text-sm">1,200+ reviews</div>
+                  </div>
                 </div>
               </div>
             </div>
 
-            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-8 border border-white/20">
-              <h3 className="text-2xl font-bold mb-6 text-center">Ready to Experience Egypt?</h3>
-              <p className="text-white/70 text-center mb-8">
-                Contact us today to start planning your perfect Egyptian adventure. Our team is ready to create a
-                customized itinerary that matches your interests, schedule, and budget.
-              </p>
+            <div className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-md rounded-2xl p-10 border-2 border-white/20 shadow-2xl hover:border-egyptian-gold/40 transition-all duration-300">
+              <div className="text-center mb-8">
+                <div className="inline-block mb-4">
+                  <Badge className="bg-egyptian-gold/20 border border-egyptian-gold/30 text-egyptian-gold font-bold text-sm px-4 py-2">
+                    Start Your Journey
+                  </Badge>
+                </div>
+                <h3 className="text-3xl md:text-4xl font-bold mb-4 text-white">Ready to Experience Egypt?</h3>
+                <p className="text-white/80 text-lg leading-relaxed">
+                  Contact us today to start planning your perfect Egyptian adventure. Our team is ready to create a
+                  customized itinerary that matches your interests, schedule, and budget.
+                </p>
+              </div>
               <div className="flex flex-col gap-4">
-                <Button asChild className="bg-egyptian-gold hover:bg-egyptian-gold-dark text-black">
-                  <Link href="/contact">Contact Us</Link>
+                <Button asChild size="lg" className="bg-gradient-to-r from-egyptian-gold to-egyptian-gold-dark hover:from-egyptian-gold-dark hover:to-egyptian-gold text-black font-bold text-lg px-10 py-7 shadow-xl hover:shadow-2xl transition-all duration-300 group">
+                  <Link href="/contact" className="inline-flex items-center gap-2">
+                    Contact Us
+                    <ChevronRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                  </Link>
                 </Button>
-                <Button asChild variant="outline" className="border-white/30 text-white hover:bg-white/10">
-                  <Link href="/tours">
+                <Button asChild variant="outline" size="lg" className="border-2 border-white/30 text-white hover:bg-white hover:text-[#0c1e35] font-semibold text-lg px-10 py-7 transition-all duration-300 backdrop-blur-sm">
+                  <Link href="/tours" className="inline-flex items-center gap-2">
                     Browse Our Tours
-                    <ChevronRight className="ml-2 h-4 w-4" />
+                    <ChevronRight className="h-5 w-5" />
                   </Link>
                 </Button>
               </div>

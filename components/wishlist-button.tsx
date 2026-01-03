@@ -4,13 +4,14 @@ import { Heart } from "lucide-react"
 import { useWishlist } from "@/hooks/use-wishlist"
 import type { Tour } from "@/lib/data/tours"
 import { useEffect, useState } from "react"
+import { toast } from "@/hooks/use-toast"
 
 interface WishlistButtonProps {
   tour: Tour
 }
 
 export function WishlistButton({ tour }: WishlistButtonProps) {
-  const { toggleWishlist, isInWishlist, isLoaded } = useWishlist()
+  const { toggleWishlist, isInWishlist, isLoaded, isAuthenticated } = useWishlist()
   const [isWishlisted, setIsWishlisted] = useState(false)
 
   useEffect(() => {
@@ -19,10 +20,19 @@ export function WishlistButton({ tour }: WishlistButtonProps) {
     }
   }, [isLoaded, isInWishlist, tour.id])
 
-  const handleClick = (e: React.MouseEvent) => {
+  const handleClick = async (e: React.MouseEvent) => {
     e.preventDefault()
     e.stopPropagation()
-    toggleWishlist(tour)
+
+    // Show helpful message for non-authenticated users on first add
+    if (!isAuthenticated && !isWishlisted) {
+      toast({
+        title: "Wishlist saved locally",
+        description: "Sign in to save your wishlist across devices and sync with your account.",
+      })
+    }
+
+    await toggleWishlist(tour)
   }
 
   return (

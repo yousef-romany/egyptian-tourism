@@ -74,6 +74,19 @@ export default function BookNowPage() {
 
       console.log("Booking created:", booking)
 
+      // Track booking completion in Google Analytics
+      if (typeof window !== 'undefined' && window.gtag) {
+        window.gtag('event', 'booking_completed', {
+          tour_name: data.tourType,
+          number_of_travelers: parseInt(data.numberOfTravelers),
+          travel_date: data.travelDate,
+          country: data.country,
+          booking_reference: booking.bookingReference || `EGY-${booking.id}`,
+          value: 0, // Will be updated when price is calculated
+          currency: 'USD'
+        })
+      }
+
       // Store booking data in sessionStorage for confirmation page
       sessionStorage.setItem('bookingData', JSON.stringify({
         ...data,
@@ -95,28 +108,39 @@ export default function BookNowPage() {
 
   return (
     <div className="flex min-h-screen flex-col">
-      {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-[#0c1e35] via-[#1a3a5f] to-[#0c1e35] text-white py-20 md:py-28 lg:py-36">
+      {/* Enhanced Hero Section */}
+      <section className="relative bg-gradient-to-br from-[#0c1e35] via-[#1a3a5f] to-[#0c1e35] text-white py-24 md:py-32 lg:py-40 overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,_rgba(212,175,55,0.15),transparent_70%)]"></div>
 
+        {/* Decorative elements */}
+        <div className="absolute top-10 right-10 w-40 h-40 border border-egyptian-gold/20 rounded-full animate-pulse"></div>
+        <div className="absolute bottom-20 left-10 w-32 h-32 bg-egyptian-gold/10 rounded-full blur-3xl animate-pulse delay-700"></div>
+        <div className="absolute top-1/2 left-1/3 w-64 h-64 bg-egyptian-gold/5 rounded-full blur-3xl"></div>
+
         <div className="container relative z-10">
-          <div className="max-w-3xl mx-auto text-center">
-            <Badge className="bg-gradient-to-r from-egyptian-gold to-egyptian-gold-dark text-black font-bold text-base px-4 py-1.5 mb-6 shadow-lg">
+          <div className="max-w-4xl mx-auto text-center">
+            <Badge className="bg-gradient-to-r from-egyptian-gold to-egyptian-gold-dark text-black font-bold text-base px-5 py-2.5 mb-8 shadow-lg">
               Book Your Adventure
             </Badge>
-            <h1 className="font-heading text-5xl md:text-6xl lg:text-7xl font-extrabold mb-6 bg-gradient-to-r from-white via-egyptian-gold to-white bg-clip-text text-transparent">
+            <h1 className="font-heading text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-extrabold mb-8 bg-gradient-to-r from-white via-egyptian-gold to-white bg-clip-text text-transparent leading-tight">
               Start Your Egyptian Journey
             </h1>
-            <p className="text-xl md:text-2xl text-white/90 mb-8 leading-relaxed">
+            <p className="text-xl md:text-2xl lg:text-3xl text-white/90 mb-10 leading-relaxed">
               Fill out the form below and our team will contact you within 24 hours to customize your perfect Egyptian adventure.
             </p>
-            <EgyptianDivider className="mx-auto my-8 bg-egyptian-gold/70" />
+            <EgyptianDivider className="mx-auto my-10 bg-egyptian-gold/70" />
           </div>
         </div>
       </section>
 
-      {/* Booking Form Section */}
-      <section className="container py-16 md:py-20 lg:py-24">
+      {/* Enhanced Booking Form Section */}
+      <section className="container py-20 md:py-28 relative overflow-hidden">
+        {/* Background decoration */}
+        <div className="absolute inset-0 -z-10">
+          <div className="absolute top-10 left-1/4 w-96 h-96 bg-egyptian-gold/5 rounded-full blur-3xl" />
+          <div className="absolute bottom-10 right-1/4 w-96 h-96 bg-egyptian-gold/5 rounded-full blur-3xl" />
+        </div>
+
         <div className="grid lg:grid-cols-3 gap-12">
           {/* Form */}
           <div className="lg:col-span-2">
@@ -331,55 +355,55 @@ export default function BookNowPage() {
           {/* Sidebar */}
           <div className="lg:col-span-1">
             <div className="sticky top-24 space-y-6">
-              {/* Why Book With Us */}
-              <Card className="border-2 border-egyptian-gold/30 shadow-xl">
+              {/* Enhanced Why Book With Us */}
+              <Card className="border-2 border-egyptian-gold/30 shadow-xl hover:shadow-2xl transition-all duration-300 hover:border-egyptian-gold">
                 <CardContent className="p-8">
-                  <h3 className="text-2xl font-bold mb-6">Why Book With Us?</h3>
+                  <h3 className="text-2xl md:text-3xl font-bold mb-6">Why Book With Us?</h3>
                   <EgyptianDivider className="my-4" />
                   <div className="space-y-6">
-                    <div className="flex gap-4">
-                      <div className="h-12 w-12 rounded-xl bg-egyptian-gold/10 flex items-center justify-center flex-shrink-0">
+                    <div className="flex gap-4 p-3 rounded-xl hover:bg-egyptian-gold/5 transition-all duration-300 group">
+                      <div className="h-12 w-12 rounded-xl bg-egyptian-gold/10 flex items-center justify-center flex-shrink-0 group-hover:bg-egyptian-gold/20 group-hover:scale-110 transition-all duration-300">
                         <CheckCircle className="h-6 w-6 text-egyptian-gold" />
                       </div>
                       <div>
-                        <h4 className="font-bold mb-1">Best Price Guarantee</h4>
-                        <p className="text-sm text-muted-foreground">
+                        <h4 className="font-bold mb-1 group-hover:text-egyptian-gold transition-colors">Best Price Guarantee</h4>
+                        <p className="text-sm text-muted-foreground leading-relaxed">
                           We offer the best rates with no hidden fees
                         </p>
                       </div>
                     </div>
 
-                    <div className="flex gap-4">
-                      <div className="h-12 w-12 rounded-xl bg-egyptian-gold/10 flex items-center justify-center flex-shrink-0">
+                    <div className="flex gap-4 p-3 rounded-xl hover:bg-egyptian-gold/5 transition-all duration-300 group">
+                      <div className="h-12 w-12 rounded-xl bg-egyptian-gold/10 flex items-center justify-center flex-shrink-0 group-hover:bg-egyptian-gold/20 group-hover:scale-110 transition-all duration-300">
                         <Clock className="h-6 w-6 text-egyptian-gold" />
                       </div>
                       <div>
-                        <h4 className="font-bold mb-1">24/7 Support</h4>
-                        <p className="text-sm text-muted-foreground">
+                        <h4 className="font-bold mb-1 group-hover:text-egyptian-gold transition-colors">24/7 Support</h4>
+                        <p className="text-sm text-muted-foreground leading-relaxed">
                           Our team is available around the clock
                         </p>
                       </div>
                     </div>
 
-                    <div className="flex gap-4">
-                      <div className="h-12 w-12 rounded-xl bg-egyptian-gold/10 flex items-center justify-center flex-shrink-0">
+                    <div className="flex gap-4 p-3 rounded-xl hover:bg-egyptian-gold/5 transition-all duration-300 group">
+                      <div className="h-12 w-12 rounded-xl bg-egyptian-gold/10 flex items-center justify-center flex-shrink-0 group-hover:bg-egyptian-gold/20 group-hover:scale-110 transition-all duration-300">
                         <Users className="h-6 w-6 text-egyptian-gold" />
                       </div>
                       <div>
-                        <h4 className="font-bold mb-1">Expert Guides</h4>
-                        <p className="text-sm text-muted-foreground">
+                        <h4 className="font-bold mb-1 group-hover:text-egyptian-gold transition-colors">Expert Guides</h4>
+                        <p className="text-sm text-muted-foreground leading-relaxed">
                           All tours led by certified Egyptologists
                         </p>
                       </div>
                     </div>
 
-                    <div className="flex gap-4">
-                      <div className="h-12 w-12 rounded-xl bg-egyptian-gold/10 flex items-center justify-center flex-shrink-0">
+                    <div className="flex gap-4 p-3 rounded-xl hover:bg-egyptian-gold/5 transition-all duration-300 group">
+                      <div className="h-12 w-12 rounded-xl bg-egyptian-gold/10 flex items-center justify-center flex-shrink-0 group-hover:bg-egyptian-gold/20 group-hover:scale-110 transition-all duration-300">
                         <Calendar className="h-6 w-6 text-egyptian-gold" />
                       </div>
                       <div>
-                        <h4 className="font-bold mb-1">Flexible Cancellation</h4>
-                        <p className="text-sm text-muted-foreground">
+                        <h4 className="font-bold mb-1 group-hover:text-egyptian-gold transition-colors">Flexible Cancellation</h4>
+                        <p className="text-sm text-muted-foreground leading-relaxed">
                           Free cancellation up to 48 hours before
                         </p>
                       </div>
@@ -388,30 +412,36 @@ export default function BookNowPage() {
                 </CardContent>
               </Card>
 
-              {/* Contact Info */}
-              <Card className="border-2 border-egyptian-gold/30 shadow-xl bg-gradient-to-br from-egyptian-gold/5 to-transparent">
+              {/* Enhanced Contact Info */}
+              <Card className="border-2 border-egyptian-gold/30 shadow-xl hover:shadow-2xl transition-all duration-300 hover:border-egyptian-gold bg-gradient-to-br from-egyptian-gold/5 to-transparent">
                 <CardContent className="p-8">
-                  <h3 className="text-2xl font-bold mb-6">Need Help?</h3>
+                  <h3 className="text-2xl md:text-3xl font-bold mb-6">Need Help?</h3>
                   <EgyptianDivider className="my-4" />
-                  <div className="space-y-4">
-                    <div className="flex items-center gap-3">
-                      <Phone className="h-5 w-5 text-egyptian-gold" />
+                  <div className="space-y-5">
+                    <div className="flex items-center gap-4 p-3 rounded-xl hover:bg-egyptian-gold/10 transition-all duration-300 group">
+                      <div className="h-10 w-10 rounded-full bg-egyptian-gold/10 flex items-center justify-center group-hover:bg-egyptian-gold/20 transition-colors">
+                        <Phone className="h-5 w-5 text-egyptian-gold" />
+                      </div>
                       <div>
-                        <p className="text-sm font-medium">Call Us</p>
+                        <p className="text-sm font-semibold group-hover:text-egyptian-gold transition-colors">Call Us</p>
                         <p className="text-sm text-muted-foreground">+20 123 456 789</p>
                       </div>
                     </div>
-                    <div className="flex items-center gap-3">
-                      <Mail className="h-5 w-5 text-egyptian-gold" />
+                    <div className="flex items-center gap-4 p-3 rounded-xl hover:bg-egyptian-gold/10 transition-all duration-300 group">
+                      <div className="h-10 w-10 rounded-full bg-egyptian-gold/10 flex items-center justify-center group-hover:bg-egyptian-gold/20 transition-colors">
+                        <Mail className="h-5 w-5 text-egyptian-gold" />
+                      </div>
                       <div>
-                        <p className="text-sm font-medium">Email Us</p>
+                        <p className="text-sm font-semibold group-hover:text-egyptian-gold transition-colors">Email Us</p>
                         <p className="text-sm text-muted-foreground">info@egydisetours.com</p>
                       </div>
                     </div>
-                    <div className="flex items-center gap-3">
-                      <Clock className="h-5 w-5 text-egyptian-gold" />
+                    <div className="flex items-center gap-4 p-3 rounded-xl hover:bg-egyptian-gold/10 transition-all duration-300 group">
+                      <div className="h-10 w-10 rounded-full bg-egyptian-gold/10 flex items-center justify-center group-hover:bg-egyptian-gold/20 transition-colors">
+                        <Clock className="h-5 w-5 text-egyptian-gold" />
+                      </div>
                       <div>
-                        <p className="text-sm font-medium">Working Hours</p>
+                        <p className="text-sm font-semibold group-hover:text-egyptian-gold transition-colors">Working Hours</p>
                         <p className="text-sm text-muted-foreground">24/7 Available</p>
                       </div>
                     </div>

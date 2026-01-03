@@ -1,0 +1,65 @@
+{
+  "name": "Egydise Tours - Experience the Magic of Egypt",
+  "short_name": "Egydise Tours",
+  "description": "Discover the wonders of Egypt with our award-winning tours. From the majestic pyramids to the serene Nile River.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0c1e35",
+  "theme_color": "#d4af37",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["travel", "tourism", "lifestyle"],
+  "screenshots": [
+    {
+      "src": "/screenshot-mobile.png",
+      "sizes": "750x1334",
+      "type": "image/png",
+      "form_factor": "narrow"
+    },
+    {
+      "src": "/screenshot-desktop.png",
+      "sizes": "1920x1080",
+      "type": "image/png",
+      "form_factor": "wide"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Browse Tours",
+      "short_name": "Tours",
+      "description": "View all available tours",
+      "url": "/tours",
+      "icons": [
+        {
+          "src": "/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Book Now",
+      "short_name": "Book",
+      "description": "Book your Egyptian adventure",
+      "url": "/book-now",
+      "icons": [
+        {
+          "src": "/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ]
+}

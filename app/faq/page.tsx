@@ -154,67 +154,110 @@ export default function FAQPage() {
 
   return (
     <div className="flex min-h-screen flex-col">
-      <section className="relative bg-[#0c1e35] text-white py-20 md:py-28">
+      {/* Enhanced Hero Section */}
+      <section className="relative bg-gradient-to-br from-[#0c1e35] via-[#1a3a5f] to-[#0c1e35] text-white py-24 md:py-32 lg:py-40 overflow-hidden">
         <div className="absolute inset-0 z-0">
           <Image
             src="/placeholder.svg?height=600&width=1600"
             alt="Egyptian landscape"
             fill
-            className="object-cover opacity-30"
+            className="object-cover opacity-20"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[#0c1e35]/90"></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#0c1e35]/50 to-[#0c1e35]/95"></div>
         </div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,_rgba(212,175,55,0.15),transparent_70%)]"></div>
+
+        {/* Decorative elements */}
+        <div className="absolute top-10 right-10 w-40 h-40 border border-egyptian-gold/20 rounded-full animate-pulse"></div>
+        <div className="absolute bottom-20 left-10 w-32 h-32 bg-egyptian-gold/10 rounded-full blur-3xl animate-pulse delay-700"></div>
 
         <div className="container relative z-10">
-          <div className="max-w-2xl">
-            <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold mb-4">Frequently Asked Questions</h1>
-            <p className="text-lg text-white/80 mb-6">
+          <div className="max-w-4xl mx-auto text-center">
+            <div className="inline-block mb-6">
+              <span className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-egyptian-gold/10 border border-egyptian-gold/30 text-egyptian-gold font-bold text-sm backdrop-blur-sm">
+                <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clipRule="evenodd" />
+                </svg>
+                Help Center
+              </span>
+            </div>
+            <h1 className="font-heading text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-extrabold mb-8 bg-gradient-to-r from-white via-egyptian-gold to-white bg-clip-text text-transparent leading-tight">
+              Frequently Asked Questions
+            </h1>
+            <p className="text-xl md:text-2xl lg:text-3xl text-white/90 mb-10 leading-relaxed max-w-3xl mx-auto">
               Find answers to common questions about traveling in Egypt and our tours.
             </p>
-            <EgyptianDivider className="my-6 bg-white/50" />
+            <EgyptianDivider className="my-10 bg-egyptian-gold/70 mx-auto" />
           </div>
         </div>
       </section>
 
-      <section className="container py-12">
-        <div className="max-w-3xl mx-auto mb-12">
-          <div className="relative">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+      {/* Enhanced FAQ Content Section */}
+      <section className="container py-20 md:py-28 relative overflow-hidden">
+        {/* Background decoration */}
+        <div className="absolute inset-0 -z-10">
+          <div className="absolute top-10 left-1/4 w-96 h-96 bg-egyptian-gold/5 rounded-full blur-3xl" />
+          <div className="absolute bottom-10 right-1/4 w-96 h-96 bg-egyptian-gold/5 rounded-full blur-3xl" />
+        </div>
+
+        <div className="max-w-3xl mx-auto mb-16">
+          <div className="relative group">
+            <Search className="absolute left-5 top-1/2 -translate-y-1/2 h-6 w-6 text-egyptian-gold group-focus-within:scale-110 transition-transform" />
             <input
               type="text"
               placeholder="Search for questions..."
-              className="w-full h-12 pl-12 pr-4 rounded-md border border-egyptian-gold/30 focus:border-egyptian-gold focus:outline-none"
+              className="w-full h-16 pl-16 pr-6 rounded-2xl border-2 border-egyptian-gold/30 focus:border-egyptian-gold focus:outline-none bg-background shadow-lg focus:shadow-xl transition-all text-lg"
             />
           </div>
         </div>
 
-        <Tabs defaultValue="general" className="max-w-4xl mx-auto">
-          <div className="flex justify-center mb-8 overflow-x-auto pb-2">
-            <TabsList className="grid grid-cols-5 w-full">
-              <TabsTrigger value="general">General</TabsTrigger>
-              <TabsTrigger value="booking">Booking</TabsTrigger>
-              <TabsTrigger value="travel">Travel</TabsTrigger>
-              <TabsTrigger value="tours">Tours</TabsTrigger>
-              <TabsTrigger value="practical">Practical</TabsTrigger>
+        <Tabs defaultValue="general" className="max-w-5xl mx-auto">
+          <div className="flex justify-center mb-12 overflow-x-auto pb-2">
+            <TabsList className="inline-flex h-auto p-2 bg-muted rounded-2xl gap-2">
+              <TabsTrigger value="general" className="data-[state=active]:bg-egyptian-gold data-[state=active]:text-black font-bold px-6 py-3 rounded-xl">
+                General
+              </TabsTrigger>
+              <TabsTrigger value="booking" className="data-[state=active]:bg-egyptian-gold data-[state=active]:text-black font-bold px-6 py-3 rounded-xl">
+                Booking
+              </TabsTrigger>
+              <TabsTrigger value="travel" className="data-[state=active]:bg-egyptian-gold data-[state=active]:text-black font-bold px-6 py-3 rounded-xl">
+                Travel
+              </TabsTrigger>
+              <TabsTrigger value="tours" className="data-[state=active]:bg-egyptian-gold data-[state=active]:text-black font-bold px-6 py-3 rounded-xl">
+                Tours
+              </TabsTrigger>
+              <TabsTrigger value="practical" className="data-[state=active]:bg-egyptian-gold data-[state=active]:text-black font-bold px-6 py-3 rounded-xl">
+                Practical
+              </TabsTrigger>
             </TabsList>
           </div>
 
           {Object.entries(faqCategories).map(([category, questions]) => (
             <TabsContent key={category} value={category}>
-              <Accordion type="single" collapsible className="space-y-4">
+              <Accordion type="single" collapsible className="space-y-5">
                 {questions.map((faq, index) => (
                   <AccordionItem
                     key={index}
                     value={`item-${index}`}
                     className="border-0"
                   >
-                    <Card className="border-egyptian-gold/20 hover:border-egyptian-gold/40 transition-colors">
+                    <Card className="border-2 border-egyptian-gold/20 hover:border-egyptian-gold hover:shadow-2xl transition-all duration-300 group overflow-hidden">
                       <CardContent className="p-0">
-                        <AccordionTrigger className="px-6 py-5 hover:no-underline hover:bg-egyptian-gold/5 transition-colors rounded-t-lg [&[data-state=open]]:bg-egyptian-gold/5">
-                          <h3 className="font-semibold text-lg text-left">{faq.question}</h3>
+                        <AccordionTrigger className="px-8 py-6 hover:no-underline hover:bg-egyptian-gold/10 transition-colors [&[data-state=open]]:bg-egyptian-gold/10 [&[data-state=open]]:border-b [&[data-state=open]]:border-egyptian-gold/20">
+                          <div className="flex items-start gap-4 flex-1">
+                            <div className="h-10 w-10 rounded-full bg-egyptian-gold/10 flex items-center justify-center flex-shrink-0 mt-1 group-hover:bg-egyptian-gold/20 transition-colors">
+                              <svg className="h-5 w-5 text-egyptian-gold" fill="currentColor" viewBox="0 0 20 20">
+                                <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clipRule="evenodd" />
+                              </svg>
+                            </div>
+                            <h3 className="font-bold text-lg md:text-xl text-left pr-4">{faq.question}</h3>
+                          </div>
                         </AccordionTrigger>
-                        <AccordionContent className="px-6 pb-5">
-                          <p className="text-muted-foreground leading-relaxed">{faq.answer}</p>
+                        <AccordionContent className="px-8 pb-6 pt-4">
+                          <div className="flex gap-4">
+                            <div className="w-10 flex-shrink-0"></div>
+                            <p className="text-muted-foreground leading-relaxed text-base md:text-lg">{faq.answer}</p>
+                          </div>
                         </AccordionContent>
                       </CardContent>
                     </Card>
@@ -226,22 +269,46 @@ export default function FAQPage() {
         </Tabs>
       </section>
 
-      <section className="bg-muted py-16">
-        <div className="container">
-          <div className="max-w-3xl mx-auto text-center">
-            <h2 className="text-3xl font-heading font-bold mb-4">Still Have Questions?</h2>
-            <p className="text-muted-foreground mb-8">
+      {/* Enhanced "Still Have Questions?" Section */}
+      <section className="bg-gradient-to-br from-[#0c1e35] via-[#1a3a5f] to-[#0c1e35] text-white py-20 md:py-28 relative overflow-hidden">
+        {/* Decorative elements */}
+        <div className="absolute inset-0 opacity-10">
+          <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+            <pattern id="pyramids-faq" patternUnits="userSpaceOnUse" width="20" height="20">
+              <path d="M0,20 L10,0 L20,20 Z" fill="#fff" />
+            </pattern>
+            <rect width="100%" height="100%" fill="url(#pyramids-faq)" />
+          </svg>
+        </div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,_rgba(212,175,55,0.15),transparent_60%)]"></div>
+
+        <div className="container relative z-10">
+          <div className="max-w-4xl mx-auto text-center">
+            <div className="inline-block mb-6">
+              <span className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-egyptian-gold/10 border border-egyptian-gold/30 text-egyptian-gold font-bold text-sm backdrop-blur-sm">
+                <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+                </svg>
+                Need Help?
+              </span>
+            </div>
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-heading font-extrabold mb-6">Still Have Questions?</h2>
+            <p className="text-xl text-white/90 mb-12 max-w-2xl mx-auto leading-relaxed">
               If you couldn't find the answer to your question, our team is here to help. Contact us and we'll get back
               to you as soon as possible.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button asChild className="bg-egyptian-gold hover:bg-egyptian-gold-dark text-black">
-                <Link href="/contact">Contact Us</Link>
+            <div className="flex flex-col sm:flex-row gap-6 justify-center">
+              <Button asChild size="lg" className="bg-gradient-to-r from-egyptian-gold to-egyptian-gold-dark hover:from-egyptian-gold-dark hover:to-egyptian-gold text-black font-bold text-lg px-12 py-8 shadow-2xl hover:shadow-egyptian-gold/70 transition-all duration-300 group">
+                <Link href="/contact" className="inline-flex items-center gap-2">
+                  Contact Us
+                  <ChevronRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                </Link>
               </Button>
               <Button
                 asChild
                 variant="outline"
-                className="border-egyptian-gold text-egyptian-gold hover:bg-egyptian-gold/10"
+                size="lg"
+                className="bg-transparent border-2 border-white/70 text-white hover:bg-white hover:text-[#0c1e35] font-semibold text-lg px-12 py-8 transition-all duration-300 backdrop-blur-sm"
               >
                 <Link href="mailto:info@egydise-tours.com">Email Us</Link>
               </Button>
@@ -250,9 +317,16 @@ export default function FAQPage() {
         </div>
       </section>
 
-      <section className="container py-16">
+      {/* Enhanced Contact Cards Section */}
+      <section className="container py-20 md:py-28 relative overflow-hidden">
+        {/* Background decoration */}
+        <div className="absolute inset-0 -z-10">
+          <div className="absolute top-10 left-1/3 w-96 h-96 bg-egyptian-gold/5 rounded-full blur-3xl" />
+          <div className="absolute bottom-10 right-1/3 w-96 h-96 bg-egyptian-gold/5 rounded-full blur-3xl" />
+        </div>
+
         <div className="grid md:grid-cols-3 gap-8">
-          <Card className="border-egyptian-gold/20">
+          <Card className="border-2 border-egyptian-gold/20 hover:border-egyptian-gold hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 group">
             <CardContent className="p-6">
               <div className="h-12 w-12 rounded-full bg-egyptian-gold/10 flex items-center justify-center mb-4">
                 <svg
@@ -284,9 +358,9 @@ export default function FAQPage() {
             </CardContent>
           </Card>
 
-          <Card className="border-egyptian-gold/20">
+          <Card className="border-2 border-egyptian-gold/20 hover:border-egyptian-gold hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 group">
             <CardContent className="p-6">
-              <div className="h-12 w-12 rounded-full bg-egyptian-gold/10 flex items-center justify-center mb-4">
+              <div className="h-12 w-12 rounded-full bg-egyptian-gold/10 flex items-center justify-center mb-4 group-hover:bg-egyptian-gold/20 transition-colors">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="24"
@@ -316,9 +390,9 @@ export default function FAQPage() {
             </CardContent>
           </Card>
 
-          <Card className="border-egyptian-gold/20">
+          <Card className="border-2 border-egyptian-gold/20 hover:border-egyptian-gold hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 group">
             <CardContent className="p-6">
-              <div className="h-12 w-12 rounded-full bg-egyptian-gold/10 flex items-center justify-center mb-4">
+              <div className="h-12 w-12 rounded-full bg-egyptian-gold/10 flex items-center justify-center mb-4 group-hover:bg-egyptian-gold/20 transition-colors">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="24"

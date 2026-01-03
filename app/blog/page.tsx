@@ -21,36 +21,51 @@ export default async function BlogPage() {
 
   return (
     <div className="flex min-h-screen flex-col">
-      {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-[#0c1e35] via-[#1a3a5f] to-[#0c1e35] text-white py-20 md:py-28">
+      {/* Enhanced Hero Section */}
+      <section className="relative bg-gradient-to-br from-[#0c1e35] via-[#1a3a5f] to-[#0c1e35] text-white py-24 md:py-32 lg:py-40 overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,_rgba(212,175,55,0.15),transparent_70%)]"></div>
 
+        {/* Decorative elements */}
+        <div className="absolute top-10 right-10 w-40 h-40 border border-egyptian-gold/20 rounded-full animate-pulse"></div>
+        <div className="absolute bottom-20 left-10 w-32 h-32 bg-egyptian-gold/10 rounded-full blur-3xl animate-pulse delay-700"></div>
+        <div className="absolute top-1/2 left-1/4 w-64 h-64 bg-egyptian-gold/5 rounded-full blur-3xl"></div>
+
         <div className="container relative z-10">
-          <div className="max-w-3xl mx-auto text-center">
-            <Badge className="bg-gradient-to-r from-egyptian-gold to-egyptian-gold-dark text-black font-bold text-base px-4 py-1.5 mb-6 shadow-lg">
+          <div className="max-w-4xl mx-auto text-center">
+            <Badge className="bg-gradient-to-r from-egyptian-gold to-egyptian-gold-dark text-black font-bold text-base px-5 py-2.5 mb-8 shadow-lg">
               Travel Insights
             </Badge>
-            <h1 className="font-heading text-5xl md:text-6xl lg:text-7xl font-extrabold mb-6 bg-gradient-to-r from-white via-egyptian-gold to-white bg-clip-text text-transparent">
+            <h1 className="font-heading text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-extrabold mb-8 bg-gradient-to-r from-white via-egyptian-gold to-white bg-clip-text text-transparent leading-tight">
               Egypt Travel Blog
             </h1>
-            <p className="text-xl md:text-2xl text-white/90 mb-8 leading-relaxed">
+            <p className="text-xl md:text-2xl lg:text-3xl text-white/90 mb-10 leading-relaxed">
               Expert guides, travel tips, and cultural insights to help you make the most of your Egyptian adventure
             </p>
-            <EgyptianDivider className="mx-auto my-8 bg-egyptian-gold/70" />
+            <EgyptianDivider className="mx-auto my-10 bg-egyptian-gold/70" />
           </div>
         </div>
       </section>
 
-      {/* Featured Post */}
+      {/* Enhanced Featured Post */}
       {featuredPost && (
-        <section className="container py-16 md:py-20">
-          <div className="mb-8">
-            <h2 className="text-3xl font-heading font-bold mb-2">Featured Article</h2>
-            <p className="text-muted-foreground">Our top pick for essential reading</p>
+        <section className="container py-20 md:py-28 relative overflow-hidden">
+          {/* Background decoration */}
+          <div className="absolute inset-0 -z-10">
+            <div className="absolute top-10 left-1/4 w-96 h-96 bg-egyptian-gold/5 rounded-full blur-3xl" />
+            <div className="absolute bottom-10 right-1/4 w-96 h-96 bg-egyptian-gold/5 rounded-full blur-3xl" />
+          </div>
+
+          <div className="mb-12">
+            <Badge className="bg-egyptian-gold/10 border border-egyptian-gold/20 text-egyptian-gold font-bold text-sm px-4 py-2 mb-4">
+              Featured
+            </Badge>
+            <h2 className="text-4xl md:text-5xl font-heading font-extrabold mb-3">Featured Article</h2>
+            <p className="text-muted-foreground text-lg">Our top pick for essential reading</p>
+            <EgyptianDivider className="my-6" />
           </div>
 
           <Link href={`/blog/${featuredPost.slug}`} className="group">
-            <Card className="overflow-hidden border-egyptian-gold/30 hover:border-egyptian-gold transition-all duration-300 hover:shadow-2xl">
+            <Card className="overflow-hidden border-2 border-egyptian-gold/30 hover:border-egyptian-gold transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
               <div className="grid md:grid-cols-2 gap-0">
                 <div className="relative h-64 md:h-full">
                   <Image
@@ -98,13 +113,22 @@ export default async function BlogPage() {
         </section>
       )}
 
-      {/* Category Filter */}
-      <section className="bg-muted py-8">
-        <div className="container">
-          <div className="flex flex-wrap gap-3 justify-center">
+      {/* Enhanced Category Filter */}
+      <section className="bg-muted py-12 md:py-16 relative overflow-hidden">
+        <div className="absolute inset-0 opacity-5 pointer-events-none">
+          <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+            <pattern id="blog-pattern" patternUnits="userSpaceOnUse" width="20" height="20">
+              <path d="M0,0 L20,20 M20,0 L0,20" stroke="#d4af37" strokeWidth="0.5" />
+            </pattern>
+            <rect width="100%" height="100%" fill="url(#blog-pattern)" />
+          </svg>
+        </div>
+
+        <div className="container relative z-10">
+          <div className="flex flex-wrap gap-4 justify-center">
             <Badge
               variant="outline"
-              className="px-6 py-2 text-base cursor-pointer border-egyptian-gold bg-egyptian-gold text-black hover:bg-egyptian-gold-dark transition-colors"
+              className="px-8 py-3 text-base font-bold cursor-pointer border-2 border-egyptian-gold bg-egyptian-gold text-black hover:bg-egyptian-gold-dark transition-all duration-300 shadow-lg"
             >
               All Posts ({posts.length})
             </Badge>
@@ -112,7 +136,7 @@ export default async function BlogPage() {
               <Badge
                 key={category}
                 variant="outline"
-                className="px-6 py-2 text-base cursor-pointer border-egyptian-gold/50 hover:border-egyptian-gold hover:bg-egyptian-gold/10 transition-colors"
+                className="px-8 py-3 text-base font-semibold cursor-pointer border-2 border-egyptian-gold/50 hover:border-egyptian-gold hover:bg-egyptian-gold hover:text-black transition-all duration-300"
               >
                 {category}
               </Badge>
@@ -121,17 +145,27 @@ export default async function BlogPage() {
         </div>
       </section>
 
-      {/* Recent Posts Grid */}
-      <section className="container py-16 md:py-20">
-        <div className="mb-12">
-          <h2 className="text-3xl font-heading font-bold mb-2">Latest Articles</h2>
-          <p className="text-muted-foreground">Stay updated with our newest travel insights and guides</p>
+      {/* Enhanced Recent Posts Grid */}
+      <section className="container py-20 md:py-28 relative overflow-hidden">
+        {/* Background decoration */}
+        <div className="absolute inset-0 -z-10">
+          <div className="absolute top-10 right-1/3 w-96 h-96 bg-egyptian-gold/5 rounded-full blur-3xl" />
+          <div className="absolute bottom-10 left-1/3 w-96 h-96 bg-egyptian-gold/5 rounded-full blur-3xl" />
+        </div>
+
+        <div className="mb-16">
+          <Badge className="bg-egyptian-gold/10 border border-egyptian-gold/20 text-egyptian-gold font-bold text-sm px-4 py-2 mb-4">
+            Recent Posts
+          </Badge>
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-heading font-extrabold mb-3">Latest Articles</h2>
+          <p className="text-muted-foreground text-lg">Stay updated with our newest travel insights and guides</p>
+          <EgyptianDivider className="my-6" />
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {recentPosts.map((post) => (
             <Link key={post.id} href={`/blog/${post.slug}`} className="group">
-              <Card className="overflow-hidden h-full border-egyptian-gold/20 hover:border-egyptian-gold transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+              <Card className="overflow-hidden h-full border-2 border-egyptian-gold/20 hover:border-egyptian-gold transition-all duration-300 hover:shadow-2xl hover:-translate-y-2">
                 <div className="relative h-56">
                   <Image
                     src={post.image}

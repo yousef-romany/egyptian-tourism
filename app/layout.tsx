@@ -1,4 +1,5 @@
 import type React from "react"
+import type { Viewport } from "next"
 import "./globals.css";
 import { Inter } from "next/font/google"
 import { ThemeProvider } from "@/components/theme-provider"
@@ -8,6 +9,8 @@ import Footer from "@/components/footer"
 import { OrganizationJsonLd } from "@/components/tour-json-ld"
 import FloatingContactButton from "@/components/floating-contact-button"
 import Breadcrumb from "@/components/breadcrumb"
+import { defaultMetadata } from "@/lib/metadata"
+import { GoogleAnalytics } from '@next/third-parties/google'
 
 const inter = Inter({
   subsets: ["latin"],
@@ -19,11 +22,16 @@ const heading = Inter({
   variable: "--font-heading",
 })
 
-export const metadata = {
-  title: "Egydise Tours - Experience the Magic of Egypt",
-  description:
-    "Discover the wonders of Egypt with our award-winning tours. From the majestic pyramids to the serene Nile River.",
-    generator: 'v0.dev'
+export const metadata = defaultMetadata
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '#ffffff' },
+    { media: '(prefers-color-scheme: dark)', color: '#0c1e35' }
+  ],
 }
 
 export default function RootLayout({
@@ -48,6 +56,11 @@ export default function RootLayout({
             </div>
           </AuthProvider>
         </ThemeProvider>
+
+        {/* Google Analytics */}
+        {process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID && (
+          <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID} />
+        )}
       </body>
     </html>
   )

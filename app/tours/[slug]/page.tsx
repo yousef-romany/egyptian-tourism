@@ -82,9 +82,14 @@ export default async function TourDetailPage({ params }: TourPageProps) {
     <>
       <TourJsonLd tour={tour} />
       <div className="flex min-h-screen flex-col">
-        {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-[#0c1e35] via-[#1a3a5f] to-[#0c1e35] text-white py-12 md:py-16 lg:py-20">
+        {/* Enhanced Hero Section */}
+      <section className="relative bg-gradient-to-br from-[#0c1e35] via-[#1a3a5f] to-[#0c1e35] text-white py-16 md:py-24 lg:py-32 overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,_rgba(212,175,55,0.15),transparent_70%)]"></div>
+
+        {/* Decorative elements */}
+        <div className="absolute top-10 right-10 w-40 h-40 border border-egyptian-gold/20 rounded-full animate-pulse"></div>
+        <div className="absolute bottom-20 left-10 w-32 h-32 bg-egyptian-gold/10 rounded-full blur-3xl animate-pulse delay-700"></div>
+        <div className="absolute top-1/2 left-1/4 w-64 h-64 bg-egyptian-gold/5 rounded-full blur-3xl"></div>
 
         <div className="container relative z-10">
           <nav className="text-sm mb-6">
@@ -107,10 +112,10 @@ export default async function TourDetailPage({ params }: TourPageProps) {
 
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
-              <Badge className="bg-gradient-to-r from-egyptian-gold to-egyptian-gold-dark text-black font-bold text-base px-4 py-1.5 mb-6 shadow-lg">
+              <Badge className="bg-gradient-to-r from-egyptian-gold to-egyptian-gold-dark text-black font-bold text-base px-5 py-2.5 mb-8 shadow-lg">
                 {tour.category}
               </Badge>
-              <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-extrabold mb-6 leading-tight">
+              <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold mb-8 leading-tight bg-gradient-to-r from-white via-egyptian-gold to-white bg-clip-text text-transparent">
                 {tour.title}
               </h1>
               <div className="flex flex-wrap items-center gap-5 mb-8">
@@ -413,15 +418,27 @@ export default async function TourDetailPage({ params }: TourPageProps) {
         </div>
       </section>
 
-      {/* Related Tours */}
+      {/* Enhanced Related Tours Section */}
       {relatedTours.length > 0 && (
-        <section className="bg-muted py-20 md:py-28">
-          <div className="container">
+        <section className="bg-muted py-20 md:py-28 relative overflow-hidden">
+          {/* Background decoration */}
+          <div className="absolute inset-0 -z-10">
+            <div className="absolute top-10 left-1/3 w-96 h-96 bg-egyptian-gold/5 rounded-full blur-3xl" />
+            <div className="absolute bottom-10 right-1/3 w-96 h-96 bg-egyptian-gold/5 rounded-full blur-3xl" />
+          </div>
+
+          <div className="container relative z-10">
             <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-heading font-extrabold mb-6">
+              <div className="inline-block mb-4">
+                <Badge className="bg-egyptian-gold/10 border border-egyptian-gold/20 text-egyptian-gold font-bold text-sm px-4 py-2">
+                  <Star className="h-4 w-4 inline mr-2 fill-egyptian-gold" />
+                  Similar Tours
+                </Badge>
+              </div>
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-heading font-extrabold mb-6">
                 You May Also Like
               </h2>
-              <p className="text-muted-foreground text-lg mb-8">Discover more amazing experiences in Egypt</p>
+              <p className="text-muted-foreground text-lg leading-relaxed mb-8 max-w-2xl mx-auto">Discover more amazing experiences in Egypt</p>
               <EgyptianDivider className="mx-auto" />
             </div>
 
@@ -432,8 +449,13 @@ export default async function TourDetailPage({ params }: TourPageProps) {
             </div>
 
             <div className="text-center mt-12">
-              <Button asChild variant="outline" size="lg" className="border-2 border-egyptian-gold/50 hover:border-egyptian-gold text-egyptian-gold hover:bg-egyptian-gold/10 text-lg px-8 py-6">
-                <Link href="/tours">View All Tours</Link>
+              <Button asChild variant="outline" size="lg" className="border-2 border-egyptian-gold/50 hover:border-egyptian-gold hover:bg-egyptian-gold hover:text-black text-egyptian-gold font-bold text-lg px-10 py-7 transition-all duration-300 shadow-lg hover:shadow-xl group">
+                <Link href="/tours" className="inline-flex items-center gap-2">
+                  View All Tours
+                  <svg className="h-5 w-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </Link>
               </Button>
             </div>
           </div>

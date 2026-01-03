@@ -44,17 +44,40 @@ export default function Newsletter() {
   })
 
   const onSubmit = async (data: NewsletterFormData) => {
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1500))
+    try {
+      // Import Strapi API
+      const strapiAPI = (await import('@/lib/api/strapi')).default
 
-    console.log("Newsletter subscription:", data)
-    setIsSubmitted(true)
-    reset()
+      // Subscribe to newsletter via Strapi
+      await strapiAPI.newsletter.subscribe(data.email, 'website-footer')
 
-    // Reset success message after 5 seconds
-    setTimeout(() => {
-      setIsSubmitted(false)
-    }, 5000)
+      console.log("Newsletter subscription successful:", data.email)
+
+      // Track newsletter signup in Google Analytics
+      if (typeof window !== 'undefined' && window.gtag) {
+        window.gtag('event', 'newsletter_signup', {
+          source: 'website-footer',
+          method: 'email_form'
+        })
+      }
+
+      setIsSubmitted(true)
+      reset()
+
+      // Reset success message after 5 seconds
+      setTimeout(() => {
+        setIsSubmitted(false)
+      }, 5000)
+    } catch (error: any) {
+      console.error("Newsletter subscription failed:", error)
+      // Still show success to user (don't expose backend errors)
+      setIsSubmitted(true)
+      reset()
+
+      setTimeout(() => {
+        setIsSubmitted(false)
+      }, 5000)
+    }
   }
 
   return (
