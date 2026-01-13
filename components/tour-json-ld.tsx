@@ -52,7 +52,7 @@ export function OrganizationJsonLd({ url = "https://egydise-tours.com" }: Organi
     url: url,
     logo: `${url}/logo.png`,
     image: `${url}/placeholder.svg?height=630&width=1200`,
-    telephone: "+20-100-123-4567",
+    telephone: "+20-100-123-4567", // TODO: Update with actual business phone number
     email: "info@egydise-tours.com",
     address: {
       "@type": "PostalAddress",

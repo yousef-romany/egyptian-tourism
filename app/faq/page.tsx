@@ -426,6 +426,27 @@ export default function FAQPage() {
       </section>
 
       <Newsletter />
+
+      {/* FAQPage Structured Data for SEO */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": Object.values(faqCategories)
+              .flat()
+              .map((faq) => ({
+                "@type": "Question",
+                name: faq.question,
+                acceptedAnswer: {
+                  "@type": "Answer",
+                  text: faq.answer,
+                },
+              })),
+          }),
+        }}
+      />
     </div>
   )
 }

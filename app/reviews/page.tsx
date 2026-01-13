@@ -556,6 +556,46 @@ export default function ReviewsPage() {
       </section>
 
       <Newsletter />
+
+      {/* Review Structured Data for SEO */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            name: "Egydise Tours",
+            aggregateRating: {
+              "@type": "AggregateRating",
+              ratingValue: "4.9",
+              reviewCount: "1200",
+              bestRating: "5",
+              worstRating: "1",
+            },
+            review: [
+              ...featuredReviews.map((review) => ({
+                "@type": "Review",
+                author: {
+                  "@type": "Person",
+                  name: review.name,
+                },
+                reviewRating: {
+                  "@type": "Rating",
+                  ratingValue: review.rating.toString(),
+                  bestRating: "5",
+                  worstRating: "1",
+                },
+                reviewBody: review.text,
+                datePublished: review.date,
+                itemReviewed: {
+                  "@type": "TouristTrip",
+                  name: review.tour || "Egypt Tour",
+                },
+              })),
+            ],
+          }),
+        }}
+      />
     </div>
   );
 }

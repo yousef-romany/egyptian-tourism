@@ -7,6 +7,7 @@ import Footer from "@/components/footer"
 import FloatingContactButton from "@/components/floating-contact-button"
 import { WhatsAppButton } from "@/components/whatsapp-button"
 import Breadcrumb from "@/components/breadcrumb"
+import { BreadcrumbJsonLd } from "@/components/breadcrumb-json-ld"
 import { LanguageSwitcher } from "@/components/language-switcher"
 import { ComparisonProvider } from "@/contexts/comparison-context"
 import { locales } from '@/i18n'
@@ -32,6 +33,7 @@ export default async function LocaleLayout({
           </div>
           <Navbar />
           <Breadcrumb />
+          <BreadcrumbJsonLd />
           <main className="flex-1">{children}</main>
           <Footer />
           <FloatingContactButton />
