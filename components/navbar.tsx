@@ -12,6 +12,8 @@ import { cn } from "@/lib/utils";
 import logo from "@/public/logo.png"
 import ModeToggle from "./ModeToggle";
 import MegaMenu from "./mega-menu";
+import { CurrencySelector } from "./currency";
+import { LanguageSwitcher } from "./language";
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -177,7 +179,9 @@ export default function Navbar() {
             ))}
           </nav>
 
-          <div className="hidden lg:flex items-center gap-4">
+          <div className="hidden lg:flex items-center gap-3">
+            <CurrencySelector />
+            <LanguageSwitcher />
             <button
               onClick={() => setIsSearchOpen(!isSearchOpen)}
               className="p-2 rounded-full hover:bg-egyptian-gold/10 transition-colors"

@@ -14,6 +14,7 @@
     "@emotion/is-prop-valid": "latest",
     "@hookform/resolvers": "^3.9.1",
     "@next/third-parties": "^16.1.1",
+    "@paypal/react-paypal-js": "^8.9.2",
     "@radix-ui/react-accordion": "^1.2.2",
     "@radix-ui/react-alert-dialog": "^1.1.4",
     "@radix-ui/react-aspect-ratio": "^1.1.1",
@@ -76,6 +77,7 @@
     "@types/node": "^22",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "next-pwa": "^5.6.0",
     "postcss": "^8",
     "tailwindcss": "^3.4.17",
     "typescript": "^5"

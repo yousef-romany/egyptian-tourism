@@ -8,50 +8,68 @@ export default function Footer() {
   const currentYear = new Date().getFullYear()
 
   return (
-    <footer className="bg-[#0c1e35] text-white">
-      <div className="container py-12 md:py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+    <footer className="bg-[#0c1e35] text-white relative overflow-hidden">
+      {/* Decorative background elements */}
+      <div className="absolute inset-0 opacity-10">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-egyptian-gold rounded-full blur-3xl" />
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-egyptian-gold rounded-full blur-3xl" />
+      </div>
+      
+      <div className="container py-12 md:py-16 relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
           <div>
             <div className="flex items-center gap-2 mb-6">
-              <div className="relative w-10 h-10 overflow-hidden">
+              <div className="relative w-12 h-12 overflow-hidden">
                 <Image
-                  src="/placeholder.svg?height=40&width=40"
+                  src="/logo.png"
                   alt="Egydise Tours Logo"
-                  width={40}
-                  height={40}
+                  width={48}
+                  height={48}
                   className="object-contain"
                 />
               </div>
               <span className="text-xl font-heading font-bold tracking-wider text-egyptian-gold">Egydise Tours</span>
             </div>
-            <p className="text-white/70 mb-6">
+            <p className="text-white/70 mb-6 leading-relaxed">
               Experience the magic of ancient Egypt with our expert-guided tours. From the majestic pyramids to the
               serene Nile River, we bring Egypt's wonders to life.
             </p>
-            <div className="flex space-x-4">
+            <div className="flex space-x-3">
               <Link
-                href="https://facebook.com"
-                className="h-10 w-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-egyptian-gold/20 transition-colors"
+                href="https://facebook.com/egydise"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="h-11 w-11 rounded-full bg-white/10 flex items-center justify-center hover:bg-egyptian-gold hover:scale-110 transition-all duration-300 group"
+                aria-label="Facebook"
               >
-                <Facebook className="h-5 w-5" />
+                <Facebook className="h-5 w-5 group-hover:text-black" />
               </Link>
               <Link
-                href="https://instagram.com"
-                className="h-10 w-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-egyptian-gold/20 transition-colors"
+                href="https://instagram.com/egydise"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="h-11 w-11 rounded-full bg-white/10 flex items-center justify-center hover:bg-egyptian-gold hover:scale-110 transition-all duration-300 group"
+                aria-label="Instagram"
               >
-                <Instagram className="h-5 w-5" />
+                <Instagram className="h-5 w-5 group-hover:text-black" />
               </Link>
               <Link
-                href="https://twitter.com"
-                className="h-10 w-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-egyptian-gold/20 transition-colors"
+                href="https://twitter.com/egydise"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="h-11 w-11 rounded-full bg-white/10 flex items-center justify-center hover:bg-egyptian-gold hover:scale-110 transition-all duration-300 group"
+                aria-label="Twitter"
               >
-                <Twitter className="h-5 w-5" />
+                <Twitter className="h-5 w-5 group-hover:text-black" />
               </Link>
               <Link
-                href="https://youtube.com"
-                className="h-10 w-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-egyptian-gold/20 transition-colors"
+                href="https://youtube.com/@egydise"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="h-11 w-11 rounded-full bg-white/10 flex items-center justify-center hover:bg-egyptian-gold hover:scale-110 transition-all duration-300 group"
+                aria-label="YouTube"
               >
-                <Youtube className="h-5 w-5" />
+                <Youtube className="h-5 w-5 group-hover:text-black" />
               </Link>
             </div>
           </div>
@@ -179,15 +197,19 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-white/10 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
-          <p className="text-white/50 text-sm mb-4 md:mb-0">&copy; {currentYear} Egydise Tours. All rights reserved.</p>
-          <div className="flex flex-wrap gap-4 text-sm text-white/50">
+        <div className="border-t border-white/10 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+          <p className="text-white/50 text-sm text-center md:text-left">
+            &copy; {currentYear} Egydise Tours. All rights reserved.
+          </p>
+          <div className="flex flex-wrap gap-4 text-sm text-white/50 justify-center md:justify-end">
             <Link href="/terms" className="hover:text-egyptian-gold transition-colors">
               Terms & Conditions
             </Link>
+            <span className="text-white/20">•</span>
             <Link href="/privacy-policy" className="hover:text-egyptian-gold transition-colors">
               Privacy Policy
             </Link>
+            <span className="text-white/20">•</span>
             <Link href="/sitemap" className="hover:text-egyptian-gold transition-colors">
               Sitemap
             </Link>

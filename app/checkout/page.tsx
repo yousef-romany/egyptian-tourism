@@ -2,23 +2,25 @@
 
 import React, { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { PaymentForm } from '@/components/payment-form';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
-import { Loader2, ArrowLeft, Calendar, Users, MapPin } from 'lucide-react';
+import { Loader2, ArrowLeft, Calendar, Users, MapPin, Shield, CheckCircle, Clock } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
 import Link from 'next/link';
+import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
 
 export default function CheckoutPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { toast } = useToast();
-  
+
   const [bookingData, setBookingData] = useState<any>(null);
-  const [clientSecret, setClientSecret] = useState<string>('');
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string>('');
+
+  // Get PayPal Client ID from env
+  const PAYPAL_CLIENT_ID = process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID || 'test';
 
   // Get booking data from URL params
   const bookingReference = searchParams.get('bookingReference');
@@ -47,55 +49,100 @@ export default function CheckoutPage() {
     };
 
     setBookingData(bookingInfo);
-    createPaymentIntent(bookingInfo);
+    setIsLoading(false);
   }, [bookingReference, totalPrice, customerName, email, tourName, tourDate, numberOfPeople]);
 
-  const createPaymentIntent = async (bookingInfo: any) => {
+  const createOrder = async () => {
+    if (!bookingData) throw new Error("No booking details");
+
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_URL}/api/stripe/create-payment-intent`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          data: {
-            totalPrice: bookingInfo.totalPrice,
-            bookingReference: bookingInfo.bookingReference,
-            customerName: bookingInfo.customerName,
-            email: bookingInfo.email,
-          },
-        }),
-      });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/payment/paypal/create-order`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            amount: bookingData.totalPrice,
+            currency: 'USD',
+            description: `${bookingData.tourName} - ${bookingData.numberOfPeople} people`,
+            bookingReference: bookingData.bookingReference,
+            bookingId: bookingData.bookingReference,
+          }),
+        }
+      );
 
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.error?.message || 'Failed to create payment intent');
+        throw new Error(data.error?.message || 'Failed to create PayPal order');
       }
 
-      setClientSecret(data.data.clientSecret);
+      return data.data.orderId;
     } catch (err: any) {
-      setError(err.message || 'An error occurred while setting up payment');
       toast({
-        title: "Payment Setup Failed",
-        description: err.message || "Failed to initialize payment. Please try again.",
+        title: "Order Creation Failed",
+        description: err.message || "Failed to create order. Please try again.",
         variant: "destructive",
       });
-    } finally {
-      setIsLoading(false);
+      throw err;
     }
   };
 
-  const handlePaymentSuccess = (paymentIntentId: string) => {
-    toast({
-      title: "Payment Successful",
-      description: "Your booking has been confirmed!",
-    });
-    router.push(`/book-now/confirmation?bookingReference=${bookingReference}`);
+  const onApprove = async (data: any) => {
+    if (!bookingData) return;
+
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/payment/paypal/capture-payment`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            orderId: data.orderID,
+            token: data.orderID,
+            PayerID: data.payerID,
+          }),
+        }
+      );
+
+      const result = await response.json();
+
+      if (response.ok) {
+        toast({
+          title: "Payment Successful",
+          description: "Your booking has been confirmed!",
+        });
+        // Redirect to success page
+        const params = new URLSearchParams({
+          token: data.orderID,
+          PayerID: data.payerID,
+          bookingId: bookingData.bookingReference,
+        });
+        router.push(`/payment/success?${params.toString()}`);
+      } else {
+        throw new Error(result.error?.message || 'Payment capture failed');
+      }
+    } catch (err: any) {
+      toast({
+        title: "Payment Failed",
+        description: err.message || "Failed to capture payment. Please try again.",
+        variant: "destructive",
+      });
+    }
   };
 
-  const handleCancel = () => {
-    router.back();
+  const onCancel = () => {
+    router.push('/payment/cancel');
+  };
+
+  const onError = (err: any) => {
+    console.error('PayPal error:', err);
+    setError('Payment processing failed. Please try again or contact support.');
+    toast({
+      title: "Payment Error",
+      description: "An error occurred during payment processing.",
+      variant: "destructive",
+    });
   };
 
   if (isLoading) {
@@ -103,7 +150,7 @@ export default function CheckoutPage() {
       <div className="container mx-auto px-4 py-8 flex justify-center items-center min-h-[60vh]">
         <div className="flex flex-col items-center space-y-4">
           <Loader2 className="h-8 w-8 animate-spin text-primary" />
-          <p className="text-muted-foreground">Setting up payment...</p>
+          <p className="text-muted-foreground">Loading checkout...</p>
         </div>
       </div>
     );
@@ -153,9 +200,9 @@ export default function CheckoutPage() {
                 <h3 className="font-semibold text-lg">{bookingData.tourName}</h3>
                 <p className="text-sm text-muted-foreground">Ref: {bookingData.bookingReference}</p>
               </div>
-              
+
               <Separator />
-              
+
               <div className="space-y-3">
                 <div className="flex items-center space-x-2">
                   <Calendar className="h-4 w-4 text-muted-foreground" />
@@ -163,22 +210,22 @@ export default function CheckoutPage() {
                     {new Date(bookingData.tourDate).toLocaleDateString()}
                   </span>
                 </div>
-                
+
                 <div className="flex items-center space-x-2">
                   <Users className="h-4 w-4 text-muted-foreground" />
                   <span className="text-sm">
                     {bookingData.numberOfPeople} {bookingData.numberOfPeople === 1 ? 'Person' : 'People'}
                   </span>
                 </div>
-                
+
                 <div className="flex items-center space-x-2">
                   <MapPin className="h-4 w-4 text-muted-foreground" />
                   <span className="text-sm">Egypt</span>
                 </div>
               </div>
-              
+
               <Separator />
-              
+
               <div>
                 <div className="flex justify-between items-center mb-2">
                   <span>Customer</span>
@@ -189,9 +236,9 @@ export default function CheckoutPage() {
                   <span className="font-medium text-sm">{bookingData.email}</span>
                 </div>
               </div>
-              
+
               <Separator />
-              
+
               <div className="flex justify-between items-center text-lg font-semibold">
                 <span>Total</span>
                 <span>${bookingData.totalPrice.toFixed(2)}</span>
@@ -200,24 +247,87 @@ export default function CheckoutPage() {
           </Card>
         </div>
 
-        {/* Payment Form */}
+        {/* PayPal Payment */}
         <div className="lg:col-span-2">
-          {clientSecret ? (
-            <PaymentForm
-              bookingData={bookingData}
-              onSuccess={handlePaymentSuccess}
-              onCancel={handleCancel}
-            />
-          ) : (
-            <Card className="w-full max-w-md mx-auto">
-              <CardContent className="pt-6">
-                <div className="flex flex-col items-center space-y-4">
-                  <Loader2 className="h-8 w-8 animate-spin text-primary" />
-                  <p>Initializing payment form...</p>
+          <Card>
+            <CardHeader>
+              <CardTitle>Pay with PayPal</CardTitle>
+              <CardDescription>
+                Secure payment processing with buyer protection
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-6">
+                {/* Security Badges */}
+                <div className="space-y-3 pb-6 border-b">
+                  <div className="flex items-center gap-3 text-sm">
+                    <Shield className="h-5 w-5 text-green-600" />
+                    <span className="text-muted-foreground">
+                      Secure SSL encryption
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-3 text-sm">
+                    <CheckCircle className="h-5 w-5 text-green-600" />
+                    <span className="text-muted-foreground">
+                      Buyer protection included
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-3 text-sm">
+                    <Clock className="h-5 w-5 text-egyptian-gold" />
+                    <span className="text-muted-foreground">
+                      Instant confirmation
+                    </span>
+                  </div>
                 </div>
-              </CardContent>
-            </Card>
-          )}
+
+                {/* PayPal Buttons */}
+                <PayPalScriptProvider
+                  options={{
+                    "client-id": PAYPAL_CLIENT_ID,
+                    currency: "USD",
+                  }}
+                >
+                  <div className="space-y-4">
+                    <PayPalButtons
+                      style={{
+                        layout: "vertical",
+                        color: "gold",
+                        shape: "rect",
+                        label: "paypal",
+                      }}
+                      createOrder={createOrder}
+                      onApprove={onApprove}
+                      onCancel={onCancel}
+                      onError={onError}
+                    />
+
+                    {error && (
+                      <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-4 text-red-700 dark:text-red-300 text-sm">
+                        {error}
+                      </div>
+                    )}
+                  </div>
+                </PayPalScriptProvider>
+
+                <div className="pt-4 border-t text-center">
+                  <p className="text-xs text-muted-foreground mb-4">
+                    By completing payment, you agree to our{' '}
+                    <a href="/terms" className="text-egyptian-gold hover:underline">
+                      Terms & Conditions
+                    </a>
+                  </p>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => router.push('/contact')}
+                    className="text-egyptian-gold"
+                  >
+                    Need help? Contact us →
+                  </Button>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
         </div>
       </div>
     </div>

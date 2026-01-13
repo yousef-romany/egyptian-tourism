@@ -5,6 +5,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Star, MapPin, Clock } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { WishlistButton } from "./wishlist-button"
+import { PriceDisplay } from "./currency/price-display"
 import type { Tour } from "@/lib/data/tours"
 
 interface TourCardServerProps {
@@ -26,7 +27,7 @@ export default function TourCardServer({ tour }: TourCardServerProps) {
           />
           <div className="absolute top-3 right-3 z-20">
             <Badge className="bg-egyptian-gold text-black font-bold text-base px-3 py-1 shadow-lg">
-              {tour.priceDisplay || `$${tour.price}`}
+              <PriceDisplay priceUSD={tour.priceDisplay || tour.price} />
             </Badge>
           </div>
           <WishlistButton tour={tour} />

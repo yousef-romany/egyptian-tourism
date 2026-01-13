@@ -24,7 +24,7 @@ import { TourImageGallery } from "@/components/tour-image-gallery"
 import { TourJsonLd } from "@/components/tour-json-ld"
 import { SocialShareButtons } from "@/components/social-share-buttons"
 import { ReviewForm } from "@/components/review-form"
-import { GoogleMaps } from "@/components/google-maps"
+import { TourSidebarWidgets } from "@/components/tour-sidebar-widgets"
 
 interface TourPageProps {
   params: {
@@ -423,6 +423,9 @@ export default async function TourDetailPage({ params }: TourPageProps) {
                 </div>
               </CardContent>
             </Card>
+
+            {/* Availability Calendar & Tour Map */}
+            <TourSidebarWidgets tour={tour} />
           </div>
         </div>
       </section>

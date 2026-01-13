@@ -5,6 +5,7 @@ import { Inter } from "next/font/google"
 import { ThemeProvider } from "@/components/theme-provider"
 import { AuthProvider } from "@/contexts/auth-context"
 import { StripeProvider } from "@/contexts/stripe-context"
+import { CurrencyProvider } from "@/lib/currencies/provider"
 import { OrganizationJsonLd } from "@/components/tour-json-ld"
 import { defaultMetadata } from "@/lib/metadata"
 import { GoogleAnalytics } from '@next/third-parties/google'
@@ -28,9 +29,11 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 5,
   themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#ffffff' },
-    { media: '(prefers-color-scheme: dark)', color: '#0c1e35' }
+    { media: '(prefers-color-scheme: light)', color: '#d4af37' },
+    { media: '(prefers-color-scheme: dark)', color: '#d4af37' }
   ],
+  userScalable: true,
+  viewportFit: 'cover',
 }
 
 export default function RootLayout({
@@ -42,13 +45,20 @@ export default function RootLayout({
     <html suppressHydrationWarning>
       <head>
         <OrganizationJsonLd />
+        <link rel="manifest" href="/site.webmanifest" />
+        <link rel="apple-touch-icon" href="/icon-192.png" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <meta name="apple-mobile-web-app-title" content="Egydise Tours" />
       </head>
       <body className={`${inter.variable} ${heading.variable} font-sans`}>
         <GlobalErrorBoundary>
           <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
             <AuthProvider>
               <StripeProvider>
-                {children}
+                <CurrencyProvider>
+                  {children}
+                </CurrencyProvider>
               </StripeProvider>
             </AuthProvider>
           </ThemeProvider>
