@@ -11,7 +11,7 @@ import { LanguageSwitcher } from "@/components/language-switcher"
 import { ComparisonProvider } from "@/contexts/comparison-context"
 import { locales } from '@/i18n'
 
-export default function LocaleLayout({
+export default async function LocaleLayout({
   children,
   params: { locale }
 }: {
