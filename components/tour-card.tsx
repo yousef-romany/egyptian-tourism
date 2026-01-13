@@ -41,7 +41,6 @@ export default function TourCard({
     setIsWishlisted(!isWishlisted)
 
     // In a real app, this would call an API to add/remove from wishlist
-    console.log(`${isWishlisted ? "Removing" : "Adding"} tour ${id} ${title} ${isWishlisted ? "from" : "to"} wishlist`)
   }
 
   return (

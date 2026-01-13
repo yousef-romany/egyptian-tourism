@@ -51,7 +51,7 @@ export default function Newsletter() {
       // Subscribe to newsletter via Strapi
       await strapiAPI.newsletter.subscribe(data.email, 'website-footer')
 
-      console.log("Newsletter subscription successful:", data.email)
+      // Newsletter subscription successful
 
       // Track newsletter signup in Google Analytics
       if (typeof window !== 'undefined' && window.gtag) {

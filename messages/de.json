@@ -1,0 +1,221 @@
+{
+  "nav": {
+    "home": "Startseite",
+    "tours": "Touren",
+    "about": "Über uns",
+    "gallery": "Galerie",
+    "contact": "Kontakt",
+    "profile": "Profil",
+    "wishlist": "Wunschliste",
+    "login": "Anmelden",
+    "logout": "Abmelden",
+    "bookNow": "Jetzt buchen"
+  },
+  "hero": {
+    "title": "Entdecken Sie die Wunder des alten Ägyptens",
+    "subtitle": "Erleben Sie die zeitlose Faszination der Pyramiden, Pharaonen und des Nils",
+    "cta": "Starten Sie Ihr Abenteuer",
+    "searchPlaceholder": "Suchen Sie nach Ihrer Ägypten-Reise..."
+  },
+  "tours": {
+    "title": "Entdecken Sie unsere Reiseangebote",
+    "subtitle": "Sorgfältig kuratierte Reisen zu den Wundern Ägyptens",
+    "duration": "Dauer",
+    "price": "Preis",
+    "viewDetails": "Details anzeigen",
+    "bookNow": "Jetzt buchen",
+    "noTours": "Keine Touren verfügbar",
+    "loading": "Touren werden geladen...",
+    "filters": {
+      "search": "Touren suchen",
+      "category": "Kategorie",
+      "priceRange": "Preisbereich",
+      "duration": "Dauer",
+      "sortBy": "Sortieren nach"
+    }
+  },
+  "categories": {
+    "cairoPyramids": "Kairo-Pyramiden",
+    "luxorAswan": "Luxor-Aswan",
+    "nileCruises": "Nil-Kreuzfahrten",
+    "redSea": "Rotes Meer",
+    "desertAdventures": "Wüstenabenteuer",
+    "customTours": "Individuelle Touren"
+  },
+  "booking": {
+    "title": "Buchen Sie Ihre Ägypten-Reise",
+    "tourName": "Tourname",
+    "selectDate": "Datum auswählen",
+    "selectTime": "Uhrzeit auswählen",
+    "numberOfPeople": "Anzahl der Personen",
+    "fullName": "Vollständiger Name",
+    "email": "E-Mail-Adresse",
+    "phone": "Telefonnummer",
+    "specialRequests": "Besondere Wünsche",
+    "totalPrice": "Gesamtpreis",
+    "bookNow": "Jetzt buchen",
+    "bookingConfirmed": "Buchung bestätigt!",
+    "bookingConfirmation": "Ihre Buchung wurde bestätigt. Wir senden Ihnen eine Bestätigungs-E-Mail.",
+    "error": "Bei der Buchung ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut."
+  },
+  "profile": {
+    "title": "Mein Profil",
+    "personalInfo": "Persönliche Informationen",
+    "name": "Name",
+    "email": "E-Mail-Adresse",
+    "phone": "Telefonnummer",
+    "changePassword": "Passwort ändern",
+    "currentPassword": "Aktuelles Passwort",
+    "newPassword": "Neues Passwort",
+    "confirmPassword": "Neues Passwort bestätigen",
+    "updateProfile": "Profil aktualisieren",
+    "bookingHistory": "Buchungsverlauf",
+    "noBookings": "Keine Buchungen vorhanden",
+    "wishlist": "Wunschliste",
+    "noWishlist": "Wunschliste ist leer",
+    "save": "Speichern",
+    "cancel": "Abbrechen"
+  },
+  "contact": {
+    "title": "Kontaktieren Sie uns",
+    "subtitle": "Haben Sie Fragen? Wir sind hier, um Ihnen zu helfen",
+    "name": "Name",
+    "email": "E-Mail-Adresse",
+    "subject": "Betreff",
+    "message": "Nachricht",
+    "send": "Nachricht senden",
+    "success": "Nachricht gesendet! Wir werden uns so schnell wie möglich bei Ihnen melden.",
+    "error": "Fehler beim Senden der Nachricht. Bitte versuchen Sie es erneut."
+  },
+  "about": {
+    "title": "Über uns",
+    "subtitle": "Ihr vertrauenswürdiger Experte für Ägypten-Reisen",
+    "description": "Mit über 20 Jahren Erfahrung sind wir Ihre erste Wahl für die Erkundung der Wunder Ägyptens. Unsere sachkundigen Reiseführer und sorgfältig geplanten Touren gewährleisten ein unvergessliches Erlebnis.",
+    "whyChooseUs": "Warum uns wählen?",
+    "experience": "20+ Jahre Erfahrung",
+    "expertGuides": "Experten-Reiseführer",
+    "customTours": "Individuelle Touren",
+    "bestPrice": "Best-Preis-Garantie",
+    "247Support": "24/7 Kundensupport"
+  },
+  "gallery": {
+    "title": "Ägypten-Galerie",
+    "subtitle": "Entdecken Sie die Schönheit Ägyptens durch unsere Fotos",
+    "pyramids": "Pyramiden",
+    "temples": "Tempel",
+    "nile": "Nil",
+    "desert": "Wüste",
+    "redSea": "Rotes Meer",
+    "culture": "Kultur"
+  },
+  "reviews": {
+    "title": "Kundenbewertungen",
+    "subtitle": "Hören Sie, was unsere Kunden zu sagen haben",
+    "noReviews": "Keine Bewertungen vorhanden",
+    "leaveReview": "Bewertung hinterlassen",
+    "rating": "Bewertung",
+    "comment": "Kommentar",
+    "submit": "Bewertung absenden"
+  },
+  "wishlist": {
+    "title": "Meine Wunschliste",
+    "subtitle": "Speichern Sie Ihre Lieblingstouren",
+    "empty": "Wunschliste ist leer",
+    "addToWishlist": "Zur Wunschliste hinzufügen",
+    "removeFromWishlist": "Von Wunschliste entfernen",
+    "viewDetails": "Details anzeigen",
+    "bookNow": "Jetzt buchen"
+  },
+  "footer": {
+    "description": "Entdecken Sie die Wunder des alten Ägyptens und erleben Sie die zeitlose Faszination der Pyramiden, Pharaonen und des Nils.",
+    "quickLinks": "Quick-Links",
+    "services": "Dienstleistungen",
+    "contactInfo": "Kontaktinformationen",
+    "followUs": "Folgen Sie uns",
+    "allRightsReserved": "Alle Rechte vorbehalten",
+    "privacyPolicy": "Datenschutzrichtlinie",
+    "termsOfService": "Nutzungsbedingungen"
+  },
+  "common": {
+    "loading": "Wird geladen...",
+    "error": "Ein Fehler ist aufgetreten",
+    "retry": "Erneut versuchen",
+    "close": "Schließen",
+    "save": "Speichern",
+    "cancel": "Abbrechen",
+    "delete": "Löschen",
+    "edit": "Bearbeiten",
+    "view": "Anzeigen",
+    "search": "Suchen",
+    "filter": "Filtern",
+    "sort": "Sortieren",
+    "next": "Weiter",
+    "previous": "Zurück",
+    "page": "Seite",
+    "of": "von",
+    "results": "Ergebnisse",
+    "noResults": "Keine Ergebnisse",
+    "required": "Erforderlich",
+    "optional": "Optional",
+    "yes": "Ja",
+    "no": "Nein",
+    "ok": "OK",
+    "success": "Erfolg",
+    "warning": "Warnung",
+    "info": "Information"
+  },
+  "auth": {
+    "login": "Anmelden",
+    "logout": "Abmelden",
+    "register": "Registrieren",
+    "forgotPassword": "Passwort vergessen?",
+    "resetPassword": "Passwort zurücksetzen",
+    "email": "E-Mail-Adresse",
+    "password": "Passwort",
+    "confirmPassword": "Passwort bestätigen",
+    "fullName": "Vollständiger Name",
+    "rememberMe": "Angemeldet bleiben",
+    "loginSuccess": "Anmeldung erfolgreich",
+    "logoutSuccess": "Abmeldung erfolgreich",
+    "registerSuccess": "Registrierung erfolgreich",
+    "resetPasswordSuccess": "Passwort erfolgreich zurückgesetzt",
+    "loginError": "Anmeldung fehlgeschlagen",
+    "registerError": "Registrierung fehlgeschlagen",
+    "resetPasswordError": "Passwort-Zurücksetzung fehlgeschlagen"
+  },
+  "errors": {
+    "404": {
+      "title": "Seite nicht gefunden",
+      "description": "Entschuldigung, die gesuchte Seite existiert nicht.",
+      "button": "Zurück zur Startseite"
+    },
+    "500": {
+      "title": "Serverfehler",
+      "description": "Entschuldigung, es gab ein Problem mit dem Server. Bitte versuchen Sie es später erneut.",
+      "button": "Erneut versuchen"
+    },
+    "network": {
+      "title": "Netzwerkfehler",
+      "description": "Bitte überprüfen Sie Ihre Netzwerkverbindung und versuchen Sie es erneut.",
+      "button": "Erneut versuchen"
+    }
+  },
+  "seo": {
+    "home": {
+      "title": "Ägypten-Reisen | Entdecken Sie Pyramiden, Pharaonen und den Nil",
+      "description": "Entdecken Sie die Wunder des alten Ägyptens und erleben Sie die zeitlose Faszination der Pyramiden, Pharaonen und des Nils. Buchen Sie Ihre Ägypten-Reise."
+    },
+    "tours": {
+      "title": "Ägypten-Reiseangebote | Pyramiden, Luxor, Aswan",
+      "description": "Entdecken Sie unsere sorgfältig kuratierten Ägypten-Reiseangebote. Von den Kairo-Pyramiden bis zu Nil-Kreuzfahrten, entdecken Sie die Wunder des alten Ägypten."
+    },
+    "about": {
+      "title": "Über uns | Ägypten-Reiseexperten",
+      "description": "Erfahren Sie mehr über unsere Geschichte und warum wir Ihre erste Wahl für die Erkundung der Wunder Ägyptens sind. 20+ Jahre Erfahrung, Experten-Reiseführer."
+    },
+    "contact": {
+      "title": "Kontaktieren Sie uns | Ägypten-Reisen",
+      "description": "Haben Sie Fragen? Kontaktieren Sie uns. Unser Team ist hier, um Ihnen bei der Planung Ihrer perfekten Ägypten-Reise zu helfen."
+    }
+  }
+}

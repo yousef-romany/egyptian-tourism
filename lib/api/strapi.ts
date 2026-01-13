@@ -222,6 +222,57 @@ export interface ContactSubmission {
   updatedAt: string
 }
 
+export interface Testimonial {
+  id: number
+  customerName: string
+  customerPhoto?: StrapiMedia
+  customerLocation?: string
+  story: string
+  tourName?: string
+  tour?: Tour
+  rating: number
+  featured: boolean
+  date: string
+  tripDate?: string
+  verified: boolean
+  images?: StrapiMedia[]
+  videoUrl?: string
+  createdAt: string
+  updatedAt: string
+  publishedAt: string
+}
+
+export interface PromoCode {
+  id: number
+  code: string
+  description?: string
+  discountType: 'percentage' | 'fixed' | 'free_addon'
+  discountValue?: number
+  freeAddOn?: string
+  validFrom: string
+  validUntil: string
+  usageLimit: number
+  usedCount: number
+  minBookingAmount: number
+  maxDiscountAmount?: number
+  applicableTours?: number[]
+  active: boolean
+  singleUse: boolean
+  createdAt: string
+  updatedAt: string
+}
+
+export interface PromoCodeValidation {
+  valid: boolean
+  message?: string
+  discountType?: 'percentage' | 'fixed' | 'free_addon'
+  discountAmount?: number
+  discountText?: string
+  code?: string
+  description?: string
+  promoCodeId?: number
+}
+
 // ============================================================================
 // Helper Functions
 // ============================================================================
@@ -567,6 +618,7 @@ export const tours = {
     sort?: string
     page?: number
     pageSize?: number
+    locale?: string
   }): Promise<{ data: Tour[]; meta?: any }> {
     const query = params ? buildQueryString({ ...params, populate: '*' }) : '?populate=*'
     const response = await apiFetch<StrapiResponse<any[]>>(`/tours${query}`)
@@ -579,28 +631,31 @@ export const tours = {
   /**
    * Get tour by ID
    */
-  async getById(id: number): Promise<Tour> {
-    const response = await apiFetch<StrapiResponse<any>>(`/tours/${id}?populate=*`)
+  async getById(id: number, locale?: string): Promise<Tour> {
+    const localeParam = locale ? `&locale=${locale}` : ''
+    const response = await apiFetch<StrapiResponse<any>>(`/tours/${id}?populate=*${localeParam}`)
     return transformStrapiData<Tour>(response.data)
   },
 
   /**
    * Get tour by slug
    */
-  async getBySlug(slug: string): Promise<Tour> {
-    const response = await apiFetch<StrapiResponse<any>>(`/tours/${slug}?populate=*`)
+  async getBySlug(slug: string, locale?: string): Promise<Tour> {
+    const localeParam = locale ? `&locale=${locale}` : ''
+    const response = await apiFetch<StrapiResponse<any>>(`/tours/${slug}?populate=*${localeParam}`)
     return transformStrapiData<Tour>(response.data)
   },
 
   /**
    * Get featured tours
    */
-  async getFeatured(limit?: number): Promise<Tour[]> {
+  async getFeatured(limit?: number, locale?: string): Promise<Tour[]> {
     const params = new URLSearchParams({
       'populate': '*',
       'filters[featured][$eq]': 'true',
     })
     if (limit) params.append('pagination[pageSize]', String(limit))
+    if (locale) params.append('locale', locale)
 
     const response = await apiFetch<StrapiResponse<any[]>>(`/tours?${params.toString()}`)
     return transformStrapiData<Tour[]>(response.data)
@@ -621,6 +676,7 @@ export const blog = {
     sort?: string
     page?: number
     pageSize?: number
+    locale?: string
   }): Promise<{ data: BlogPost[]; meta?: any }> {
     const query = params ? buildQueryString({ ...params, populate: '*' }) : '?populate=*'
     const response = await apiFetch<StrapiResponse<any[]>>(`/blog-posts${query}`)
@@ -633,27 +689,31 @@ export const blog = {
   /**
    * Get blog post by ID
    */
-  async getById(id: number): Promise<BlogPost> {
-    const response = await apiFetch<StrapiResponse<any>>(`/blog-posts/${id}?populate=*`)
+  async getById(id: number, locale?: string): Promise<BlogPost> {
+    const localeParam = locale ? `&locale=${locale}` : ''
+    const response = await apiFetch<StrapiResponse<any>>(`/blog-posts/${id}?populate=*${localeParam}`)
     return transformStrapiData<BlogPost>(response.data)
   },
 
   /**
    * Get blog post by slug (increments views)
    */
-  async getBySlug(slug: string): Promise<BlogPost> {
-    const response = await apiFetch<StrapiResponse<any>>(`/blog-posts/${slug}?populate=*`)
+  async getBySlug(slug: string, locale?: string): Promise<BlogPost> {
+    const localeParam = locale ? `&locale=${locale}` : ''
+    const response = await apiFetch<StrapiResponse<any>>(`/blog-posts/${slug}?populate=*${localeParam}`)
     return transformStrapiData<BlogPost>(response.data)
   },
 
   /**
    * Get featured blog posts
    */
-  async getFeatured(limit?: number): Promise<BlogPost[]> {
+  async getFeatured(limit?: number, locale?: string): Promise<BlogPost[]> {
     const params = new URLSearchParams({
       'populate': '*',
       'filters[featured][$eq]': 'true',
     })
+    if (limit) params.append('pagination[pageSize]', String(limit))
+    if (locale) params.append('locale', locale)
     if (limit) params.append('pagination[pageSize]', String(limit))
 
     const response = await apiFetch<StrapiResponse<any[]>>(`/blog-posts?${params.toString()}`)
@@ -686,6 +746,7 @@ export const reviews = {
     sort?: string
     page?: number
     pageSize?: number
+    locale?: string
   }): Promise<{ data: Review[]; meta?: any }> {
     const query = params ? buildQueryString({ ...params, populate: '*' }) : '?populate=*'
     const response = await apiFetch<StrapiResponse<any[]>>(`/reviews${query}`)
@@ -698,12 +759,13 @@ export const reviews = {
   /**
    * Get featured reviews
    */
-  async getFeatured(limit?: number): Promise<Review[]> {
+  async getFeatured(limit?: number, locale?: string): Promise<Review[]> {
     const params = new URLSearchParams({
       'populate': '*',
       'filters[featured][$eq]': 'true',
     })
     if (limit) params.append('pagination[pageSize]', String(limit))
+    if (locale) params.append('locale', locale)
 
     const response = await apiFetch<StrapiResponse<any[]>>(`/reviews?${params.toString()}`)
     return transformStrapiData<Review[]>(response.data)
@@ -712,11 +774,12 @@ export const reviews = {
   /**
    * Get reviews by platform
    */
-  async getByPlatform(platform: 'tripadvisor' | 'viator' | 'klook'): Promise<Review[]> {
+  async getByPlatform(platform: 'tripadvisor' | 'viator' | 'klook', locale?: string): Promise<Review[]> {
     const params = new URLSearchParams({
       'populate': '*',
       'filters[platform][$eq]': platform,
     })
+    if (locale) params.append('locale', locale)
     const response = await apiFetch<StrapiResponse<any[]>>(`/reviews?${params.toString()}`)
     return transformStrapiData<Review[]>(response.data)
   },
@@ -785,6 +848,79 @@ export const bookings = {
       body: JSON.stringify({ status }),
     })
     return response.data
+  },
+}
+
+// ============================================================================
+// Testimonials API
+// ============================================================================
+
+export const testimonials = {
+  /**
+   * Get all testimonials
+   */
+  async getAll(params?: {
+    locale?: string
+    featured?: boolean
+    sort?: string
+    page?: number
+    pageSize?: number
+  }): Promise<{ data: Testimonial[]; meta?: any }> {
+    const query = params ? buildQueryString({ ...params, populate: '*' }) : '?populate=*'
+    const response = await apiFetch<StrapiResponse<any[]>>(`/testimonials${query}`)
+    return {
+      data: transformStrapiData<Testimonial[]>(response.data),
+      meta: response.meta
+    }
+  },
+
+  /**
+   * Get featured testimonials
+   */
+  async getFeatured(locale?: string, limit?: number): Promise<Testimonial[]> {
+    const params = new URLSearchParams({
+      'populate': '*',
+      'filters[featured][$eq]': 'true',
+    })
+    if (limit) params.append('pagination[pageSize]', String(limit))
+    if (locale) params.append('locale', locale)
+
+    const response = await apiFetch<StrapiResponse<any[]>>(`/testimonials?${params.toString()}`)
+    return transformStrapiData<Testimonial[]>(response.data)
+  },
+
+  /**
+   * Get testimonials by tour
+   */
+  async getByTour(tourId: number, locale?: string): Promise<Testimonial[]> {
+    const params = new URLSearchParams({
+      'populate': '*',
+      'filters[tour][$eq]': String(tourId),
+    })
+    if (locale) params.append('locale', locale)
+
+    const response = await apiFetch<StrapiResponse<any[]>>(`/testimonials?${params.toString()}`)
+    return transformStrapiData<Testimonial[]>(response.data)
+  },
+}
+
+// ============================================================================
+// Promo Codes API
+// ============================================================================
+
+export const promoCodes = {
+  /**
+   * Validate promo code
+   */
+  async validate(data: {
+    code: string
+    bookingAmount: number
+    tourId?: number
+  }): Promise<PromoCodeValidation> {
+    return apiFetch<PromoCodeValidation>('/promo-codes/validate', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    })
   },
 }
 

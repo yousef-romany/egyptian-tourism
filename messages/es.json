@@ -1,0 +1,221 @@
+{
+  "nav": {
+    "home": "Inicio",
+    "tours": "Tours",
+    "about": "Acerca de",
+    "gallery": "Galería",
+    "contact": "Contacto",
+    "profile": "Perfil",
+    "wishlist": "Lista de deseos",
+    "login": "Iniciar sesión",
+    "logout": "Cerrar sesión",
+    "bookNow": "Reservar ahora"
+  },
+  "hero": {
+    "title": "Descubre las maravillas del antiguo Egipto",
+    "subtitle": "Experimenta la fascinación atemporal de las pirámides, faraones y el Nilo",
+    "cta": "Comienza tu aventura",
+    "searchPlaceholder": "Busca tu viaje a Egipto..."
+  },
+  "tours": {
+    "title": "Explora nuestros paquetes turísticos",
+    "subtitle": "Viajes cuidadosamente curados a las maravillas de Egipto",
+    "duration": "Duración",
+    "price": "Precio",
+    "viewDetails": "Ver detalles",
+    "bookNow": "Reservar ahora",
+    "noTours": "No hay tours disponibles",
+    "loading": "Cargando tours...",
+    "filters": {
+      "search": "Buscar tours",
+      "category": "Categoría",
+      "priceRange": "Rango de precios",
+      "duration": "Duración",
+      "sortBy": "Ordenar por"
+    }
+  },
+  "categories": {
+    "cairoPyramids": "Pirámides de El Cairo",
+    "luxorAswan": "Luxor-Asuán",
+    "nileCruises": "Cruceros por el Nilo",
+    "redSea": "Mar Rojo",
+    "desertAdventures": "Aventuras en el desierto",
+    "customTours": "Tours personalizados"
+  },
+  "booking": {
+    "title": "Reserva tu viaje a Egipto",
+    "tourName": "Nombre del tour",
+    "selectDate": "Seleccionar fecha",
+    "selectTime": "Seleccionar hora",
+    "numberOfPeople": "Número de personas",
+    "fullName": "Nombre completo",
+    "email": "Correo electrónico",
+    "phone": "Número de teléfono",
+    "specialRequests": "Solicitudes especiales",
+    "totalPrice": "Precio total",
+    "bookNow": "Reservar ahora",
+    "bookingConfirmed": "¡Reserva confirmada!",
+    "bookingConfirmation": "Tu reserva ha sido confirmada. Te enviaremos un correo de confirmación.",
+    "error": "Error al realizar la reserva. Por favor, inténtalo de nuevo."
+  },
+  "profile": {
+    "title": "Mi perfil",
+    "personalInfo": "Información personal",
+    "name": "Nombre",
+    "email": "Correo electrónico",
+    "phone": "Número de teléfono",
+    "changePassword": "Cambiar contraseña",
+    "currentPassword": "Contraseña actual",
+    "newPassword": "Nueva contraseña",
+    "confirmPassword": "Confirmar nueva contraseña",
+    "updateProfile": "Actualizar perfil",
+    "bookingHistory": "Historial de reservas",
+    "noBookings": "No hay reservas anteriores",
+    "wishlist": "Lista de deseos",
+    "noWishlist": "La lista de deseos está vacía",
+    "save": "Guardar",
+    "cancel": "Cancelar"
+  },
+  "contact": {
+    "title": "Contáctanos",
+    "subtitle": "¿Tienes preguntas? Estamos aquí para ayudarte",
+    "name": "Nombre",
+    "email": "Correo electrónico",
+    "subject": "Asunto",
+    "message": "Mensaje",
+    "send": "Enviar mensaje",
+    "success": "¡Mensaje enviado! Nos pondremos en contacto contigo lo antes posible.",
+    "error": "Error al enviar el mensaje. Por favor, inténtalo de nuevo."
+  },
+  "about": {
+    "title": "Acerca de nosotros",
+    "subtitle": "Tu experto de confianza en viajes a Egipto",
+    "description": "Con más de 20 años de experiencia, somos tu primera opción para explorar las maravillas de Egipto. Nuestros guías expertos y tours cuidadosamente planificados garantizan una experiencia inolvidable.",
+    "whyChooseUs": "¿Por qué elegirnos?",
+    "experience": "20+ años de experiencia",
+    "expertGuides": "Guías expertos",
+    "customTours": "Tours personalizados",
+    "bestPrice": "Garantía de mejor precio",
+    "247Support": "Soporte al cliente 24/7"
+  },
+  "gallery": {
+    "title": "Galería de Egipto",
+    "subtitle": "Descubre la belleza de Egipto a través de nuestras fotos",
+    "pyramids": "Pirámides",
+    "temples": "Templos",
+    "nile": "Nilo",
+    "desert": "Desierto",
+    "redSea": "Mar Rojo",
+    "culture": "Cultura"
+  },
+  "reviews": {
+    "title": "Reseñas de clientes",
+    "subtitle": "Escucha lo que dicen nuestros clientes",
+    "noReviews": "No hay reseñas disponibles",
+    "leaveReview": "Dejar una reseña",
+    "rating": "Calificación",
+    "comment": "Comentario",
+    "submit": "Enviar reseña"
+  },
+  "wishlist": {
+    "title": "Mi lista de deseos",
+    "subtitle": "Guarda tus tours favoritos",
+    "empty": "La lista de deseos está vacía",
+    "addToWishlist": "Añadir a la lista de deseos",
+    "removeFromWishlist": "Eliminar de la lista de deseos",
+    "viewDetails": "Ver detalles",
+    "bookNow": "Reservar ahora"
+  },
+  "footer": {
+    "description": "Descubre las maravillas del antiguo Egipto y experimenta la fascinación atemporal de las pirámides, faraones y el Nilo.",
+    "quickLinks": "Enlaces rápidos",
+    "services": "Servicios",
+    "contactInfo": "Información de contacto",
+    "followUs": "Síguenos",
+    "allRightsReserved": "Todos los derechos reservados",
+    "privacyPolicy": "Política de privacidad",
+    "termsOfService": "Términos de servicio"
+  },
+  "common": {
+    "loading": "Cargando...",
+    "error": "Ha ocurrido un error",
+    "retry": "Reintentar",
+    "close": "Cerrar",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "view": "Ver",
+    "search": "Buscar",
+    "filter": "Filtrar",
+    "sort": "Ordenar",
+    "next": "Siguiente",
+    "previous": "Anterior",
+    "page": "Página",
+    "of": "de",
+    "results": "Resultados",
+    "noResults": "Sin resultados",
+    "required": "Requerido",
+    "optional": "Opcional",
+    "yes": "Sí",
+    "no": "No",
+    "ok": "OK",
+    "success": "Éxito",
+    "warning": "Advertencia",
+    "info": "Información"
+  },
+  "auth": {
+    "login": "Iniciar sesión",
+    "logout": "Cerrar sesión",
+    "register": "Registrarse",
+    "forgotPassword": "¿Olvidaste tu contraseña?",
+    "resetPassword": "Restablecer contraseña",
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "confirmPassword": "Confirmar contraseña",
+    "fullName": "Nombre completo",
+    "rememberMe": "Recordarme",
+    "loginSuccess": "Inicio de sesión exitoso",
+    "logoutSuccess": "Cierre de sesión exitoso",
+    "registerSuccess": "Registro exitoso",
+    "resetPasswordSuccess": "Contraseña restablecida exitosamente",
+    "loginError": "Error al iniciar sesión",
+    "registerError": "Error al registrarse",
+    "resetPasswordError": "Error al restablecer contraseña"
+  },
+  "errors": {
+    "404": {
+      "title": "Página no encontrada",
+      "description": "Lo sentimos, la página que buscas no existe.",
+      "button": "Volver al inicio"
+    },
+    "500": {
+      "title": "Error del servidor",
+      "description": "Lo sentimos, hay un problema con el servidor. Por favor, inténtalo más tarde.",
+      "button": "Reintentar"
+    },
+    "network": {
+      "title": "Error de red",
+      "description": "Por favor, verifica tu conexión a internet e inténtalo de nuevo.",
+      "button": "Reintentar"
+    }
+  },
+  "seo": {
+    "home": {
+      "title": "Viajes a Egipto | Descubre pirámides, faraones y el Nilo",
+      "description": "Descubre las maravillas del antiguo Egipto y experimenta la fascinación atemporal de las pirámides, faraones y el Nilo. Reserva tu viaje a Egipto."
+    },
+    "tours": {
+      "title": "Paquetes turísticos de Egipto | Pirámides, Luxor, Asuán",
+      "description": "Explora nuestros paquetes turísticos cuidadosamente curados de Egipto. Desde las pirámides de El Cairo hasta cruceros por el Nilo, descubre las maravillas del antiguo Egipto."
+    },
+    "about": {
+      "title": "Acerca de nosotros | Expertos en viajes a Egipto",
+      "description": "Conoce nuestra historia y por qué somos tu primera opción para explorar las maravillas de Egipto. 20+ años de experiencia, guías expertos."
+    },
+    "contact": {
+      "title": "Contáctanos | Viajes a Egipto",
+      "description": "¿Tienes preguntas? Contáctanos. Nuestro equipo está aquí para ayudarte a planificar tu viaje perfecto a Egipto."
+    }
+  }
+}

@@ -22,6 +22,9 @@ import TourCardServer from "@/components/tour-card-server"
 import { getTourBySlug, getRelatedTours, getAllTourSlugs } from "@/lib/data/tours"
 import { TourImageGallery } from "@/components/tour-image-gallery"
 import { TourJsonLd } from "@/components/tour-json-ld"
+import { SocialShareButtons } from "@/components/social-share-buttons"
+import { ReviewForm } from "@/components/review-form"
+import { GoogleMaps } from "@/components/google-maps"
 
 interface TourPageProps {
   params: {
@@ -403,8 +406,14 @@ export default async function TourDetailPage({ params }: TourPageProps) {
                 </div>
 
                 <EgyptianDivider className="my-8" />
-
-                <div className="text-center bg-muted/50 rounded-xl p-6">
+                
+                <SocialShareButtons
+                  url={typeof window !== 'undefined' ? window.location.href : ''}
+                  title={tour.title}
+                  description={tour.description}
+                />
+                
+                <div className="text-center bg-muted/50 rounded-xl p-6 mt-8">
                   <p className="text-sm font-semibold text-muted-foreground mb-3 uppercase tracking-wide">
                     Need help?
                   </p>
@@ -461,6 +470,54 @@ export default async function TourDetailPage({ params }: TourPageProps) {
           </div>
         </section>
       )}
+
+        {/* Review Section */}
+        <section className="container py-16 md:py-20">
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center mb-12">
+              <div className="inline-block mb-4">
+                <Badge className="bg-egyptian-gold/10 border border-egyptian-gold/20 text-egyptian-gold font-bold text-sm px-4 py-2">
+                  <Star className="h-4 w-4 inline mr-2 fill-egyptian-gold" />
+                  Share Your Experience
+                </Badge>
+              </div>
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-heading font-extrabold mb-6">
+                Leave a Review
+              </h2>
+              <p className="text-muted-foreground text-lg leading-relaxed mb-8 max-w-2xl mx-auto">
+                Help other travelers by sharing your experience about this tour
+              </p>
+              <EgyptianDivider className="mx-auto" />
+            </div>
+            
+            <div className="grid lg:grid-cols-2 gap-12">
+              <div className="lg:col-span-1">
+                <ReviewForm
+                  tourId={tour.id.toString()}
+                  tourName={tour.title}
+                  onSuccess={() => {
+                    // Refresh the page to show the new review
+                    window.location.reload();
+                  }}
+                />
+              </div>
+              
+              <div className="lg:col-span-1">
+                <Card className="border-2 border-egyptian-gold/30 shadow-xl">
+                  <CardContent className="p-8">
+                    <h3 className="text-2xl font-bold mb-6">Why Leave a Review?</h3>
+                    <div className="space-y-4 text-muted-foreground">
+                      <p>• Your feedback helps us improve our tours</p>
+                      <p>• Reviews assist other travelers in making informed decisions</p>
+                      <p>• Share your highlights and tips for future visitors</p>
+                      <p>• All reviews are verified before publication</p>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+            </div>
+          </div>
+        </section>
 
         <Newsletter />
       </div>

@@ -1,16 +1,15 @@
 import type React from "react"
 import type { Viewport } from "next"
-import "./globals.css";
+import "./globals.css"
 import { Inter } from "next/font/google"
 import { ThemeProvider } from "@/components/theme-provider"
 import { AuthProvider } from "@/contexts/auth-context"
-import Navbar from "@/components/navbar"
-import Footer from "@/components/footer"
+import { StripeProvider } from "@/contexts/stripe-context"
 import { OrganizationJsonLd } from "@/components/tour-json-ld"
-import FloatingContactButton from "@/components/floating-contact-button"
-import Breadcrumb from "@/components/breadcrumb"
 import { defaultMetadata } from "@/lib/metadata"
 import { GoogleAnalytics } from '@next/third-parties/google'
+import { GlobalErrorBoundary } from "@/components/global-error-boundary"
+import { Toaster } from "@/components/ui/toaster"
 
 const inter = Inter({
   subsets: ["latin"],
@@ -40,31 +39,27 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html suppressHydrationWarning>
       <head>
         <OrganizationJsonLd />
       </head>
       <body className={`${inter.variable} ${heading.variable} font-sans`}>
-        <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
-          <AuthProvider>
-            <div className="flex min-h-screen flex-col">
-              <Navbar />
-              <Breadcrumb />
-              <main className="flex-1">{children}</main>
-              <Footer />
-              <FloatingContactButton />
-            </div>
-          </AuthProvider>
-        </ThemeProvider>
+        <GlobalErrorBoundary>
+          <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
+            <AuthProvider>
+              <StripeProvider>
+                {children}
+              </StripeProvider>
+            </AuthProvider>
+          </ThemeProvider>
+        </GlobalErrorBoundary>
+        <Toaster />
 
-        {/* Google Analytics */}
-        {process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID && (
-          <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID} />
-        )}
+      {/* Google Analytics */}
+      {process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID && (
+        <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID} />
+      )}
       </body>
     </html>
   )
 }
-
-
-

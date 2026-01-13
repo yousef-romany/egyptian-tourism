@@ -59,6 +59,19 @@ export default function BookNowPage() {
       // Import strapi API
       const strapiAPI = (await import('@/lib/api/strapi')).default
 
+      // Calculate a sample price based on tour type and number of travelers
+      // In a real app, this would come from the tour data
+      const basePrice = {
+        'pyramids': 150,
+        'luxor': 200,
+        'nile': 350,
+        'red-sea': 250,
+        'desert': 180,
+        'custom': 300
+      }[data.tourType] || 200;
+      
+      const totalPrice = basePrice * parseInt(data.numberOfTravelers);
+
       // Create booking in Strapi
       const booking = await strapiAPI.bookings.create({
         tourName: data.tourType,
@@ -67,22 +80,20 @@ export default function BookNowPage() {
         phone: data.phone,
         numberOfPeople: parseInt(data.numberOfTravelers),
         tourDate: data.travelDate,
-        totalPrice: 0, // Will be calculated by admin
+        totalPrice: totalPrice, // Now using calculated price
         specialRequests: data.specialRequests || '',
         nationality: data.country,
       })
 
-      console.log("Booking created:", booking)
-
       // Track booking completion in Google Analytics
       if (typeof window !== 'undefined' && window.gtag) {
-        window.gtag('event', 'booking_completed', {
+        window.gtag('event', 'booking_initiated', {
           tour_name: data.tourType,
           number_of_travelers: parseInt(data.numberOfTravelers),
           travel_date: data.travelDate,
           country: data.country,
           booking_reference: booking.bookingReference || `EGY-${booking.id}`,
-          value: 0, // Will be updated when price is calculated
+          value: totalPrice,
           currency: 'USD'
         })
       }
@@ -96,8 +107,19 @@ export default function BookNowPage() {
 
       setIsSubmitting(false)
 
-      // Redirect to confirmation page
-      router.push('/book-now/confirmation')
+      // Redirect to checkout page instead of confirmation
+      const bookingReference = booking.bookingReference || `EGY-${booking.id}`;
+      const queryParams = new URLSearchParams({
+        bookingReference,
+        totalPrice: totalPrice.toString(),
+        customerName: `${data.firstName} ${data.lastName}`,
+        email: data.email,
+        tourName: data.tourType,
+        tourDate: data.travelDate,
+        numberOfPeople: data.numberOfTravelers,
+      });
+      
+      router.push(`/checkout?${queryParams.toString()}`);
 
     } catch (error) {
       console.error("Booking failed:", error)

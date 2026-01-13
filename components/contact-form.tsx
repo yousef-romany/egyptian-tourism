@@ -80,7 +80,7 @@ export default function ContactForm() {
         message: data.message,
       })
 
-      console.log("Contact form submitted successfully")
+      // Contact form submitted successfully
 
       // Track contact form submission in Google Analytics
       if (typeof window !== 'undefined' && window.gtag) {
