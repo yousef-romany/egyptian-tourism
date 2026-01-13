@@ -2,9 +2,9 @@ import { getAllTourSlugs } from "@/lib/data/tours"
 import { getAllPostSlugs } from "@/lib/data/blog"
 
 export async function GET() {
-  const baseUrl = "https://egydisetours.com"
-  const tourSlugs = getAllTourSlugs()
-  const blogSlugs = getAllPostSlugs()
+  const baseUrl = "https://wonderlandegypt.com"
+  const tourSlugs = await getAllTourSlugs()
+  const blogSlugs = await getAllPostSlugs()
 
   const staticPages = [
     "",
@@ -37,7 +37,7 @@ export async function GET() {
   </url>`
     )
     .join("")}
-  ${tourSlugs
+  ${(await tourSlugs)
     .map(
       (slug) => `
   <url>
@@ -48,7 +48,7 @@ export async function GET() {
   </url>`
     )
     .join("")}
-  ${blogSlugs
+  ${(await blogSlugs)
     .map(
       (slug) => `
   <url>
@@ -59,7 +59,7 @@ export async function GET() {
   </url>`
     )
     .join("")}
-</urlset>`
+  </urlset>`
 
   return new Response(sitemap, {
     headers: {

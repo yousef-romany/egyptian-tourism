@@ -22,13 +22,13 @@ export default function Footer() {
               <div className="relative w-12 h-12 overflow-hidden">
                 <Image
                   src="/logo.png"
-                  alt="Egydise Tours Logo"
+                  alt="WanderLand Egypt Logo"
                   width={48}
                   height={48}
                   className="object-contain"
                 />
               </div>
-              <span className="text-xl font-heading font-bold tracking-wider text-egyptian-gold">Egydise Tours</span>
+              <span className="text-xl font-heading font-bold tracking-wider text-egyptian-gold">WanderLand Egypt</span>
             </div>
             <p className="text-white/70 mb-6 leading-relaxed">
               Experience the magic of ancient Egypt with our expert-guided tours. From the majestic pyramids to the
@@ -36,7 +36,7 @@ export default function Footer() {
             </p>
             <div className="flex space-x-3">
               <Link
-                href="https://facebook.com/egydise"
+                href="https://facebook.com/wanderlandegypt"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="h-11 w-11 rounded-full bg-white/10 flex items-center justify-center hover:bg-egyptian-gold hover:scale-110 transition-all duration-300 group"
@@ -45,7 +45,7 @@ export default function Footer() {
                 <Facebook className="h-5 w-5 group-hover:text-black" />
               </Link>
               <Link
-                href="https://instagram.com/egydise"
+                href="https://instagram.com/wanderlandegypt"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="h-11 w-11 rounded-full bg-white/10 flex items-center justify-center hover:bg-egyptian-gold hover:scale-110 transition-all duration-300 group"
@@ -54,7 +54,7 @@ export default function Footer() {
                 <Instagram className="h-5 w-5 group-hover:text-black" />
               </Link>
               <Link
-                href="https://twitter.com/egydise"
+                href="https://twitter.com/wanderlandegypt"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="h-11 w-11 rounded-full bg-white/10 flex items-center justify-center hover:bg-egyptian-gold hover:scale-110 transition-all duration-300 group"
@@ -63,7 +63,7 @@ export default function Footer() {
                 <Twitter className="h-5 w-5 group-hover:text-black" />
               </Link>
               <Link
-                href="https://youtube.com/@egydise"
+                href="https://youtube.com/@wanderlandegypt"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="h-11 w-11 rounded-full bg-white/10 flex items-center justify-center hover:bg-egyptian-gold hover:scale-110 transition-all duration-300 group"
@@ -175,10 +175,10 @@ export default function Footer() {
               <li className="flex items-center gap-3">
                 <Mail className="h-5 w-5 text-egyptian-gold flex-shrink-0" />
                 <Link
-                  href="mailto:info@egydise-tours.com"
+                  href="mailto:info@wonderlandegypt.com"
                   className="text-white/70 hover:text-egyptian-gold transition-colors"
                 >
-                  info@egydise-tours.com
+                  info@wonderlandegypt.com
                 </Link>
               </li>
             </ul>
@@ -199,7 +199,7 @@ export default function Footer() {
 
         <div className="border-t border-white/10 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-white/50 text-sm text-center md:text-left">
-            &copy; {currentYear} Egydise Tours. All rights reserved.
+            &copy; {currentYear} WanderLand Egypt. All rights reserved.
           </p>
           <div className="flex flex-wrap gap-4 text-sm text-white/50 justify-center md:justify-end">
             <Link href="/terms" className="hover:text-egyptian-gold transition-colors">

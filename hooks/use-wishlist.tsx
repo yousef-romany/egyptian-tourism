@@ -4,7 +4,7 @@ import { useState, useEffect } from "react"
 import type { Tour } from "@/lib/data/tours"
 import { useAuth } from "@/contexts/auth-context"
 
-const WISHLIST_STORAGE_KEY = "egydise-wishlist"
+const WISHLIST_STORAGE_KEY = "wonderlandegypt-wishlist"
 
 export function useWishlist() {
   const [wishlist, setWishlist] = useState<Tour[]>([])

@@ -1,7 +1,7 @@
 import { Metadata } from 'next'
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'
-const SITE_NAME = process.env.NEXT_PUBLIC_SITE_NAME || 'Egydise Tours'
+const SITE_NAME = process.env.NEXT_PUBLIC_SITE_NAME || 'WanderLand Egypt'
 
 /**
  * Generate enhanced metadata with Open Graph and Twitter Cards
@@ -112,7 +112,7 @@ export function generateTourMetadata(tour: {
   category?: string
   price?: string
 }): Metadata {
-  const description = tour.description || `Book your ${tour.title} adventure with Egydise Tours. Experience the best of Egypt with our expert guides.`
+  const description = tour.description || `Book your ${tour.title} adventure with WanderLand Egypt. Experience the best of Egypt with our expert guides.`
 
   return generateEnhancedMetadata({
     title: tour.title,
@@ -165,10 +165,10 @@ export function generateOrganizationJsonLd() {
     url: SITE_URL,
     logo: `${SITE_URL}/logo.png`,
     sameAs: [
-      'https://www.facebook.com/egydisetours',
-      'https://www.instagram.com/egydisetours',
-      'https://www.twitter.com/egydisetours',
-      'https://www.tripadvisor.com/EGydiseTours',
+      'https://www.facebook.com/wanderlandegypt',
+      'https://www.instagram.com/wanderlandegypt',
+      'https://www.twitter.com/wanderlandegypt',
+      'https://www.tripadvisor.com/WanderLandEgypt',
     ],
     contactPoint: {
       '@type': 'ContactPoint',
@@ -245,7 +245,7 @@ export function generateBlogPostJsonLd(post: {
     url: `${SITE_URL}${post.url}`,
     author: {
       '@type': 'Person',
-      name: post.author || 'Egydise Tours Team',
+      name: post.author || 'WanderLand Egypt Team',
     },
     publisher: {
       '@type': 'Organization',

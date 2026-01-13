@@ -1,12 +1,12 @@
 import type { Metadata } from "next"
 
-const siteUrl = "https://egydisetours.com"
+const siteUrl = "https://wonderlandegypt.com"
 
 export const defaultMetadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Egydise Tours - Experience the Magic of Egypt",
-    template: "%s | Egydise Tours"
+    default: "WanderLand Egypt - Experience Magic of Egypt",
+    template: "%s | WanderLand Egypt"
   },
   description:
     "Discover the wonders of Egypt with our award-winning tours. From the majestic pyramids to the serene Nile River. Expert guides, 5-star reviews.",
@@ -26,9 +26,9 @@ export const defaultMetadata: Metadata = {
     "Sphinx tours",
     "Temple of Karnak",
   ],
-  authors: [{ name: "Egydise Tours" }],
-  creator: "Egydise Tours",
-  publisher: "Egydise Tours",
+  authors: [{ name: "WanderLand Egypt" }],
+  creator: "WanderLand Egypt",
+  publisher: "WanderLand Egypt",
   formatDetection: {
     email: false,
     address: false,
@@ -41,8 +41,8 @@ export const defaultMetadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: siteUrl,
-    siteName: "Egydise Tours",
-    title: "Egydise Tours - Experience the Magic of Egypt",
+    siteName: "WanderLand Egypt",
+    title: "WanderLand Egypt - Experience Magic of Egypt",
     description:
       "Discover the wonders of Egypt with our award-winning tours. From the majestic pyramids to the serene Nile River. Expert guides, 5-star reviews.",
     images: [
@@ -50,18 +50,18 @@ export const defaultMetadata: Metadata = {
         url: "/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "Egydise Tours - Egyptian Tourism",
+        alt: "WanderLand Egypt - Egyptian Tourism",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Egydise Tours - Experience the Magic of Egypt",
+    title: "WanderLand Egypt - Experience Magic of Egypt",
     description:
       "Discover the wonders of Egypt with our award-winning tours. From the majestic pyramids to the serene Nile River. Expert guides, 5-star reviews.",
     images: ["/og-image.jpg"],
-    creator: "@egydise",
-    site: "@egydise",
+    creator: "@wonderlandegypt",
+    site: "@wonderlandegypt",
   },
   robots: {
     index: true,
@@ -106,7 +106,7 @@ export function generatePageMetadata(
       description,
       url,
       type: "website",
-      siteName: "Egydise Tours",
+      siteName: "WanderLand Egypt",
       locale: "en_US",
       images: [
         {
@@ -122,8 +122,8 @@ export function generatePageMetadata(
       title,
       description,
       images: [ogImage],
-      creator: "@egydise",
-      site: "@egydise",
+      creator: "@wonderlandegypt",
+      site: "@wonderlandegypt",
     },
   }
 }

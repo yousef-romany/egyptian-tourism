@@ -9,6 +9,7 @@ import { Calendar, Clock, User, ArrowLeft, Share2, Facebook, Twitter, Linkedin, 
 import EgyptianDivider from "@/components/egyptian-divider"
 import Newsletter from "@/components/newsletter"
 import Breadcrumb from "@/components/breadcrumb"
+import { CommentSection } from "@/components/blog/comment-section"
 import { getPostBySlug, getAllPostSlugs, getRelatedPosts } from "@/lib/data/blog"
 
 interface BlogPostPageProps {
@@ -246,6 +247,11 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
               </div>
             </CardContent>
           </Card>
+
+          {/* Comments Section */}
+          <div className="mt-12">
+            <CommentSection postId={post.id} postSlug={post.slug} />
+          </div>
         </div>
       </article>
 

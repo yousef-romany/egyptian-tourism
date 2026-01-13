@@ -80,7 +80,7 @@ export function PWAInstallPrompt() {
         <div className="flex-1">
           <h3 className="font-bold text-lg mb-1 text-egyptian-gold">Install App</h3>
           <p className="text-sm text-muted-foreground mb-3">
-            Install Egydise Tours for a better experience. Access tours offline and get faster loading.
+            Install WanderLand Egypt for a better experience. Access tours offline and get faster loading.
           </p>
           <div className="flex gap-2">
             <Button

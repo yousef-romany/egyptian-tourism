@@ -13,7 +13,7 @@ interface SocialShareButtonsProps {
 
 export function SocialShareButtons({ 
   url = typeof window !== 'undefined' ? window.location.href : '', 
-  title = 'Egydise Tours - Discover the Wonders of Egypt',
+  title = 'WanderLand Egypt - Discover the Wonders of Egypt',
   description = 'Join us for an unforgettable journey through ancient Egypt\'s most spectacular sites.'
 }: SocialShareButtonsProps) {
   const [copied, setCopied] = useState(false);

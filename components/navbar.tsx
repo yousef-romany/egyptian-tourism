@@ -101,7 +101,7 @@ export default function Navbar() {
           <Link href="/" className="flex items-center justify-center gap-2 z-50">
               <Image
                 src={logo}
-                alt="Egydise Tours Logo"
+                alt="WanderLand Egypt Logo"
                 className="object-contain max-w-[180px]"
               />
           </Link>
@@ -255,14 +255,14 @@ export default function Navbar() {
                     <div className="relative w-8 h-8 overflow-hidden">
                       <Image
                         src="/placeholder.svg?height=32&width=32"
-                        alt="Egydise Tours Logo"
+                        alt="WanderLand Egypt Logo"
                         width={32}
                         height={32}
                         className="object-contain"
                       />
                     </div>
                     <span className="text-lg font-heading font-bold tracking-wider text-egyptian-gold">
-                      Egydise Tours
+                      WanderLand Egypt
                     </span>
                   </div>
                 </div>

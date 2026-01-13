@@ -8,7 +8,7 @@ Disallow: /api/
 Disallow: /admin/
 
 # Sitemap location
-Sitemap: https://egydisetours.com/sitemap.xml
+Sitemap: https://wonderlandegypt.com/sitemap.xml
 `
 
   return new Response(robotsTxt, {

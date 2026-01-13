@@ -49,13 +49,13 @@ export default function FloatingContactButton() {
               </a>
 
               <a
-                href="mailto:info@egydisetours.com"
+                href="mailto:info@wonderlandegypt.com"
                 className="flex items-center gap-3 p-3 rounded-lg bg-blue-500 hover:bg-blue-600 text-white transition-colors duration-200 group"
               >
                 <Mail className="h-6 w-6" />
                 <div className="text-left">
                   <div className="text-xs opacity-90">Email Us</div>
-                  <div className="font-semibold text-sm">info@egydisetours.com</div>
+                  <div className="font-semibold text-sm">info@wonderlandegypt.com</div>
                 </div>
               </a>
             </div>

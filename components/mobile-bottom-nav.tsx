@@ -92,14 +92,14 @@ export function MobileBottomNav() {
                         <div className="relative w-12 h-12 overflow-hidden">
                           <Image
                             src="/logo.png"
-                            alt="Egydise Tours"
+                            alt="WanderLand Egypt"
                             width={48}
                             height={48}
                             className="object-contain"
                           />
                         </div>
                         <div>
-                          <h2 className="text-xl font-heading font-bold text-egyptian-gold">Egydise Tours</h2>
+                          <h2 className="text-xl font-heading font-bold text-egyptian-gold">WanderLand Egypt</h2>
                           <p className="text-sm text-muted-foreground">Menu</p>
                         </div>
                       </div>

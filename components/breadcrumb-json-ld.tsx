@@ -6,7 +6,7 @@ interface BreadcrumbJsonLdProps {
   baseUrl?: string
 }
 
-export function BreadcrumbJsonLd({ baseUrl = "https://egydisetours.com" }: BreadcrumbJsonLdProps) {
+export function BreadcrumbJsonLd({ baseUrl = "https://wonderlandegypt.com" }: BreadcrumbJsonLdProps) {
   const pathname = usePathname()
 
   // Don't add structured data for home page

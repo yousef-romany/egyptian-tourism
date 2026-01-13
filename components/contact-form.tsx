@@ -261,7 +261,7 @@ export default function ContactForm() {
                 >
                   Privacy Policy
                 </Link>{" "}
-                and consent to Egydise Tours processing my data.{" "}
+                and consent to WanderLand Egypt processing my data.{" "}
                 <span className="text-red-500">*</span>
               </Label>
               {errors.privacy && (

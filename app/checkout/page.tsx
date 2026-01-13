@@ -5,10 +5,12 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
-import { Loader2, ArrowLeft, Calendar, Users, MapPin, Shield, CheckCircle, Clock } from 'lucide-react';
+import { Loader2, ArrowLeft, Calendar, Users, MapPin, Shield, CheckCircle, Clock, Tag } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
 import Link from 'next/link';
 import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
+import { PromoCodeInput } from '@/components/promo-code-input';
+import type { PromoCodeValidation } from '@/lib/api/strapi';
 
 export default function CheckoutPage() {
   const router = useRouter();
@@ -18,6 +20,8 @@ export default function CheckoutPage() {
   const [bookingData, setBookingData] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string>('');
+  const [promoValidation, setPromoValidation] = useState<PromoCodeValidation | null>(null);
+  const [finalPrice, setFinalPrice] = useState<number>(0);
 
   // Get PayPal Client ID from env
   const PAYPAL_CLIENT_ID = process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID || 'test';
@@ -49,8 +53,45 @@ export default function CheckoutPage() {
     };
 
     setBookingData(bookingInfo);
+    setFinalPrice(bookingInfo.totalPrice);
     setIsLoading(false);
   }, [bookingReference, totalPrice, customerName, email, tourName, tourDate, numberOfPeople]);
+
+  // Handle promo code application
+  const handlePromoCodeApplied = (validation: PromoCodeValidation) => {
+    setPromoValidation(validation);
+
+    if (validation.valid && validation.discountAmount && bookingData) {
+      let discountedPrice = bookingData.totalPrice;
+
+      if (validation.discountType === 'percentage') {
+        // Already calculated on backend
+        discountedPrice = bookingData.totalPrice - validation.discountAmount;
+      } else if (validation.discountType === 'fixed') {
+        discountedPrice = bookingData.totalPrice - validation.discountAmount;
+      }
+
+      // Ensure price doesn't go below 0
+      setFinalPrice(Math.max(0, discountedPrice));
+
+      toast({
+        title: "Discount Applied!",
+        description: `You saved $${validation.discountAmount.toFixed(2)}`,
+      });
+    }
+  };
+
+  // Handle promo code removal
+  const handlePromoCodeRemoved = () => {
+    setPromoValidation(null);
+    if (bookingData) {
+      setFinalPrice(bookingData.totalPrice);
+    }
+    toast({
+      title: "Promo code removed",
+      description: "Original price restored",
+    });
+  };
 
   const createOrder = async () => {
     if (!bookingData) throw new Error("No booking details");
@@ -62,9 +103,9 @@ export default function CheckoutPage() {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            amount: bookingData.totalPrice,
+            amount: finalPrice, // Use final price after discount
             currency: 'USD',
-            description: `${bookingData.tourName} - ${bookingData.numberOfPeople} people`,
+            description: `${bookingData.tourName} - ${bookingData.numberOfPeople} people${promoValidation?.valid ? ` (Promo: ${promoValidation.code})` : ''}`,
             bookingReference: bookingData.bookingReference,
             bookingId: bookingData.bookingReference,
           }),
@@ -239,16 +280,44 @@ export default function CheckoutPage() {
 
               <Separator />
 
-              <div className="flex justify-between items-center text-lg font-semibold">
-                <span>Total</span>
-                <span>${bookingData.totalPrice.toFixed(2)}</span>
+              <div className="space-y-2">
+                <div className="flex justify-between items-center">
+                  <span className="text-sm">Subtotal</span>
+                  <span className="text-sm">${bookingData.totalPrice.toFixed(2)}</span>
+                </div>
+
+                {promoValidation?.valid && promoValidation.discountAmount && (
+                  <div className="flex justify-between items-center text-green-600 dark:text-green-400">
+                    <div className="flex items-center gap-1">
+                      <Tag className="h-3 w-3" />
+                      <span className="text-sm">Discount ({promoValidation.code})</span>
+                    </div>
+                    <span className="text-sm">-${promoValidation.discountAmount.toFixed(2)}</span>
+                  </div>
+                )}
+
+                <Separator />
+
+                <div className="flex justify-between items-center text-lg font-semibold">
+                  <span>Total</span>
+                  <span className={promoValidation?.valid ? "text-green-600 dark:text-green-400" : ""}>
+                    ${finalPrice.toFixed(2)}
+                  </span>
+                </div>
               </div>
             </CardContent>
           </Card>
         </div>
 
         {/* PayPal Payment */}
-        <div className="lg:col-span-2">
+        <div className="lg:col-span-2 space-y-6">
+          {/* Promo Code Section */}
+          <PromoCodeInput
+            totalPrice={bookingData.totalPrice}
+            onCodeApplied={handlePromoCodeApplied}
+            onCodeRemoved={handlePromoCodeRemoved}
+          />
+
           <Card>
             <CardHeader>
               <CardTitle>Pay with PayPal</CardTitle>

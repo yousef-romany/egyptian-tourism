@@ -43,17 +43,17 @@ interface OrganizationJsonLdProps {
   url?: string
 }
 
-export function OrganizationJsonLd({ url = "https://egydise-tours.com" }: OrganizationJsonLdProps) {
+export function OrganizationJsonLd({ url = "https://wonderlandegypt.com" }: OrganizationJsonLdProps) {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "TravelAgency",
-    name: "Egydise Tours",
+    name: "WanderLand Egypt",
     description: "Award-winning Egyptian tour operator offering expert-guided tours to Egypt's most iconic destinations.",
     url: url,
     logo: `${url}/logo.png`,
     image: `${url}/placeholder.svg?height=630&width=1200`,
     telephone: "+20-100-123-4567", // TODO: Update with actual business phone number
-    email: "info@egydise-tours.com",
+    email: "info@wonderlandegypt.com",
     address: {
       "@type": "PostalAddress",
       addressCountry: "Egypt",
@@ -67,9 +67,9 @@ export function OrganizationJsonLd({ url = "https://egydise-tours.com" }: Organi
       worstRating: 1,
     },
     sameAs: [
-      "https://www.facebook.com/egydise",
-      "https://www.instagram.com/egydise",
-      "https://twitter.com/egydise",
+      "https://www.facebook.com/wanderlandegypt",
+      "https://www.instagram.com/wanderlandegypt",
+      "https://twitter.com/wanderlandegypt",
     ],
   }
 

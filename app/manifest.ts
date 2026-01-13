@@ -2,8 +2,8 @@ import { MetadataRoute } from 'next'
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: 'Egydise Tours - Discover the Wonders of Egypt',
-    short_name: 'Egydise Tours',
+    name: 'WanderLand Egypt - Discover Wonders of Egypt',
+    short_name: 'WanderLand Egypt',
     description: 'Experience unforgettable Egyptian adventures with expert-guided tours to pyramids, temples, and Nile cruises.',
     start_url: '/',
     display: 'standalone',

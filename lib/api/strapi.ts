@@ -222,6 +222,23 @@ export interface ContactSubmission {
   updatedAt: string
 }
 
+export interface BlogComment {
+  id: number
+  content: string
+  author: string
+  email: string
+  post?: BlogPost
+  parent?: BlogComment
+  replies?: BlogComment[]
+  user?: User
+  status: 'pending' | 'approved' | 'rejected' | 'spam'
+  ipAddress?: string
+  userAgent?: string
+  approvedAt?: string
+  createdAt: string
+  updatedAt: string
+}
+
 export interface Testimonial {
   id: number
   customerName: string
@@ -1019,6 +1036,127 @@ export const contact = {
 }
 
 // ============================================================================
+// Blog Comments API
+// ============================================================================
+
+export const blogComments = {
+  /**
+   * Get approved comments for a blog post
+   */
+  async getByPost(postId: number, page: number = 1, limit: number = 10): Promise<{ data: BlogComment[]; meta: any }> {
+    const response = await apiFetch<{ data: BlogComment[]; meta: any }>(
+      `/blog-comments/post/${postId}?page=${page}&limit=${limit}`
+    )
+    return response
+  },
+
+  /**
+   * Get comment count for a post
+   */
+  async getCountByPost(postId: number): Promise<number> {
+    const response = await apiFetch<{ data: { count: number } }>(`/blog-comments/count/${postId}`)
+    return response.data.count
+  },
+
+  /**
+   * Submit a comment (requires authentication)
+   */
+  async submit(data: {
+    content: string
+    author: string
+    email: string
+    postId: number
+    parentId?: number
+  }): Promise<{ data: BlogComment; message: string }> {
+    return apiFetch('/blog-comments/submit', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    })
+  },
+
+  /**
+   * Moderate a comment (admin only)
+   */
+  async moderate(commentId: number, status: 'approved' | 'rejected' | 'spam'): Promise<BlogComment> {
+    const response = await apiFetch<{ data: BlogComment }>(`/blog-comments/${commentId}/moderate`, {
+      method: 'POST',
+      body: JSON.stringify({ status }),
+    })
+    return response.data
+  },
+}
+
+// ============================================================================
+// Admin Dashboard API
+// ============================================================================
+
+export const adminDashboard = {
+  /**
+   * Get dashboard overview statistics
+   */
+  async getOverview(): Promise<any> {
+    const response = await apiFetch<{ data: any }>('/admin-dashboard/overview')
+    return response.data
+  },
+
+  /**
+   * Get sales analytics
+   */
+  async getSalesAnalytics(startDate?: string, endDate?: string): Promise<any> {
+    const params = new URLSearchParams()
+    if (startDate) params.append('startDate', startDate)
+    if (endDate) params.append('endDate', endDate)
+    const query = params.toString() ? `?${params.toString()}` : ''
+    const response = await apiFetch<{ data: any }>(`/admin-dashboard/sales${query}`)
+    return response.data
+  },
+
+  /**
+   * Get bookings with pagination and filters
+   */
+  async getBookings(page: number = 1, limit: number = 10, status?: string, search?: string): Promise<any> {
+    const params = new URLSearchParams()
+    params.append('page', String(page))
+    params.append('limit', String(limit))
+    if (status) params.append('status', status)
+    if (search) params.append('search', search)
+    return apiFetch(`/admin-dashboard/bookings?${params.toString()}`)
+  },
+
+  /**
+   * Get top performing tours
+   */
+  async getTopTours(limit: number = 10): Promise<any> {
+    const response = await apiFetch<{ data: any }>(`/admin-dashboard/top-tours?limit=${limit}`)
+    return response.data
+  },
+
+  /**
+   * Get customer insights
+   */
+  async getCustomers(): Promise<any> {
+    const response = await apiFetch<{ data: any }>('/admin-dashboard/customers')
+    return response.data
+  },
+
+  /**
+   * Get revenue chart data
+   */
+  async getRevenueChart(period: number = 30): Promise<any> {
+    const response = await apiFetch<{ data: any }>(`/admin-dashboard/revenue-chart?period=${period}`)
+    return response.data
+  },
+
+  /**
+   * Get booking stats distribution
+   */
+  async getBookingStats(): Promise<any> {
+    const response = await apiFetch<{ data: any }>('/admin-dashboard/booking-stats')
+    return response.data
+  },
+}
+
+// ============================================================================
 // Default Export
 // ============================================================================
 
@@ -1032,6 +1170,10 @@ const strapiAPI = {
   wishlist,
   newsletter,
   contact,
+  blogComments,
+  testimonials,
+  promoCodes,
+  adminDashboard,
   getMediaUrl,
   getStoredUser,
 }

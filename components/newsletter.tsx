@@ -187,7 +187,7 @@ export default function Newsletter() {
 
           <p className="text-xs text-muted-foreground mt-4">
             By subscribing, you agree to our <Link href="/privacy-policy">Privacy Policy</Link> and consent to receive
-            updates from Egydise Tours.
+            updates from WanderLand Egypt.
           </p>
         </div>
       </div>
