@@ -5,6 +5,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Star, MapPin, Clock } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { WishlistButton } from "./wishlist-button"
+import { CompareButton } from "./compare-button"
 import { PriceDisplay } from "./currency/price-display"
 import type { Tour } from "@/lib/data/tours"
 
@@ -69,9 +70,12 @@ export default function TourCardServer({ tour }: TourCardServerProps) {
               <span className="text-muted-foreground">{tour.duration}</span>
             </div>
           </div>
-          <Button className="w-full mt-2 bg-gradient-to-r from-[#0c1e35] to-[#1a3a5f] hover:from-[#1a3a5f] hover:to-[#0c1e35] text-white shadow-md hover:shadow-lg transition-all duration-300">
-            View Details
-          </Button>
+          <div className="flex gap-2 mt-2">
+            <Button className="flex-1 bg-gradient-to-r from-[#0c1e35] to-[#1a3a5f] hover:from-[#1a3a5f] hover:to-[#0c1e35] text-white shadow-md hover:shadow-lg transition-all duration-300">
+              View Details
+            </Button>
+            <CompareButton tour={tour} />
+          </div>
         </CardContent>
       </Card>
     </Link>

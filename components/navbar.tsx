@@ -14,6 +14,7 @@ import ModeToggle from "./ModeToggle";
 import MegaMenu from "./mega-menu";
 import { CurrencySelector } from "./currency";
 import { LanguageSwitcher } from "./language";
+import { SearchInput } from "./search-input";
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -55,6 +56,10 @@ export default function Navbar() {
     {
       name: "Reviews",
       href: "/reviews",
+    },
+    {
+      name: "Testimonials",
+      href: "/testimonials",
     },
     {
       name: "Blog",
@@ -190,30 +195,11 @@ export default function Navbar() {
               <Search className="h-5 w-5" />
             </button>
             <ModeToggle />
-            <AnimatePresence>
-              {isSearchOpen && (
-                <motion.div
-                  initial={{ width: 0, opacity: 0 }}
-                  animate={{ width: 200, opacity: 1 }}
-                  exit={{ width: 0, opacity: 0 }}
-                  transition={{ duration: 0.2 }}
-                  className="relative"
-                >
-                  <input
-                    type="text"
-                    placeholder="Search..."
-                    className="w-full h-10 pl-3 pr-8 rounded-md border border-egyptian-gold/30 focus:border-egyptian-gold focus:outline-none"
-                    autoFocus
-                  />
-                  <button
-                    onClick={() => setIsSearchOpen(false)}
-                    className="absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
-                  >
-                    <X className="h-4 w-4" />
-                  </button>
-                </motion.div>
-              )}
-            </AnimatePresence>
+            <SearchInput
+              isOpen={isSearchOpen}
+              onClose={() => setIsSearchOpen(false)}
+              variant="desktop"
+            />
 
             <Button
               asChild
@@ -268,12 +254,11 @@ export default function Navbar() {
                 </div>
 
                 <div className="p-4">
-                  <div className="relative mb-4">
-                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                    <input
-                      type="text"
-                      placeholder="Search..."
-                      className="w-full h-10 pl-9 pr-3 rounded-md border border-egyptian-gold/30 focus:border-egyptian-gold focus:outline-none"
+                  <div className="mb-4">
+                    <SearchInput
+                      isOpen={true}
+                      onClose={() => {}}
+                      variant="mobile"
                     />
                   </div>
                 </div>

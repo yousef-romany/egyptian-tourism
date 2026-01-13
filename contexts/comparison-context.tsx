@@ -1,30 +1,21 @@
 "use client"
 
 import { createContext, useContext, useState, useEffect } from 'react'
-
-interface Tour {
-  id: number
-  title: string
-  slug: string
-  image: string
-  price: string
-  duration: string
-  location: string
-  rating: number
-  reviews: number
-}
+import type { Tour } from '@/lib/data/tours'
 
 interface ComparisonContextType {
   compareList: Tour[]
-  addToCompare: (tour: Tour) => void
+  addToCompare: (tour: Tour) => { success: boolean; message: string }
   removeFromCompare: (tourId: number) => void
   clearCompare: () => void
   isInCompare: (tourId: number) => boolean
+  canAddMore: () => boolean
+  maxTours: number
 }
 
 const ComparisonContext = createContext<ComparisonContextType | undefined>(undefined)
 
-const MAX_COMPARE = 3
+const MAX_COMPARE = 4
 
 export function ComparisonProvider({ children }: { children: React.ReactNode }) {
   const [compareList, setCompareListState] = useState<Tour[]>([])
@@ -51,20 +42,49 @@ export function ComparisonProvider({ children }: { children: React.ReactNode }) 
 
   const addToCompare = (tour: Tour) => {
     if (compareList.length >= MAX_COMPARE) {
-      alert('You can only compare up to 3 tours at a time')
-      return
+      return {
+        success: false,
+        message: `You can only compare up to ${MAX_COMPARE} tours at once`
+      }
     }
 
     if (compareList.some(t => t.id === tour.id)) {
-      alert('This tour is already in your comparison list')
-      return
+      return {
+        success: false,
+        message: 'This tour is already in your comparison list'
+      }
     }
 
     setCompareList([...compareList, tour])
+
+    // Track in Google Analytics
+    if (typeof window !== 'undefined' && window.gtag) {
+      window.gtag('event', 'add_to_comparison', {
+        item_id: tour.id,
+        item_name: tour.title,
+        item_category: tour.category,
+        price: tour.price,
+      })
+    }
+
+    return {
+      success: true,
+      message: 'Tour added to comparison'
+    }
   }
 
   const removeFromCompare = (tourId: number) => {
+    const tour = compareList.find(t => t.id === tourId)
     setCompareList(compareList.filter(t => t.id !== tourId))
+
+    // Track in Google Analytics
+    if (typeof window !== 'undefined' && window.gtag && tour) {
+      window.gtag('event', 'remove_from_comparison', {
+        item_id: tourId,
+        item_name: tour.title,
+        item_category: tour.category,
+      })
+    }
   }
 
   const clearCompare = () => {
@@ -75,6 +95,10 @@ export function ComparisonProvider({ children }: { children: React.ReactNode }) 
     return compareList.some(t => t.id === tourId)
   }
 
+  const canAddMore = () => {
+    return compareList.length < MAX_COMPARE
+  }
+
   return (
     <ComparisonContext.Provider
       value={{
@@ -83,6 +107,8 @@ export function ComparisonProvider({ children }: { children: React.ReactNode }) 
         removeFromCompare,
         clearCompare,
         isInCompare,
+        canAddMore,
+        maxTours: MAX_COMPARE,
       }}
     >
       {children}

@@ -279,6 +279,21 @@ export interface PromoCode {
   updatedAt: string
 }
 
+export interface Gallery {
+  id: number
+  title: string
+  slug: string
+  description?: string
+  category: 'pyramids' | 'temples' | 'landscape' | 'desert' | 'culture' | 'nile' | 'museums' | 'markets'
+  location: string
+  images: StrapiMedia[]
+  featured: boolean
+  displayOrder: number
+  createdAt: string
+  updatedAt: string
+  publishedAt: string
+}
+
 export interface PromoCodeValidation {
   valid: boolean
   message?: string
@@ -1157,6 +1172,97 @@ export const adminDashboard = {
 }
 
 // ============================================================================
+// Gallery API
+// ============================================================================
+
+export const galleries = {
+  /**
+   * Get all galleries
+   */
+  async getAll(params?: {
+    populate?: string
+    filters?: any
+    sort?: string
+    category?: string
+  }): Promise<{ data: Gallery[]; meta?: any }> {
+    const queryParams = new URLSearchParams()
+
+    if (params?.populate) queryParams.append('populate', params.populate)
+    if (params?.sort) queryParams.append('sort', params.sort)
+    if (params?.category && params.category !== 'all') {
+      queryParams.append('category', params.category)
+    }
+
+    const query = queryParams.toString() ? `?${queryParams.toString()}` : ''
+    const response = await apiFetch<StrapiResponse<any[]>>(`/galleries${query}`)
+
+    return {
+      data: transformStrapiData<Gallery[]>(response.data),
+      meta: response.meta,
+    }
+  },
+
+  /**
+   * Get featured galleries
+   */
+  async getFeatured(limit: number = 12): Promise<Gallery[]> {
+    const params = new URLSearchParams({
+      populate: 'images',
+      limit: limit.toString(),
+    })
+
+    const response = await apiFetch<StrapiResponse<any[]>>(`/galleries/featured?${params.toString()}`)
+    return transformStrapiData<Gallery[]>(response.data)
+  },
+
+  /**
+   * Get galleries by category
+   */
+  async getByCategory(category: string, limit?: number): Promise<Gallery[]> {
+    const params = new URLSearchParams({ populate: 'images' })
+    if (limit) params.append('limit', limit.toString())
+
+    const response = await apiFetch<StrapiResponse<any[]>>(
+      `/galleries/category/${category}?${params.toString()}`
+    )
+    return transformStrapiData<Gallery[]>(response.data)
+  },
+
+  /**
+   * Get galleries by location
+   */
+  async getByLocation(location: string, limit?: number): Promise<Gallery[]> {
+    const params = new URLSearchParams({ populate: 'images' })
+    if (limit) params.append('limit', limit.toString())
+
+    const response = await apiFetch<StrapiResponse<any[]>>(
+      `/galleries/location/${location}?${params.toString()}`
+    )
+    return transformStrapiData<Gallery[]>(response.data)
+  },
+
+  /**
+   * Get gallery categories with counts
+   */
+  async getCategories(): Promise<{ name: string; count: number }[]> {
+    const response = await apiFetch<{ data: { name: string; count: number }[] }>(
+      '/galleries/categories'
+    )
+    return response.data
+  },
+
+  /**
+   * Get single gallery by slug or ID
+   */
+  async getBySlug(slugOrId: string | number): Promise<Gallery> {
+    const response = await apiFetch<StrapiResponse<any>>(
+      `/galleries/${slugOrId}?populate=images`
+    )
+    return transformStrapiData<Gallery>(response.data)
+  },
+}
+
+// ============================================================================
 // Default Export
 // ============================================================================
 
@@ -1174,6 +1280,7 @@ const strapiAPI = {
   testimonials,
   promoCodes,
   adminDashboard,
+  galleries,
   getMediaUrl,
   getStoredUser,
 }

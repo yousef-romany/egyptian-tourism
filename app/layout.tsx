@@ -5,12 +5,14 @@ import { Inter } from "next/font/google"
 import { ThemeProvider } from "@/components/theme-provider"
 import { AuthProvider } from "@/contexts/auth-context"
 import { StripeProvider } from "@/contexts/stripe-context"
+import { ComparisonProvider } from "@/contexts/comparison-context"
 import { CurrencyProvider } from "@/lib/currencies/provider"
 import { OrganizationJsonLd } from "@/components/tour-json-ld"
 import { defaultMetadata } from "@/lib/metadata"
 import { GoogleAnalytics } from '@next/third-parties/google'
 import { GlobalErrorBoundary } from "@/components/global-error-boundary"
 import { Toaster } from "@/components/ui/toaster"
+import { ComparisonBar } from "@/components/comparison-bar"
 
 const inter = Inter({
   subsets: ["latin"],
@@ -56,9 +58,12 @@ export default function RootLayout({
           <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
             <AuthProvider>
               <StripeProvider>
-                <CurrencyProvider>
-                  {children}
-                </CurrencyProvider>
+                <ComparisonProvider>
+                  <CurrencyProvider>
+                    {children}
+                    <ComparisonBar />
+                  </CurrencyProvider>
+                </ComparisonProvider>
               </StripeProvider>
             </AuthProvider>
           </ThemeProvider>

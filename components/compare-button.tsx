@@ -2,46 +2,83 @@
 
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
+import { GitCompare, Check } from "lucide-react"
 import { useComparison } from "@/contexts/comparison-context"
-import { GitCompare } from "lucide-react"
+import { useToast } from "@/hooks/use-toast"
+import type { Tour } from "@/lib/data/tours"
 
 interface CompareButtonProps {
-  tour: {
-    id: number
-    title: string
-    slug: string
-    image: string
-    price: string
-    duration: string
-    location: string
-    rating: number
-    reviews: number
-  }
+  tour: Tour
+  variant?: "default" | "outline" | "ghost"
+  size?: "default" | "sm" | "lg" | "icon"
+  className?: string
 }
 
-export function CompareButton({ tour }: CompareButtonProps) {
-  const { addToCompare, removeFromCompare, isInCompare } = useComparison()
-  const [isAdding, setIsAdding] = useState(false)
+export function CompareButton({
+  tour,
+  variant = "outline",
+  size = "sm",
+  className = ""
+}: CompareButtonProps) {
+  const { isInCompare, addToCompare, removeFromCompare } = useComparison()
+  const { toast } = useToast()
+  const [isAnimating, setIsAnimating] = useState(false)
 
-  const handleClick = () => {
-    if (isInCompare(tour.id)) {
+  const inComparison = isInCompare(tour.id)
+
+  const handleClick = (e: React.MouseEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+
+    if (inComparison) {
       removeFromCompare(tour.id)
+      toast({
+        title: "Removed from Comparison",
+        description: `${tour.title} was removed from comparison`,
+      })
+      setIsAnimating(true)
+      setTimeout(() => setIsAnimating(false), 300)
     } else {
-      setIsAdding(true)
-      addToCompare(tour)
-      setTimeout(() => setIsAdding(false), 500)
+      const result = addToCompare(tour)
+
+      // Show toast notification
+      toast({
+        title: result.success ? "Added to Comparison" : "Cannot Add",
+        description: result.message,
+        variant: result.success ? "default" : "destructive",
+      })
+
+      // Trigger animation
+      if (result.success) {
+        setIsAnimating(true)
+        setTimeout(() => setIsAnimating(false), 300)
+      }
     }
   }
 
   return (
     <Button
-      variant={isInCompare(tour.id) ? "default" : "outline"}
-      size="sm"
+      variant={inComparison ? "default" : variant}
+      size={size}
       onClick={handleClick}
-      className={isInCompare(tour.id) ? "bg-egyptian-gold hover:bg-egyptian-gold-dark" : ""}
+      className={`
+        ${inComparison ? "bg-egyptian-gold hover:bg-egyptian-gold-dark text-white" : ""}
+        ${isAnimating ? "scale-110" : "scale-100"}
+        transition-all duration-300
+        ${className}
+      `}
     >
-      <GitCompare className="h-4 w-4 mr-2" />
-      {isInCompare(tour.id) ? 'Comparing' : 'Compare'}
+      {inComparison ? (
+        <>
+          <Check className="h-4 w-4 mr-2" />
+          In Comparison
+        </>
+      ) : (
+        <>
+          <GitCompare className="h-4 w-4 mr-2" />
+          Compare
+        </>
+      )}
     </Button>
   )
 }

@@ -11,7 +11,7 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: process.env.NEXT_PUBLIC_STRAPI_URL?.replace('https://', '').replace('http://', '') || 'localhost',
-        port: process.env.NEXT_PUBLIC_STRAPI_URL?.includes('localhost') ? 1337 : undefined,
+        port: process.env.NEXT_PUBLIC_STRAPI_URL?.includes('localhost') ? '1337' : undefined,
         pathname: '/uploads',
       },
     ],

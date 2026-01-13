@@ -1,153 +1,86 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Image from "next/image"
 import { Badge } from "@/components/ui/badge"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { motion, AnimatePresence } from "framer-motion"
-import { X, ZoomIn, MapPin } from "lucide-react"
+import { X, ZoomIn, MapPin, Loader2 } from "lucide-react"
 import EgyptianDivider from "@/components/egyptian-divider"
+import strapiAPI, { getMediaUrl } from "@/lib/api/strapi"
+import type { Gallery } from "@/lib/api/strapi"
 
 export default function GalleryClient() {
   const [selectedCategory, setSelectedCategory] = useState("all")
-  const [selectedImage, setSelectedImage] = useState<number | null>(null)
+  const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null)
+  const [galleries, setGalleries] = useState<Gallery[]>([])
+  const [isLoading, setIsLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+  const [categories, setCategories] = useState<{ value: string; label: string; count: number }[]>([])
 
-  const galleryImages = [
-    {
-      id: 1,
-      src: "/placeholder.svg?height=600&width=800",
-      title: "Great Pyramid of Giza",
-      location: "Giza",
-      category: "pyramids",
-      description: "The last remaining wonder of the ancient world",
-    },
-    {
-      id: 2,
-      src: "/placeholder.svg?height=600&width=800",
-      title: "Sphinx at Sunset",
-      location: "Giza",
-      category: "pyramids",
-      description: "The majestic guardian of the pyramids",
-    },
-    {
-      id: 3,
-      src: "/placeholder.svg?height=600&width=800",
-      title: "Valley of the Kings",
-      location: "Luxor",
-      category: "temples",
-      description: "Ancient burial ground of pharaohs",
-    },
-    {
-      id: 4,
-      src: "/placeholder.svg?height=600&width=800",
-      title: "Karnak Temple Complex",
-      location: "Luxor",
-      category: "temples",
-      description: "The largest ancient religious site in the world",
-    },
-    {
-      id: 5,
-      src: "/placeholder.svg?height=600&width=800",
-      title: "Abu Simbel Temples",
-      location: "Aswan",
-      category: "temples",
-      description: "Colossal monuments of Ramses II",
-    },
-    {
-      id: 6,
-      src: "/placeholder.svg?height=600&width=800",
-      title: "Nile River at Dawn",
-      location: "Aswan",
-      category: "landscape",
-      description: "The lifeblood of ancient Egypt",
-    },
-    {
-      id: 7,
-      src: "/placeholder.svg?height=600&width=800",
-      title: "Hot Air Balloon Over Luxor",
-      location: "Luxor",
-      category: "landscape",
-      description: "Sunrise view from above the temples",
-    },
-    {
-      id: 8,
-      src: "/placeholder.svg?height=600&width=800",
-      title: "White Desert Formations",
-      location: "Bahariya Oasis",
-      category: "desert",
-      description: "Surreal chalk rock formations",
-    },
-    {
-      id: 9,
-      src: "/placeholder.svg?height=600&width=800",
-      title: "Tutankhamun's Golden Mask",
-      location: "Egyptian Museum",
-      category: "museums",
-      description: "The iconic treasure of King Tut",
-    },
-    {
-      id: 10,
-      src: "/placeholder.svg?height=600&width=800",
-      title: "Khan El-Khalili Bazaar",
-      location: "Cairo",
-      category: "culture",
-      description: "Historic marketplace in Islamic Cairo",
-    },
-    {
-      id: 11,
-      src: "/placeholder.svg?height=600&width=800",
-      title: "Red Sea Coral Reef",
-      location: "Hurghada",
-      category: "landscape",
-      description: "Vibrant underwater paradise",
-    },
-    {
-      id: 12,
-      src: "/placeholder.svg?height=600&width=800",
-      title: "Siwa Oasis",
-      location: "Siwa",
-      category: "desert",
-      description: "Egypt's most remote and beautiful oasis",
-    },
-    {
-      id: 13,
-      src: "/placeholder.svg?height=600&width=800",
-      title: "Felucca on the Nile",
-      location: "Aswan",
-      category: "culture",
-      description: "Traditional sailing boats at sunset",
-    },
-    {
-      id: 14,
-      src: "/placeholder.svg?height=600&width=800",
-      title: "Hatshepsut Temple",
-      location: "Luxor",
-      category: "temples",
-      description: "Mortuary temple carved into cliffs",
-    },
-    {
-      id: 15,
-      src: "/placeholder.svg?height=600&width=800",
-      title: "Luxor Temple at Night",
-      location: "Luxor",
-      category: "temples",
-      description: "Ancient temple beautifully illuminated",
-    },
-  ]
+  useEffect(() => {
+    fetchGalleryData()
+  }, [])
 
-  const categories = [
-    { value: "all", label: "All Photos", count: galleryImages.length },
-    { value: "pyramids", label: "Pyramids", count: galleryImages.filter(img => img.category === "pyramids").length },
-    { value: "temples", label: "Temples", count: galleryImages.filter(img => img.category === "temples").length },
-    { value: "desert", label: "Desert", count: galleryImages.filter(img => img.category === "desert").length },
-    { value: "landscape", label: "Landscapes", count: galleryImages.filter(img => img.category === "landscape").length },
-    { value: "culture", label: "Culture", count: galleryImages.filter(img => img.category === "culture").length },
-    { value: "museums", label: "Museums", count: galleryImages.filter(img => img.category === "museums").length },
-  ]
+  const fetchGalleryData = async () => {
+    try {
+      setIsLoading(true)
+      setError(null)
+
+      const [galleriesData, categoriesData] = await Promise.all([
+        strapiAPI.galleries.getAll({ populate: 'images', sort: 'displayOrder:asc' }),
+        strapiAPI.galleries.getCategories(),
+      ])
+
+      setGalleries(galleriesData.data)
+
+      // Build categories with counts
+      const allCount = galleriesData.data.reduce((sum, g) => sum + g.images.length, 0)
+      const formattedCategories = [
+        { value: "all", label: "All Photos", count: allCount },
+        ...categoriesData.map(cat => ({
+          value: cat.name,
+          label: cat.name.charAt(0).toUpperCase() + cat.name.slice(1),
+          count: cat.count
+        }))
+      ]
+
+      setCategories(formattedCategories)
+    } catch (err) {
+      console.error("Failed to fetch gallery data:", err)
+      setError("Unable to load gallery. Please try again later.")
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  // Flatten galleries into individual images with metadata
+  const allImages = galleries.flatMap((gallery) =>
+    gallery.images.map((image, index) => ({
+      id: `${gallery.id}-${index}`,
+      src: getMediaUrl(image),
+      title: gallery.title,
+      location: gallery.location,
+      category: gallery.category,
+      description: gallery.description || "",
+    }))
+  )
 
   const filteredImages = selectedCategory === "all"
-    ? galleryImages
-    : galleryImages.filter(img => img.category === selectedCategory)
+    ? allImages
+    : allImages.filter(img => img.category === selectedCategory)
+
+  const handleNext = () => {
+    if (selectedImageIndex !== null && selectedImageIndex < filteredImages.length - 1) {
+      setSelectedImageIndex(selectedImageIndex + 1)
+    }
+  }
+
+  const handlePrevious = () => {
+    if (selectedImageIndex !== null && selectedImageIndex > 0) {
+      setSelectedImageIndex(selectedImageIndex - 1)
+    }
+  }
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -173,134 +106,179 @@ export default function GalleryClient() {
 
       {/* Gallery Section */}
       <section className="container py-16 md:py-20">
-        {/* Filter Tabs */}
-        <div className="mb-12">
-          <Tabs value={selectedCategory} onValueChange={setSelectedCategory} className="w-full">
-            <TabsList className="inline-flex h-auto p-1 bg-muted/50 flex-wrap justify-center gap-2">
-              {categories.map((cat) => (
-                <TabsTrigger
-                  key={cat.value}
-                  value={cat.value}
-                  className="data-[state=active]:bg-egyptian-gold data-[state=active]:text-black font-semibold px-6 py-3 rounded-lg"
-                >
-                  {cat.label} ({cat.count})
-                </TabsTrigger>
-              ))}
-            </TabsList>
-          </Tabs>
-        </div>
-
-        {/* Gallery Grid */}
-        <motion.div
-          layout
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
-        >
-          <AnimatePresence mode="popLayout">
-            {filteredImages.map((image, index) => (
-              <motion.div
-                key={image.id}
-                layout
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.8 }}
-                transition={{ duration: 0.4, delay: index * 0.05 }}
-                className="group relative overflow-hidden rounded-xl cursor-pointer aspect-square bg-muted"
-                onClick={() => setSelectedImage(image.id)}
-              >
-                <Image
-                  src={image.src}
-                  alt={image.title}
-                  fill
-                  className="object-cover transition-transform duration-500 group-hover:scale-110"
-                />
-
-                {/* Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <div className="absolute bottom-0 left-0 right-0 p-6">
-                    <h3 className="text-white font-bold text-lg mb-2">{image.title}</h3>
-                    <div className="flex items-center gap-2 text-white/80 text-sm mb-2">
-                      <MapPin className="h-4 w-4" />
-                      <span>{image.location}</span>
-                    </div>
-                    <p className="text-white/70 text-sm">{image.description}</p>
-                  </div>
-
-                  <div className="absolute top-4 right-4">
-                    <div className="h-10 w-10 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
-                      <ZoomIn className="h-5 w-5 text-white" />
-                    </div>
-                  </div>
-                </div>
-
-                {/* Category Badge */}
-                <Badge className="absolute top-4 left-4 bg-egyptian-gold text-black font-bold capitalize">
-                  {image.category}
-                </Badge>
-              </motion.div>
-            ))}
-          </AnimatePresence>
-        </motion.div>
-
-        {filteredImages.length === 0 && (
-          <div className="text-center py-20">
-            <p className="text-muted-foreground text-lg">No images found in this category</p>
+        {/* Loading State */}
+        {isLoading && (
+          <div className="text-center py-12">
+            <Loader2 className="h-12 w-12 animate-spin text-egyptian-gold mx-auto mb-4" />
+            <p className="text-muted-foreground">Loading gallery...</p>
           </div>
+        )}
+
+        {/* Error State */}
+        {error && !isLoading && (
+          <div className="text-center py-12">
+            <p className="text-red-600 dark:text-red-400 mb-4">{error}</p>
+            <button
+              onClick={fetchGalleryData}
+              className="bg-egyptian-gold hover:bg-egyptian-gold-dark text-white px-6 py-2 rounded-md"
+            >
+              Try Again
+            </button>
+          </div>
+        )}
+
+        {/* Gallery Content */}
+        {!isLoading && !error && (
+          <>
+            {/* Filter Tabs */}
+            <div className="mb-12">
+              <Tabs value={selectedCategory} onValueChange={setSelectedCategory} className="w-full">
+                <TabsList className="inline-flex h-auto p-1 bg-muted/50 flex-wrap justify-center gap-2">
+                  {categories.map((category) => (
+                    <TabsTrigger
+                      key={category.value}
+                      value={category.value}
+                      className="data-[state=active]:bg-egyptian-gold data-[state=active]:text-white px-6 py-2.5 rounded-md transition-all hover:bg-egyptian-gold/10 font-semibold"
+                    >
+                      {category.label}
+                      <span className="ml-2 text-xs opacity-70">({category.count})</span>
+                    </TabsTrigger>
+                  ))}
+                </TabsList>
+              </Tabs>
+            </div>
+
+            {/* Gallery Grid */}
+            {filteredImages.length === 0 ? (
+              <div className="text-center py-12">
+                <p className="text-muted-foreground">No images found in this category.</p>
+              </div>
+            ) : (
+              <motion.div
+                key={selectedCategory}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+              >
+                {filteredImages.map((image, index) => (
+                  <motion.div
+                    key={image.id}
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.3, delay: index * 0.05 }}
+                    className="group relative aspect-[4/3] overflow-hidden rounded-xl cursor-pointer bg-muted"
+                    onClick={() => setSelectedImageIndex(index)}
+                  >
+                    <Image
+                      src={image.src}
+                      alt={image.title}
+                      fill
+                      className="object-cover transition-transform duration-500 group-hover:scale-110"
+                    />
+
+                    {/* Overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
+                        <h3 className="font-bold text-lg mb-1">{image.title}</h3>
+                        <div className="flex items-center gap-2 text-sm opacity-90">
+                          <MapPin className="h-3 w-3" />
+                          {image.location}
+                        </div>
+                      </div>
+
+                      <div className="absolute top-4 right-4 bg-egyptian-gold text-white p-2 rounded-full">
+                        <ZoomIn className="h-5 w-5" />
+                      </div>
+                    </div>
+                  </motion.div>
+                ))}
+              </motion.div>
+            )}
+          </>
         )}
       </section>
 
       {/* Lightbox */}
       <AnimatePresence>
-        {selectedImage !== null && (
+        {selectedImageIndex !== null && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 p-4"
-            onClick={() => setSelectedImage(null)}
+            onClick={() => setSelectedImageIndex(null)}
+            className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center p-4"
           >
             <button
-              onClick={() => setSelectedImage(null)}
-              className="absolute top-4 right-4 h-12 w-12 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center hover:bg-white/20 transition-colors z-10"
+              onClick={() => setSelectedImageIndex(null)}
+              className="absolute top-4 right-4 text-white hover:text-egyptian-gold transition-colors p-2 rounded-full hover:bg-white/10"
             >
-              <X className="h-6 w-6 text-white" />
+              <X className="h-6 w-6" />
             </button>
 
-            {galleryImages.find(img => img.id === selectedImage) && (
+            <button
+              onClick={(e) => {
+                e.stopPropagation()
+                handlePrevious()
+              }}
+              disabled={selectedImageIndex === 0}
+              className="absolute left-4 top-1/2 -translate-y-1/2 text-white hover:text-egyptian-gold transition-colors p-2 rounded-full hover:bg-white/10 disabled:opacity-30 disabled:cursor-not-allowed"
+            >
+              <svg className="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              </svg>
+            </button>
+
+            <button
+              onClick={(e) => {
+                e.stopPropagation()
+                handleNext()
+              }}
+              disabled={selectedImageIndex === filteredImages.length - 1}
+              className="absolute right-4 top-1/2 -translate-y-1/2 text-white hover:text-egyptian-gold transition-colors p-2 rounded-full hover:bg-white/10 disabled:opacity-30 disabled:cursor-not-allowed"
+            >
+              <svg className="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
+
+            <div
+              onClick={(e) => e.stopPropagation()}
+              className="relative max-w-6xl max-h-[90vh] mx-auto"
+            >
               <motion.div
                 initial={{ scale: 0.9, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 exit={{ scale: 0.9, opacity: 0 }}
-                className="max-w-6xl w-full"
-                onClick={(e) => e.stopPropagation()}
+                transition={{ duration: 0.2 }}
               >
-                <div className="relative aspect-video w-full mb-6">
-                  <Image
-                    src={galleryImages.find(img => img.id === selectedImage)!.src}
-                    alt={galleryImages.find(img => img.id === selectedImage)!.title}
-                    fill
-                    className="object-contain"
-                  />
-                </div>
+                <Image
+                  src={filteredImages[selectedImageIndex].src}
+                  alt={filteredImages[selectedImageIndex].title}
+                  width={1200}
+                  height={800}
+                  className="max-h-[80vh] w-auto object-contain rounded-lg"
+                />
 
-                <div className="text-white text-center">
-                  <h2 className="text-3xl font-bold mb-3">
-                    {galleryImages.find(img => img.id === selectedImage)!.title}
-                  </h2>
-                  <div className="flex items-center justify-center gap-4 text-white/70 mb-3">
-                    <div className="flex items-center gap-2">
-                      <MapPin className="h-5 w-5" />
-                      <span>{galleryImages.find(img => img.id === selectedImage)!.location}</span>
-                    </div>
-                    <Badge variant="outline" className="text-white border-white/30 capitalize">
-                      {galleryImages.find(img => img.id === selectedImage)!.category}
-                    </Badge>
+                <div className="mt-4 text-white text-center">
+                  <h3 className="text-2xl font-bold mb-2">
+                    {filteredImages[selectedImageIndex].title}
+                  </h3>
+                  <div className="flex items-center justify-center gap-2 text-egyptian-gold mb-2">
+                    <MapPin className="h-4 w-4" />
+                    {filteredImages[selectedImageIndex].location}
                   </div>
-                  <p className="text-lg text-white/80">
-                    {galleryImages.find(img => img.id === selectedImage)!.description}
+                  {filteredImages[selectedImageIndex].description && (
+                    <p className="text-gray-300 max-w-2xl mx-auto">
+                      {filteredImages[selectedImageIndex].description}
+                    </p>
+                  )}
+                  <p className="text-sm text-gray-400 mt-2">
+                    {selectedImageIndex + 1} / {filteredImages.length}
                   </p>
                 </div>
               </motion.div>
-            )}
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
