@@ -1,60 +1,47 @@
 "use client"
 
+import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { useComparison } from "@/contexts/comparison-context"
-import { useToast } from "@/hooks/use-toast"
-import { Scale } from "lucide-react"
-import { useEffect, useState } from "react"
+import { GitCompare } from "lucide-react"
 
 interface CompareButtonProps {
-  tourId: number
-  tourTitle: string
+  tour: {
+    id: number
+    title: string
+    slug: string
+    image: string
+    price: string
+    duration: string
+    location: string
+    rating: number
+    reviews: number
+  }
 }
 
-export function CompareButton({ tourId, tourTitle }: CompareButtonProps) {
+export function CompareButton({ tour }: CompareButtonProps) {
   const { addToCompare, removeFromCompare, isInCompare } = useComparison()
-  const { toast } = useToast()
-  const [isComparing, setIsComparing] = useState(false)
+  const [isAdding, setIsAdding] = useState(false)
 
-  useEffect(() => {
-    setIsComparing(isInCompare(tourId))
-  }, [tourId, isInCompare])
-
-  const handleToggle = () => {
-    if (isComparing) {
-      removeFromCompare(tourId)
-      setIsComparing(false)
-      toast({
-        title: "Removed from comparison",
-        description: `${tourTitle} has been removed from your comparison list.`,
-      })
+  const handleClick = () => {
+    if (isInCompare(tour.id)) {
+      removeFromCompare(tour.id)
     } else {
-      const success = addToCompare(tourId, 4)
-      if (success) {
-        setIsComparing(true)
-        toast({
-          title: "Added to comparison",
-          description: `${tourTitle} has been added to your comparison list.`,
-        })
-      } else {
-        toast({
-          title: "Comparison limit reached",
-          description: "You can compare up to 4 tours at once. Remove one first.",
-          variant: "destructive"
-        })
-      }
+      setIsAdding(true)
+      addToCompare(tour)
+      setTimeout(() => setIsAdding(false), 500)
     }
   }
 
   return (
     <Button
-      variant={isComparing ? "secondary" : "outline"}
+      variant={isInCompare(tour.id) ? "default" : "outline"}
       size="sm"
-      onClick={handleToggle}
-      className="gap-2"
+      onClick={handleClick}
+      className={isInCompare(tour.id) ? "bg-egyptian-gold hover:bg-egyptian-gold-dark" : ""}
     >
-      <Scale className="h-4 w-4" />
-      {isComparing ? "Comparing" : "Compare"}
+      <GitCompare className="h-4 w-4 mr-2" />
+      {isInCompare(tour.id) ? 'Comparing' : 'Compare'}
     </Button>
   )
 }

@@ -3,11 +3,13 @@
  * Helper functions for improving accessibility throughout the application
  */
 
+import React, { useEffect } from 'react'
+
 /**
  * Generate unique ID for accessibility attributes
  */
 export function generateId(prefix: string): string {
-  return `${prefix}-${Math.random().toString(36).substr(2, 9)}`
+  return `${prefix}-${Math.random().toString(36).substring(2, 11)}`
 }
 
 /**

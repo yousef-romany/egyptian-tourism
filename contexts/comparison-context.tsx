@@ -1,10 +1,22 @@
 "use client"
 
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react'
+import { createContext, useContext, useState, useEffect } from 'react'
+
+interface Tour {
+  id: number
+  title: string
+  slug: string
+  image: string
+  price: string
+  duration: string
+  location: string
+  rating: number
+  reviews: number
+}
 
 interface ComparisonContextType {
-  compareList: number[]
-  addToCompare: (tourId: number, maxItems?: number) => boolean
+  compareList: Tour[]
+  addToCompare: (tour: Tour) => void
   removeFromCompare: (tourId: number) => void
   clearCompare: () => void
   isInCompare: (tourId: number) => boolean
@@ -12,55 +24,67 @@ interface ComparisonContextType {
 
 const ComparisonContext = createContext<ComparisonContextType | undefined>(undefined)
 
-export function ComparisonProvider({ children }: { children: ReactNode }) {
-  const [compareList, setCompareList] = useState<number[]>([])
+const MAX_COMPARE = 3
 
-  // Load from localStorage on mount
+export function ComparisonProvider({ children }: { children: React.ReactNode }) {
+  const [compareList, setCompareListState] = useState<Tour[]>([])
+
   useEffect(() => {
-    const saved = localStorage.getItem('tourCompareList')
+    const saved = localStorage.getItem('compareList')
     if (saved) {
       try {
-        setCompareList(JSON.parse(saved))
+        setCompareListState(JSON.parse(saved))
       } catch (error) {
-        console.error('Failed to parse compare list from localStorage:', error)
-        localStorage.removeItem('tourCompareList')
+        console.error('Failed to load compare list:', error)
       }
     }
   }, [])
 
-  // Save to localStorage on change
-  useEffect(() => {
-    localStorage.setItem('tourCompareList', JSON.stringify(compareList))
-  }, [compareList])
+  const setCompareList = (tours: Tour[]) => {
+    setCompareListState(tours)
+    if (tours.length === 0) {
+      localStorage.removeItem('compareList')
+    } else {
+      localStorage.setItem('compareList', JSON.stringify(tours))
+    }
+  }
 
-  const addToCompare = (tourId: number, maxItems: number = 4): boolean => {
-    if (compareList.includes(tourId)) return true
-    if (compareList.length >= maxItems) return false
+  const addToCompare = (tour: Tour) => {
+    if (compareList.length >= MAX_COMPARE) {
+      alert('You can only compare up to 3 tours at a time')
+      return
+    }
 
-    setCompareList([...compareList, tourId])
-    return true
+    if (compareList.some(t => t.id === tour.id)) {
+      alert('This tour is already in your comparison list')
+      return
+    }
+
+    setCompareList([...compareList, tour])
   }
 
   const removeFromCompare = (tourId: number) => {
-    setCompareList(compareList.filter(id => id !== tourId))
+    setCompareList(compareList.filter(t => t.id !== tourId))
   }
 
   const clearCompare = () => {
     setCompareList([])
   }
 
-  const isInCompare = (tourId: number): boolean => {
-    return compareList.includes(tourId)
+  const isInCompare = (tourId: number) => {
+    return compareList.some(t => t.id === tourId)
   }
 
   return (
-    <ComparisonContext.Provider value={{
-      compareList,
-      addToCompare,
-      removeFromCompare,
-      clearCompare,
-      isInCompare
-    }}>
+    <ComparisonContext.Provider
+      value={{
+        compareList,
+        addToCompare,
+        removeFromCompare,
+        clearCompare,
+        isInCompare,
+      }}
+    >
       {children}
     </ComparisonContext.Provider>
   )
@@ -68,8 +92,8 @@ export function ComparisonProvider({ children }: { children: ReactNode }) {
 
 export function useComparison() {
   const context = useContext(ComparisonContext)
-  if (!context) {
-    throw new Error('useComparison must be used within ComparisonProvider')
+  if (context === undefined) {
+    throw new Error('useComparison must be used within a ComparisonProvider')
   }
   return context
 }
