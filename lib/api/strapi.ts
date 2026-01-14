@@ -294,6 +294,71 @@ export interface Gallery {
   publishedAt: string
 }
 
+export interface Product {
+  id: number
+  name: string
+  slug: string
+  description: string
+  shortDescription?: string
+  price: number
+  originalPrice?: number
+  currency: 'USD' | 'EUR' | 'EGP' | 'GBP'
+  images: StrapiMedia[]
+  category: 'souvenirs' | 'jewelry' | 'papyrus' | 'statues' | 'textiles' | 'home-decor' | 'clothing' | 'books' | 'art' | 'other'
+  tags?: string[]
+  sku: string
+  stock: number
+  inStock: boolean
+  featured: boolean
+  weight?: number
+  dimensions?: any
+  material?: string
+  origin?: string
+  views: number
+  rating?: number
+  reviewCount: number
+  metaTitle?: string
+  metaDescription?: string
+  createdAt: string
+  updatedAt: string
+  publishedAt: string
+}
+
+export interface HistoryVideo {
+  id: number
+  title: string
+  slug: string
+  description: string
+  shortDescription?: string
+  videoUrl: string
+  videoFile?: StrapiMedia
+  thumbnail: StrapiMedia
+  category: 'pharaohs' | 'monuments' | 'legends' | 'ancient-egypt' | 'islamic-egypt' | 'modern-egypt' | 'culture' | 'archaeology' | 'mythology' | 'documentaries' | 'cartoons' | 'other'
+  tags?: string[]
+  duration?: string
+  durationSeconds?: number
+  videoType: 'youtube' | 'vimeo' | 'local' | 'external'
+  featured: boolean
+  views: number
+  likes: number
+  language: 'en' | 'ar' | 'fr' | 'de' | 'es' | 'it'
+  hasSubtitles: boolean
+  subtitleLanguages?: string[]
+  ageRating: 'G' | 'PG' | 'PG-13' | 'R' | 'NR'
+  releaseDate?: string
+  producer?: string
+  narrator?: string
+  relatedPeriod?: string
+  historicalAccuracy: 'historical' | 'semi-historical' | 'fictional' | 'educational'
+  rating?: number
+  reviewCount: number
+  metaTitle?: string
+  metaDescription?: string
+  createdAt: string
+  updatedAt: string
+  publishedAt: string
+}
+
 export interface PromoCodeValidation {
   valid: boolean
   message?: string
@@ -746,7 +811,6 @@ export const blog = {
     })
     if (limit) params.append('pagination[pageSize]', String(limit))
     if (locale) params.append('locale', locale)
-    if (limit) params.append('pagination[pageSize]', String(limit))
 
     const response = await apiFetch<StrapiResponse<any[]>>(`/blog-posts?${params.toString()}`)
     return transformStrapiData<BlogPost[]>(response.data)
@@ -1263,6 +1327,219 @@ export const galleries = {
 }
 
 // ============================================================================
+// Products API
+// ============================================================================
+
+export const products = {
+  /**
+   * Get all products
+   */
+  async getAll(params?: {
+    category?: string
+    minPrice?: number
+    maxPrice?: number
+    featured?: boolean
+    inStock?: boolean
+    sort?: string
+    page?: number
+    pageSize?: number
+  }): Promise<{ data: Product[]; meta?: any }> {
+    const query = params ? buildQueryString({ ...params, populate: '*' }) : '?populate=*'
+    const response = await apiFetch<StrapiResponse<any[]>>(`/products${query}`)
+    return {
+      data: transformStrapiData<Product[]>(response.data),
+      meta: response.meta
+    }
+  },
+
+  /**
+   * Get product by ID
+   */
+  async getById(id: number): Promise<Product> {
+    const response = await apiFetch<StrapiResponse<any>>(`/products/${id}?populate=*`)
+    return transformStrapiData<Product>(response.data)
+  },
+
+  /**
+   * Get product by slug
+   */
+  async getBySlug(slug: string): Promise<Product> {
+    const response = await apiFetch<StrapiResponse<any>>(`/products/${slug}?populate=*`)
+    return transformStrapiData<Product>(response.data)
+  },
+
+  /**
+   * Get featured products
+   */
+  async getFeatured(limit: number = 8): Promise<Product[]> {
+    const params = new URLSearchParams({
+      limit: limit.toString(),
+    })
+    const response = await apiFetch<StrapiResponse<any[]>>(`/products/featured?${params.toString()}`)
+    return transformStrapiData<Product[]>(response.data)
+  },
+
+  /**
+   * Get products by category
+   */
+  async getByCategory(category: string, page: number = 1, pageSize: number = 20): Promise<{ data: Product[]; meta?: any }> {
+    const params = new URLSearchParams({
+      limit: pageSize.toString(),
+      start: ((page - 1) * pageSize).toString(),
+    })
+    const response = await apiFetch<StrapiResponse<any[]>>(`/products/category/${category}?${params.toString()}`)
+    return {
+      data: transformStrapiData<Product[]>(response.data),
+      meta: response.meta
+    }
+  },
+
+  /**
+   * Search products
+   */
+  async search(query: string, filters?: {
+    category?: string
+    minPrice?: number
+    maxPrice?: number
+    page?: number
+    pageSize?: number
+  }): Promise<{ data: Product[]; meta?: any }> {
+    const params = new URLSearchParams({ q: query })
+    if (filters) {
+      Object.entries(filters).forEach(([key, value]) => {
+        if (value !== undefined) params.append(key, String(value))
+      })
+    }
+    const response = await apiFetch<StrapiResponse<any[]>>(`/products/search?${params.toString()}`)
+    return {
+      data: transformStrapiData<Product[]>(response.data),
+      meta: response.meta
+    }
+  },
+
+  /**
+   * Increment product views
+   */
+  async incrementViews(id: number): Promise<void> {
+    await apiFetch(`/products/${id}/views`, { method: 'POST' })
+  },
+}
+
+// ============================================================================
+// History Videos API
+// ============================================================================
+
+export const historyVideos = {
+  /**
+   * Get all history videos
+   */
+  async getAll(params?: {
+    category?: string
+    language?: string
+    featured?: boolean
+    sort?: string
+    page?: number
+    pageSize?: number
+  }): Promise<{ data: HistoryVideo[]; meta?: any }> {
+    const query = params ? buildQueryString({ ...params, populate: '*' }) : '?populate=*'
+    const response = await apiFetch<StrapiResponse<any[]>>(`/history-videos${query}`)
+    return {
+      data: transformStrapiData<HistoryVideo[]>(response.data),
+      meta: response.meta
+    }
+  },
+
+  /**
+   * Get video by ID
+   */
+  async getById(id: number): Promise<HistoryVideo> {
+    const response = await apiFetch<StrapiResponse<any>>(`/history-videos/${id}?populate=*`)
+    return transformStrapiData<HistoryVideo>(response.data)
+  },
+
+  /**
+   * Get video by slug
+   */
+  async getBySlug(slug: string): Promise<HistoryVideo> {
+    const response = await apiFetch<StrapiResponse<any>>(`/history-videos/${slug}?populate=*`)
+    return transformStrapiData<HistoryVideo>(response.data)
+  },
+
+  /**
+   * Get featured videos
+   */
+  async getFeatured(limit: number = 6): Promise<HistoryVideo[]> {
+    const params = new URLSearchParams({
+      limit: limit.toString(),
+    })
+    const response = await apiFetch<StrapiResponse<any[]>>(`/history-videos/featured?${params.toString()}`)
+    return transformStrapiData<HistoryVideo[]>(response.data)
+  },
+
+  /**
+   * Get popular videos (most viewed)
+   */
+  async getPopular(limit: number = 10): Promise<HistoryVideo[]> {
+    const params = new URLSearchParams({
+      limit: limit.toString(),
+    })
+    const response = await apiFetch<StrapiResponse<any[]>>(`/history-videos/popular?${params.toString()}`)
+    return transformStrapiData<HistoryVideo[]>(response.data)
+  },
+
+  /**
+   * Get videos by category
+   */
+  async getByCategory(category: string, page: number = 1, pageSize: number = 20): Promise<{ data: HistoryVideo[]; meta?: any }> {
+    const params = new URLSearchParams({
+      limit: pageSize.toString(),
+      start: ((page - 1) * pageSize).toString(),
+    })
+    const response = await apiFetch<StrapiResponse<any[]>>(`/history-videos/category/${category}?${params.toString()}`)
+    return {
+      data: transformStrapiData<HistoryVideo[]>(response.data),
+      meta: response.meta
+    }
+  },
+
+  /**
+   * Search videos
+   */
+  async search(query: string, filters?: {
+    category?: string
+    language?: string
+    page?: number
+    pageSize?: number
+  }): Promise<{ data: HistoryVideo[]; meta?: any }> {
+    const params = new URLSearchParams({ q: query })
+    if (filters) {
+      Object.entries(filters).forEach(([key, value]) => {
+        if (value !== undefined) params.append(key, String(value))
+      })
+    }
+    const response = await apiFetch<StrapiResponse<any[]>>(`/history-videos/search?${params.toString()}`)
+    return {
+      data: transformStrapiData<HistoryVideo[]>(response.data),
+      meta: response.meta
+    }
+  },
+
+  /**
+   * Increment video views
+   */
+  async incrementViews(id: number): Promise<void> {
+    await apiFetch(`/history-videos/${id}/views`, { method: 'POST' })
+  },
+
+  /**
+   * Increment video likes
+   */
+  async incrementLikes(id: number): Promise<void> {
+    await apiFetch(`/history-videos/${id}/likes`, { method: 'POST' })
+  },
+}
+
+// ============================================================================
 // Default Export
 // ============================================================================
 
@@ -1281,6 +1558,8 @@ const strapiAPI = {
   promoCodes,
   adminDashboard,
   galleries,
+  products,
+  historyVideos,
   getMediaUrl,
   getStoredUser,
 }

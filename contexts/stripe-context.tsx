@@ -4,8 +4,9 @@ import React, { createContext, useContext, useState, useEffect, ReactNode } from
 import { loadStripe, Stripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
 
-// Initialize Stripe with your publishable key
-const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
+// Initialize Stripe with your publishable key (only if key is provided)
+const stripePublishableKey = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY;
+const stripePromise = stripePublishableKey ? loadStripe(stripePublishableKey) : null;
 
 interface StripeContextType {
   stripe: Stripe | null;

@@ -28,6 +28,7 @@ import { TourSidebarWidgets } from "@/components/tour-sidebar-widgets"
 
 interface TourPageProps {
   params: {
+    locale: string
     slug: string
   }
 }
@@ -45,7 +46,7 @@ export async function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: TourPageProps): Promise<Metadata> {
-  const tour = await getTourBySlug(params.slug)
+  const tour = await getTourBySlug(params.slug, params.locale)
 
   if (!tour) {
     return {
@@ -72,7 +73,7 @@ export async function generateMetadata({
 }
 
 export default async function TourDetailPage({ params }: TourPageProps) {
-  const tour = await getTourBySlug(params.slug)
+  const tour = await getTourBySlug(params.slug, params.locale)
 
   if (!tour) {
     notFound()

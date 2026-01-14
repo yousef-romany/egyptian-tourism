@@ -40,7 +40,7 @@ function convertStrapiTour(strapiTour: StrapiTour): Tour {
     id: strapiTour.id,
     title: strapiTour.title,
     slug: strapiTour.slug,
-    image: getMediaUrl(strapiTour.image),
+    image: getMediaUrl(strapiTour.image || undefined),
     images: strapiTour.images?.map((img) => getMediaUrl(img)),
     duration: strapiTour.duration,
     location: strapiTour.location,
@@ -62,9 +62,9 @@ function convertStrapiTour(strapiTour: StrapiTour): Tour {
 /**
  * Get all tours from Strapi
  */
-export async function getTours(): Promise<Tour[]> {
+export async function getTours(locale?: string): Promise<Tour[]> {
   try {
-    const response = await strapiAPI.tours.getAll()
+    const response = await strapiAPI.tours.getAll({ locale })
     return response.data.map(convertStrapiTour)
   } catch (error) {
     console.error('Failed to fetch tours:', error)
@@ -75,9 +75,9 @@ export async function getTours(): Promise<Tour[]> {
 /**
  * Get tour by slug from Strapi
  */
-export async function getTourBySlug(slug: string): Promise<Tour | undefined> {
+export async function getTourBySlug(slug: string, locale?: string): Promise<Tour | undefined> {
   try {
-    const strapiTour = await strapiAPI.tours.getBySlug(slug)
+    const strapiTour = await strapiAPI.tours.getBySlug(slug, locale)
     return convertStrapiTour(strapiTour)
   } catch (error) {
     console.error(`Failed to fetch tour with slug ${slug}:`, error)
@@ -88,9 +88,9 @@ export async function getTourBySlug(slug: string): Promise<Tour | undefined> {
 /**
  * Get tour by ID from Strapi
  */
-export async function getTourById(id: number): Promise<Tour | undefined> {
+export async function getTourById(id: number, locale?: string): Promise<Tour | undefined> {
   try {
-    const strapiTour = await strapiAPI.tours.getById(id)
+    const strapiTour = await strapiAPI.tours.getById(id, locale)
     return convertStrapiTour(strapiTour)
   } catch (error) {
     console.error(`Failed to fetch tour with ID ${id}:`, error)
@@ -101,9 +101,9 @@ export async function getTourById(id: number): Promise<Tour | undefined> {
 /**
  * Get featured tours from Strapi
  */
-export async function getFeaturedTours(limit: number = 7): Promise<Tour[]> {
+export async function getFeaturedTours(limit: number = 7, locale?: string): Promise<Tour[]> {
   try {
-    const strapiTours = await strapiAPI.tours.getFeatured(limit)
+    const strapiTours = await strapiAPI.tours.getFeatured(limit, locale)
     return strapiTours.map(convertStrapiTour)
   } catch (error) {
     console.error('Failed to fetch featured tours:', error)

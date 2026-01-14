@@ -8,7 +8,20 @@ import EgyptianDivider from "@/components/egyptian-divider"
 import { getFeaturedPosts } from "@/lib/data/blog"
 
 export default async function BlogPreview() {
-  const featuredPosts = await getFeaturedPosts(3)
+  let featuredPosts = []
+
+  try {
+    featuredPosts = await getFeaturedPosts(3)
+  } catch (error) {
+    console.error('Failed to fetch featured blog posts:', error)
+    // Return empty section if no posts available
+    return null
+  }
+
+  // Don't render if no posts
+  if (!featuredPosts || featuredPosts.length === 0) {
+    return null
+  }
 
   return (
     <section className="container py-20 md:py-28">
