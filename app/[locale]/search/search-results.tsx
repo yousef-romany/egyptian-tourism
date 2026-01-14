@@ -36,7 +36,6 @@ export default function SearchResults() {
         // Search tours and blog posts in parallel
         const [toursResult, blogsResult] = await Promise.all([
           strapiAPI.tours.getAll({
-            populate: "image",
             filters: {
               $or: [
                 { title: { $containsi: query } },
@@ -46,7 +45,6 @@ export default function SearchResults() {
             },
           }),
           strapiAPI.blog.getAll({
-            populate: "coverImage,author",
             filters: {
               $or: [
                 { title: { $containsi: query } },
@@ -242,10 +240,10 @@ function BlogResults({ posts }: { posts: BlogPost[] }) {
         <Link key={post.id} href={`/blog/${post.slug}`}>
           <Card className="h-full overflow-hidden border-egyptian-gold/30 hover:border-egyptian-gold transition-all hover:shadow-lg">
             <div className="flex gap-4 p-4">
-              {post.coverImage && (
+              {post.image && (
                 <div className="relative w-32 h-32 flex-shrink-0">
                   <Image
-                    src={getMediaUrl(post.coverImage)}
+                    src={getMediaUrl(post.image)}
                     alt={post.title}
                     fill
                     className="object-cover rounded-md"

@@ -9,12 +9,13 @@ interface SearchParams {
   bookingId?: string
 }
 
-export default function PaymentSuccessPage({
+export default async function PaymentSuccessPage({
   searchParams,
 }: {
-  searchParams: SearchParams
+  searchParams: Promise<SearchParams>
 }) {
-  const { token, PayerID, bookingId } = searchParams
+  const awaitedSearchParams = await searchParams;
+  const { token, PayerID, bookingId } = awaitedSearchParams
 
   if (!token) {
     redirect('/')

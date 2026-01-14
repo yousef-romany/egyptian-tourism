@@ -13,8 +13,8 @@ export const metadata = {
     "Experience the magic of Egypt's deserts with camel rides, Bedouin camps, and starlit nights.",
 }
 
-export default function DesertAdventuresPage() {
-  const allTours = getTours()
+export default async function DesertAdventuresPage() {
+  const allTours = await getTours()
   const tours = allTours.filter(tour =>
     tour.title.toLowerCase().includes('desert') ||
     tour.title.toLowerCase().includes('safari') ||

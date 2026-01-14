@@ -352,7 +352,7 @@ export default function CheckoutPage() {
                 {/* PayPal Buttons */}
                 <PayPalScriptProvider
                   options={{
-                    "client-id": PAYPAL_CLIENT_ID,
+                    clientId: PAYPAL_CLIENT_ID,
                     currency: "USD",
                   }}
                 >

@@ -1,4 +1,5 @@
 import strapiAPI, { BlogPost as StrapiBlogPost, getMediaUrl } from '@/lib/api/strapi'
+import { sampleBlogPosts } from './sample-data'
 
 // Frontend BlogPost type
 export interface BlogPost {
@@ -66,7 +67,8 @@ export async function getFeaturedPosts(limit?: number): Promise<BlogPost[]> {
     return strapiBlogPosts.map(convertStrapiBlogPost)
   } catch (error) {
     console.error('Failed to fetch featured blog posts:', error)
-    return []
+    // Return sample data when backend is unavailable
+    return limit ? sampleBlogPosts.slice(0, limit) : sampleBlogPosts
   }
 }
 

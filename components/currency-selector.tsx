@@ -1,8 +1,8 @@
 'use client'
 
 import React from 'react'
-import { useCurrency } from '@/contexts/currency-context'
-import { Currency, CURRENCIES } from '@/lib/currency'
+import { useCurrency } from '@/lib/currencies/provider'
+import { Currency } from '@/lib/currency'
 import {
   Select,
   SelectContent,
@@ -12,20 +12,20 @@ import {
 } from '@/components/ui/select'
 
 export function CurrencySelector() {
-  const { currency, setCurrency } = useCurrency()
+  const { currency, setCurrency, currencies } = useCurrency()
 
   return (
     <Select value={currency} onValueChange={(value) => setCurrency(value as Currency)}>
       <SelectTrigger className="w-[120px] h-9">
         <SelectValue>
           <span className="flex items-center gap-1">
-            <span>{CURRENCIES[currency].symbol}</span>
+            <span>{currencies[currency].symbol}</span>
             <span className="hidden sm:inline">{currency}</span>
           </span>
         </SelectValue>
       </SelectTrigger>
       <SelectContent>
-        {Object.entries(CURRENCIES).map(([code, { symbol, name }]) => (
+        {Object.entries(currencies).map(([code, { symbol, name }]) => (
           <SelectItem key={code} value={code}>
             <div className="flex items-center gap-2">
               <span className="font-medium">{symbol}</span>

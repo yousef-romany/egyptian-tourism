@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Star, MapPin, Clock, Heart, Share2, Search, X } from "lucide-react"
+import { Star, MapPin, Clock, Heart, Share2, Search, X, Filter } from "lucide-react"
 import { motion } from "framer-motion"
 import { useWishlist } from "@/hooks/use-wishlist"
 

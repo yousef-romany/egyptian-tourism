@@ -1,5 +1,5 @@
 import { Metadata } from "next"
-import strapiAPI from "@/lib/api/strapi"
+import strapiAPI, { Testimonial } from "@/lib/api/strapi"
 import { TestimonialCard } from "@/components/testimonial-card"
 import { VideoTestimonial } from "@/components/video-testimonial"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -14,12 +14,11 @@ export const metadata: Metadata = {
 
 export default async function TestimonialsPage() {
   // Fetch testimonials from Strapi
-  let testimonials = []
+  let testimonials: Testimonial[] = []
   let error = null
 
   try {
     const result = await strapiAPI.testimonials.getAll({
-      populate: "customerPhoto,images,tour",
       sort: "featured:desc,date:desc",
     })
     testimonials = result.data

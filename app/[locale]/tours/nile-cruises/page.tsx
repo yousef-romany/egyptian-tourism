@@ -13,8 +13,8 @@ export const metadata = {
     "Experience Egypt from the deck of a luxury Nile cruise, visiting ancient temples and monuments along the way.",
 }
 
-export default function NileCruisesPage() {
-  const allTours = getTours()
+export default async function NileCruisesPage() {
+  const allTours = await getTours()
   const tours = allTours.filter(tour =>
     tour.title.toLowerCase().includes('cruise') ||
     tour.title.toLowerCase().includes('nile') ||

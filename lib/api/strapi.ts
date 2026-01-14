@@ -319,6 +319,7 @@ export interface Product {
   reviewCount: number
   metaTitle?: string
   metaDescription?: string
+  metaKeywords?: string
   createdAt: string
   updatedAt: string
   publishedAt: string
@@ -354,6 +355,7 @@ export interface HistoryVideo {
   reviewCount: number
   metaTitle?: string
   metaDescription?: string
+  metaKeywords?: string
   createdAt: string
   updatedAt: string
   publishedAt: string
@@ -438,38 +440,62 @@ async function apiFetch<T>(
   options: RequestInit = {}
 ): Promise<T> {
   const token = getToken()
-  const headers: HeadersInit = {
+  const headers: Record<string, string> = {
     'Content-Type': 'application/json',
-    ...options.headers,
+    ...(options.headers as Record<string, string> || {}),
   }
 
   if (token) {
     headers['Authorization'] = `Bearer ${token}`
   }
 
-  const response = await fetch(`${API_URL}${endpoint}`, {
-    ...options,
-    headers,
-  })
+  try {
+    const response = await fetch(`${API_URL}${endpoint}`, {
+      ...options,
+      headers,
+    })
 
-  if (!response.ok) {
-    const error: StrapiError = await response.json().catch(() => ({
-      error: {
-        status: response.status,
-        name: 'FetchError',
-        message: response.statusText,
-      },
-    }))
+    if (!response.ok) {
+      const error: StrapiError = await response.json().catch(() => ({
+        error: {
+          status: response.status,
+          name: 'FetchError',
+          message: response.statusText,
+        },
+      }))
+      throw error
+    }
+
+    return response.json()
+  } catch (error: any) {
+    // Handle connection errors (backend not running)
+    if (error.cause && error.cause.code === 'ECONNREFUSED') {
+      console.warn(`Backend not available. Returning fallback data for ${endpoint}`)
+      
+      // Return appropriate fallback data based on the endpoint
+      if (endpoint.includes('/tours')) {
+        return { data: [], meta: { pagination: { page: 1, pageSize: 10, pageCount: 0, total: 0 } } } as T
+      } else if (endpoint.includes('/reviews')) {
+        return { data: [] } as T
+      } else if (endpoint.includes('/blog-posts')) {
+        return { data: [] } as T
+      } else if (endpoint.includes('/testimonials')) {
+        return { data: [] } as T
+      } else if (endpoint.includes('/auth')) {
+        throw new Error('Authentication service is not available')
+      } else {
+        return {} as T
+      }
+    }
+    
     throw error
   }
-
-  return response.json()
 }
 
 /**
  * Get media URL (handles relative and absolute URLs)
  */
-export function getMediaUrl(media?: StrapiMedia | string): string {
+export function getMediaUrl(media?: StrapiMedia | string | null): string {
   if (!media) return '/placeholder.svg'
 
   if (typeof media === 'string') {
@@ -716,6 +742,7 @@ export const tours = {
     page?: number
     pageSize?: number
     locale?: string
+    filters?: any // Add filters property
   }): Promise<{ data: Tour[]; meta?: any }> {
     const query = params ? buildQueryString({ ...params, populate: '*' }) : '?populate=*'
     const response = await apiFetch<StrapiResponse<any[]>>(`/tours${query}`)
@@ -774,6 +801,7 @@ export const blog = {
     page?: number
     pageSize?: number
     locale?: string
+    filters?: any // Add filters property
   }): Promise<{ data: BlogPost[]; meta?: any }> {
     const query = params ? buildQueryString({ ...params, populate: '*' }) : '?populate=*'
     const response = await apiFetch<StrapiResponse<any[]>>(`/blog-posts${query}`)

@@ -13,9 +13,9 @@ export const metadata = {
     "Explore the Pyramids of Giza, the Sphinx, and the treasures of Cairo with our expert-guided tours.",
 }
 
-export default function CairoPyramidsToursPage() {
+export default async function CairoPyramidsToursPage() {
   // Filter tours by Cairo/Pyramids category
-  const allTours = getTours()
+  const allTours = await getTours()
   const tours = allTours.filter(tour =>
     tour.location.toLowerCase().includes('cairo') ||
     tour.location.toLowerCase().includes('giza') ||

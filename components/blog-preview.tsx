@@ -8,19 +8,44 @@ import EgyptianDivider from "@/components/egyptian-divider"
 import { getFeaturedPosts } from "@/lib/data/blog"
 
 export default async function BlogPreview() {
-  let featuredPosts = []
-
+  let featuredPosts: any[] = []
+  
   try {
     featuredPosts = await getFeaturedPosts(3)
   } catch (error) {
     console.error('Failed to fetch featured blog posts:', error)
-    // Return empty section if no posts available
-    return null
+    // Continue with empty array
   }
-
-  // Don't render if no posts
+  
+  // Show message if no posts
   if (!featuredPosts || featuredPosts.length === 0) {
-    return null
+    return (
+      <section className="container py-20 md:py-28">
+        <div className="text-center">
+          <div className="inline-block mb-4">
+            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-egyptian-gold/10 border border-egyptian-gold/20 text-egyptian-gold font-semibold text-sm">
+              <BookOpen className="h-4 w-4" />
+              Travel Insights
+            </span>
+          </div>
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-heading font-bold mb-6">
+            Latest from Our Blog
+          </h2>
+          <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-8">
+            Expert travel tips, cultural insights, and destination guides to enhance your Egyptian adventure
+          </p>
+          <div className="max-w-2xl mx-auto p-8 bg-muted/30 rounded-2xl border border-egyptian-gold/20">
+            <h3 className="text-2xl font-bold mb-4">Blog Articles Coming Soon</h3>
+            <p className="text-muted-foreground text-lg">
+              We're preparing insightful travel articles about Egypt. Check back soon for expert tips, cultural insights, and destination guides!
+            </p>
+            <Button className="mt-6 bg-egyptian-gold hover:bg-egyptian-gold-dark text-black">
+              Explore Our Tours Instead
+            </Button>
+          </div>
+        </div>
+      </section>
+    )
   }
 
   return (

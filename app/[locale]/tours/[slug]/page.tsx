@@ -27,10 +27,10 @@ import { ReviewForm } from "@/components/review-form"
 import { TourSidebarWidgets } from "@/components/tour-sidebar-widgets"
 
 interface TourPageProps {
-  params: {
+  params: Promise<{
     locale: string
     slug: string
-  }
+  }>
 }
 
 // Generate static paths for all tours at build time
@@ -46,7 +46,8 @@ export async function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: TourPageProps): Promise<Metadata> {
-  const tour = await getTourBySlug(params.slug, params.locale)
+  const { slug, locale } = await params
+  const tour = await getTourBySlug(slug, locale)
 
   if (!tour) {
     return {
@@ -73,13 +74,14 @@ export async function generateMetadata({
 }
 
 export default async function TourDetailPage({ params }: TourPageProps) {
-  const tour = await getTourBySlug(params.slug, params.locale)
+  const { slug, locale } = await params
+  const tour = await getTourBySlug(slug, locale)
 
   if (!tour) {
     notFound()
   }
 
-  const relatedTours = await getRelatedTours(params.slug, 3)
+  const relatedTours = await getRelatedTours(slug, 3)
   const images = tour.images || [tour.image]
 
   return (

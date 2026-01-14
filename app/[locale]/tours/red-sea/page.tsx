@@ -13,8 +13,8 @@ export const metadata = {
     "Dive into the crystal-clear waters of the Red Sea and explore vibrant coral reefs and marine life.",
 }
 
-export default function RedSeaToursPage() {
-  const allTours = getTours()
+export default async function RedSeaToursPage() {
+  const allTours = await getTours()
   const tours = allTours.filter(tour =>
     tour.location.toLowerCase().includes('hurghada') ||
     tour.location.toLowerCase().includes('sharm') ||

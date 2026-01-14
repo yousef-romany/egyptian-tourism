@@ -13,8 +13,8 @@ export const metadata = {
     "Explore the ancient temples and tombs of Luxor and Aswan with our expert-guided tours.",
 }
 
-export default function LuxorAswanToursPage() {
-  const allTours = getTours()
+export default async function LuxorAswanToursPage() {
+  const allTours = await getTours()
   const tours = allTours.filter(tour =>
     tour.location.toLowerCase().includes('luxor') ||
     tour.location.toLowerCase().includes('aswan')

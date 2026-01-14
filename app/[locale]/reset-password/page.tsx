@@ -12,10 +12,7 @@ import { useToast } from "@/hooks/use-toast"
 import strapiAPI from "@/lib/api/strapi"
 import { Mail, ArrowLeft, Loader2, CheckCircle, Eye, EyeOff, Lock } from "lucide-react"
 
-export const metadata = {
-  title: "Reset Password - Egydise Tours",
-  description: "Reset your password for your Egydise Tours account.",
-}
+
 
 export default function ResetPasswordPage() {
   const [code, setCode] = useState("")

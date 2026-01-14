@@ -192,5 +192,384 @@
     "goHome": "Go Home",
     "networkError": "Network Error",
     "checkConnection": "Please check your internet connection"
+  },
+  "ProductsPage": {
+    "title": "Egyptian Souvenirs & Products",
+    "description": "Discover authentic Egyptian handicrafts, souvenirs, and cultural treasures to bring home memories of your journey",
+    "breadcrumb": {
+      "home": "Home",
+      "products": "Products"
+    },
+    "results": "Showing {start}-{end} of {count} products",
+    "noProducts": {
+      "title": "No Products Found",
+      "description": "Try adjusting your filters or browse all products"
+    },
+    "error": {
+      "title": "Unable to Load Products",
+      "description": "Please try again later or contact support if the problem persists"
+    }
+  },
+  "ProductPage": {
+    "breadcrumb": {
+      "home": "Home",
+      "products": "Products"
+    },
+    "relatedProducts": "Related Products",
+    "notFound": {
+      "title": "Product Not Found",
+      "description": "The product you're looking for doesn't exist or has been removed"
+    }
+  },
+  "ProductCard": {
+    "featured": "Featured",
+    "outOfStock": "Out of Stock",
+    "addToWishlist": "Add to Wishlist",
+    "categories": {
+      "souvenirs": "Souvenirs",
+      "jewelry": "Jewelry",
+      "papyrus": "Papyrus Art",
+      "statues": "Statues",
+      "textiles": "Textiles",
+      "homeDecor": "Home Decor",
+      "clothing": "Clothing",
+      "books": "Books",
+      "art": "Art",
+      "other": "Other"
+    },
+    "stock": "{count} in stock",
+    "viewDetails": "View Details"
+  },
+  "ProductFilters": {
+    "title": "Filter Products",
+    "category": "Category",
+    "selectCategory": "Select Category",
+    "priceRange": "Price Range",
+    "sortBy": "Sort By",
+    "selectSort": "Select Sort",
+    "featuredOnly": "Featured Only",
+    "applyFilters": "Apply Filters",
+    "clear": "Clear",
+    "categories": {
+      "souvenirs": "Souvenirs",
+      "jewelry": "Jewelry",
+      "papyrus": "Papyrus Art",
+      "statues": "Statues",
+      "textiles": "Textiles",
+      "homeDecor": "Home Decor",
+      "clothing": "Clothing",
+      "books": "Books",
+      "art": "Art",
+      "other": "Other"
+    },
+    "sort": {
+      "nameAsc": "Name: A-Z",
+      "nameDesc": "Name: Z-A",
+      "priceAsc": "Price: Low to High",
+      "priceDesc": "Price: High to Low",
+      "newest": "Newest First",
+      "oldest": "Oldest First",
+      "popular": "Most Popular"
+    }
+  },
+  "ProductDetail": {
+    "featured": "Featured",
+    "outOfStock": "Out of Stock",
+    "inStock": "{count} in stock",
+    "quantity": "Quantity",
+    "addToCart": "Add to Cart",
+    "freeShipping": "Free Shipping",
+    "securePayment": "Secure Payment",
+    "easyReturns": "Easy Returns",
+    "tabs": {
+      "description": "Description",
+      "details": "Details",
+      "reviews": "Reviews"
+    },
+    "details": {
+      "productInfo": "Product Information",
+      "category": "Category",
+      "sku": "SKU",
+      "material": "Material",
+      "origin": "Origin",
+      "weight": "Weight",
+      "tags": "Tags"
+    },
+    "reviews": {
+      "comingSoon": "Customer reviews coming soon"
+    },
+    "categories": {
+      "souvenirs": "Souvenirs",
+      "jewelry": "Jewelry",
+      "papyrus": "Papyrus Art",
+      "statues": "Statues",
+      "textiles": "Textiles",
+      "homeDecor": "Home Decor",
+      "clothing": "Clothing",
+      "books": "Books",
+      "art": "Art",
+      "other": "Other"
+    }
+  },
+  "ProductRecommendations": {
+    "featured": "Featured",
+    "outOfStock": "Out of Stock",
+    "addToWishlist": "Add to Wishlist",
+    "noRecommendations": "No related products found",
+    "viewDetails": "View Details",
+    "categories": {
+      "souvenirs": "Souvenirs",
+      "jewelry": "Jewelry",
+      "papyrus": "Papyrus Art",
+      "statues": "Statues",
+      "textiles": "Textiles",
+      "homeDecor": "Home Decor",
+      "clothing": "Clothing",
+      "books": "Books",
+      "art": "Art",
+      "other": "Other"
+    }
+  },
+  "HistoryVideosPage": {
+    "title": "Egyptian History Videos",
+    "description": "Explore the rich history of Egypt through our curated collection of educational videos and documentaries",
+    "breadcrumb": {
+      "home": "Home",
+      "history": "History",
+      "videos": "Videos"
+    },
+    "results": "Showing {start}-{end} of {count} videos",
+    "noVideos": {
+      "title": "No Videos Found",
+      "description": "Try adjusting your filters or browse all videos"
+    },
+    "error": {
+      "title": "Unable to Load Videos",
+      "description": "Please try again later or contact support if the problem persists"
+    },
+    "meta": {
+      "title": "Egyptian History Videos - Educational Documentaries",
+      "description": "Watch educational videos about ancient Egyptian history, pharaohs, pyramids, and Egyptian culture",
+      "keywords": "Egyptian history videos, ancient Egypt documentaries, Egyptian culture, pharaohs, pyramids",
+      "og": {
+        "title": "Egyptian History Videos - Educational Documentaries",
+        "description": "Watch educational videos about ancient Egyptian history, pharaohs, pyramids, and Egyptian culture"
+      }
+    }
+  },
+  "historyVideos": {
+    "title": "Egyptian History Videos",
+    "description": "Explore rich history of Egypt through our curated collection of educational videos and documentaries",
+    "breadcrumb": {
+      "home": "Home",
+      "history": "History",
+      "videos": "Videos"
+    },
+    "results": "Showing {start}-{end} of {count} videos",
+    "noVideos": {
+      "title": "No Videos Found",
+      "description": "Try adjusting your filters or browse all videos"
+    },
+    "error": {
+      "title": "Unable to Load Videos",
+      "description": "Please try again later or contact support if the problem persists"
+    },
+    "meta": {
+      "title": "Egyptian History Videos - Educational Documentaries",
+      "description": "Watch educational videos about ancient Egyptian history, pharaohs, pyramids, and Egyptian culture",
+      "keywords": "Egyptian history videos, ancient Egypt documentaries, Egyptian culture, pharaohs, pyramids",
+      "og": {
+        "title": "Egyptian History Videos - Educational Documentaries",
+        "description": "Watch educational videos about ancient Egyptian history, pharaohs, pyramids, and Egyptian culture"
+      }
+    }
+  },
+  "VideoPage": {
+    "breadcrumb": {
+      "home": "Home",
+      "history": "History",
+      "videos": "Videos"
+    },
+    "notFound": {
+      "title": "Video Not Found",
+      "description": "The video you're looking for doesn't exist or has been removed"
+    }
+  },
+  "VideoCard": {
+    "featured": "Featured",
+    "subtitles": "Subtitles",
+    "watchNow": "Watch Now",
+    "categories": {
+      "pharaohs": "Pharaohs",
+      "monuments": "Monuments",
+      "legends": "Legends",
+      "ancient-egypt": "Ancient Egypt",
+      "islamic-egypt": "Islamic Egypt",
+      "modern-egypt": "Modern Egypt",
+      "culture": "Culture",
+      "archaeology": "Archaeology",
+      "mythology": "Mythology",
+      "documentaries": "Documentaries",
+      "cartoons": "Cartoons",
+      "other": "Other"
+    },
+    "languages": {
+      "en": "English",
+      "ar": "Arabic",
+      "fr": "French",
+      "de": "German",
+      "es": "Spanish",
+      "it": "Italian"
+    }
+  },
+  "VideoFilters": {
+    "title": "Filter Videos",
+    "category": "Category",
+    "selectCategory": "Select Category",
+    "language": "Language",
+    "selectLanguage": "Select Language",
+    "sortBy": "Sort By",
+    "selectSort": "Select Sort",
+    "featuredOnly": "Featured Only",
+    "applyFilters": "Apply Filters",
+    "clear": "Clear",
+    "categories": {
+      "pharaohs": "Pharaohs",
+      "monuments": "Monuments",
+      "legends": "Legends",
+      "ancient-egypt": "Ancient Egypt",
+      "islamic-egypt": "Islamic Egypt",
+      "modern-egypt": "Modern Egypt",
+      "culture": "Culture",
+      "archaeology": "Archaeology",
+      "mythology": "Mythology",
+      "documentaries": "Documentaries",
+      "cartoons": "Cartoons",
+      "other": "Other"
+    },
+    "languages": {
+      "en": "English",
+      "ar": "Arabic",
+      "fr": "French",
+      "de": "German",
+      "es": "Spanish",
+      "it": "Italian"
+    },
+    "sort": {
+      "newest": "Newest First",
+      "oldest": "Oldest First",
+      "titleAsc": "Title: A-Z",
+      "titleDesc": "Title: Z-A",
+      "popular": "Most Popular",
+      "liked": "Most Liked",
+      "shortest": "Shortest First",
+      "longest": "Longest First"
+    }
+  },
+  "VideoPlayer": {
+    "subtitles": "Subtitles",
+    "categories": {
+      "pharaohs": "Pharaohs",
+      "monuments": "Monuments",
+      "legends": "Legends",
+      "ancient-egypt": "Ancient Egypt",
+      "islamic-egypt": "Islamic Egypt",
+      "modern-egypt": "Modern Egypt",
+      "culture": "Culture",
+      "archaeology": "Archaeology",
+      "mythology": "Mythology",
+      "documentaries": "Documentaries",
+      "cartoons": "Cartoons",
+      "other": "Other"
+    },
+    "languages": {
+      "en": "English",
+      "ar": "Arabic",
+      "fr": "French",
+      "de": "German",
+      "es": "Spanish",
+      "it": "Italian"
+    }
+  },
+  "VideoInfo": {
+    "views": "views",
+    "likes": "likes",
+    "share": "Share",
+    "featured": "Featured",
+    "subtitles": "Subtitles",
+    "tabs": {
+      "description": "Description",
+      "details": "Details",
+      "metadata": "Metadata"
+    },
+    "details": {
+      "videoInfo": "Video Information",
+      "category": "Category",
+      "duration": "Duration",
+      "language": "Language",
+      "videoType": "Video Type",
+      "ageRating": "Age Rating",
+      "production": "Production Details",
+      "producer": "Producer",
+      "narrator": "Narrator",
+      "releaseDate": "Release Date",
+      "historicalAccuracy": "Historical Accuracy",
+      "relatedPeriod": "Related Period",
+      "tags": "Tags",
+      "subtitleLanguages": "Subtitle Languages"
+    },
+    "categories": {
+      "pharaohs": "Pharaohs",
+      "monuments": "Monuments",
+      "legends": "Legends",
+      "ancient-egypt": "Ancient Egypt",
+      "islamic-egypt": "Islamic Egypt",
+      "modern-egypt": "Modern Egypt",
+      "culture": "Culture",
+      "archaeology": "Archaeology",
+      "mythology": "Mythology",
+      "documentaries": "Documentaries",
+      "cartoons": "Cartoons",
+      "other": "Other"
+    },
+    "languages": {
+      "en": "English",
+      "ar": "Arabic",
+      "fr": "French",
+      "de": "German",
+      "es": "Spanish",
+      "it": "Italian"
+    },
+    "videoTypes": {
+      "youtube": "YouTube",
+      "vimeo": "Vimeo",
+      "local": "Local Video",
+      "external": "External Video"
+    },
+    "accuracy": {
+      "historical": "Historical",
+      "semi-historical": "Semi-Historical",
+      "fictional": "Fictional",
+      "educational": "Educational"
+    }
+  },
+  "RelatedVideos": {
+    "title": "Related Videos",
+    "noVideos": "No related videos found",
+    "viewMore": "View More Videos",
+    "categories": {
+      "pharaohs": "Pharaohs",
+      "monuments": "Monuments",
+      "legends": "Legends",
+      "ancient-egypt": "Ancient Egypt",
+      "islamic-egypt": "Islamic Egypt",
+      "modern-egypt": "Modern Egypt",
+      "culture": "Culture",
+      "archaeology": "Archaeology",
+      "mythology": "Mythology",
+      "documentaries": "Documentaries",
+      "cartoons": "Cartoons",
+      "other": "Other"
+    }
   }
 }

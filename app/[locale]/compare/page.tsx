@@ -7,12 +7,13 @@ import { getLocale } from "next-intl/server"
 export default async function ComparePage({
   searchParams
 }: {
-  searchParams: { tours?: string }
+  searchParams: Promise<{ tours?: string }>
 }) {
+  const awaitedSearchParams = await searchParams
   const locale = await getLocale()
 
   // Get tour IDs from URL params
-  const tourIds = searchParams.tours?.split(',').map(Number).filter(Boolean) || []
+  const tourIds = awaitedSearchParams.tours?.split(',').map(Number).filter(Boolean) || []
 
   if (tourIds.length < 2 || tourIds.length > 4) {
     redirect('/tours')

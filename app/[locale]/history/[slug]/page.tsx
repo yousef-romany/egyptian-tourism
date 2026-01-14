@@ -197,8 +197,8 @@ const historyData: Record<string, HistoryContent> = {
 }
 
 // Generate metadata for the page
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-  const slug = params.slug
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params
   const content = historyData[slug]
 
   if (!content) {
@@ -221,8 +221,8 @@ export function generateStaticParams() {
   }))
 }
 
-export default function HistorySlugPage({ params }: { params: { slug: string } }) {
-  const { slug } = params
+export default async function HistorySlugPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params
   const content = historyData[slug]
 
   // Handle case where slug doesn't exist

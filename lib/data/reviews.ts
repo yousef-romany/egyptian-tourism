@@ -1,4 +1,5 @@
 import strapiAPI, { Review as StrapiReview } from '@/lib/api/strapi'
+import { sampleReviews } from './sample-data'
 
 // Frontend Review type
 export interface Review {
@@ -23,7 +24,7 @@ function convertStrapiReview(strapiReview: StrapiReview): Review {
     location: strapiReview.location,
     date: strapiReview.date,
     rating: strapiReview.rating,
-    title: '', // Strapi review doesn't have title, can use first sentence of review
+    title: strapiReview.review.split('.')[0] || '', // Use first sentence as title
     content: strapiReview.review,
     tourName: strapiReview.tourName || strapiReview.tour?.title || '',
     avatar: strapiReview.avatar || '/placeholder.svg?height=40&width=40',
@@ -39,7 +40,13 @@ export async function getReviews(): Promise<Review[]> {
     return response.data.map(convertStrapiReview)
   } catch (error) {
     console.error('Failed to fetch reviews:', error)
-    return []
+    // Return all sample reviews when backend is unavailable
+    const allSampleReviews = [
+      ...sampleReviews.tripadvisor,
+      ...sampleReviews.viator,
+      ...sampleReviews.klook
+    ]
+    return allSampleReviews.map(convertStrapiReview)
   }
 }
 
@@ -54,7 +61,9 @@ export async function getReviewsByPlatform(
     return strapiReviews.map(convertStrapiReview)
   } catch (error) {
     console.error(`Failed to fetch reviews for ${platform}:`, error)
-    return []
+    // Return sample data when backend is unavailable
+    const sampleData = sampleReviews[platform] || []
+    return sampleData.map(convertStrapiReview)
   }
 }
 
@@ -67,6 +76,12 @@ export async function getFeaturedReviews(limit: number = 9): Promise<Review[]> {
     return strapiReviews.map(convertStrapiReview)
   } catch (error) {
     console.error('Failed to fetch featured reviews:', error)
-    return []
+    // Return sample featured reviews when backend is unavailable
+    const allSampleReviews = [
+      ...sampleReviews.tripadvisor.filter(r => r.featured),
+      ...sampleReviews.viator.filter(r => r.featured),
+      ...sampleReviews.klook.filter(r => r.featured)
+    ]
+    return allSampleReviews.slice(0, limit).map(convertStrapiReview)
   }
 }

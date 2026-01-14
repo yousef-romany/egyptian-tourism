@@ -15,8 +15,25 @@ interface TourCarouselClientProps {
 }
 
 export function TourCarouselClient({ tours }: TourCarouselClientProps) {
-  const [currentIndex, setCurrentIndex] = useState(0)
+  // If no tours, show a message
+  if (tours.length === 0) {
+    return (
+      <div className="text-center py-12">
+        <div className="max-w-2xl mx-auto p-8 bg-muted/30 rounded-2xl border border-egyptian-gold/20">
+          <h3 className="text-2xl font-bold mb-4">Featured Tours Coming Soon</h3>
+          <p className="text-muted-foreground text-lg">
+            We're preparing amazing tour experiences for you. Check back soon to explore our curated Egyptian adventures!
+          </p>
+          <Button className="mt-6 bg-egyptian-gold hover:bg-egyptian-gold-dark text-black">
+            Explore All Tours
+          </Button>
+        </div>
+      </div>
+    )
+  }
 
+  const [currentIndex, setCurrentIndex] = useState(0)
+  
   // Calculate how many tours to show based on screen size
   const getItemsToShow = () => {
     if (typeof window !== "undefined") {

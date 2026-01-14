@@ -13,8 +13,9 @@ export const metadata = {
     "Explore our wide range of Egyptian tours, from the pyramids of Giza to the temples of Luxor and beyond.",
 }
 
-export default async function ToursPage({ params }: { params: { locale: string } }) {
-  const tours = await getTours(params.locale)
+export default async function ToursPage({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params
+  const tours = await getTours(locale)
 
   return (
     <div className="flex min-h-screen flex-col">

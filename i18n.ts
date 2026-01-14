@@ -23,14 +23,24 @@ export const localeFlags: Record<string, string> = {
 };
 
 export default getRequestConfig(async ({ locale }) => {
+  // Simple approach for Next.js 15 compatibility
+  const validatedLocale = locale || defaultLocale;
+  
   // Validate that the incoming `locale` parameter is valid
-  if (!locales.includes(locale as any)) notFound();
+  if (!locales.includes(validatedLocale as any)) {
+    console.error(`Invalid locale: ${validatedLocale}`);
+    notFound();
+  }
 
-  // Ensure locale is a string, not undefined
-  const validatedLocale = locale as string;
-
-  return {
-    locale: validatedLocale,
-    messages: (await import(`./messages/${validatedLocale}.json`)).default,
-  };
+  try {
+    // Direct import approach
+    const messagesModule = await import(`./messages/${validatedLocale}.json`);
+    return {
+      locale: validatedLocale,
+      messages: messagesModule.default,
+    };
+  } catch (error) {
+    console.error(`Failed to load messages for locale: ${validatedLocale}`, error);
+    notFound();
+  }
 });

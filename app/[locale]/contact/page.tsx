@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import EgyptianDivider from "@/components/egyptian-divider";
 import ContactForm from "@/components/contact-form";
+import { Button } from "@/components/ui/button";
 
 export const metadata = {
   title: "Contact Us - Egydise Tours",

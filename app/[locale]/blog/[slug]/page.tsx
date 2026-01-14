@@ -13,14 +13,14 @@ import { CommentSection } from "@/components/blog/comment-section"
 import { getPostBySlug, getAllPostSlugs, getRelatedPosts } from "@/lib/data/blog"
 
 interface BlogPostPageProps {
-  params: {
+  params: Promise<{
     slug: string
-  }
+  }>
 }
 
 // Generate static params for all blog posts (SSG)
 export async function generateStaticParams() {
-  const slugs = getAllPostSlugs()
+  const slugs = await getAllPostSlugs()
   return slugs.map((slug) => ({
     slug: slug,
   }))
@@ -28,7 +28,8 @@ export async function generateStaticParams() {
 
 // Generate metadata for SEO
 export async function generateMetadata({ params }: BlogPostPageProps): Promise<Metadata> {
-  const post = getPostBySlug(params.slug)
+  const { slug } = await params
+  const post = await getPostBySlug(slug)
 
   if (!post) {
     return {
@@ -65,15 +66,16 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
   }
 }
 
-export default function BlogPostPage({ params }: BlogPostPageProps) {
-  const post = getPostBySlug(params.slug)
+export default async function BlogPostPage({ params }: BlogPostPageProps) {
+  const { slug } = await params
+  const post = await getPostBySlug(slug)
 
   if (!post) {
     notFound()
   }
 
-  const relatedPosts = getRelatedPosts(params.slug)
-  const shareUrl = `https://egydisetours.com/blog/${params.slug}`
+  const relatedPosts = await getRelatedPosts(slug)
+  const shareUrl = `https://egydisetours.com/blog/${slug}`
 
   return (
     <div className="flex min-h-screen flex-col">
