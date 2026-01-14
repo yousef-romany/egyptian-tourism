@@ -1,10 +1,10 @@
 import { getTranslations } from 'next-intl/server'
 import { historyVideos } from '@/lib/api/strapi'
-import { VideoCard } from '@/components/video-card'
-import { VideoFilters } from '@/components/video-filters'
 import { Pagination } from '@/components/pagination'
 import { Breadcrumb } from '@/components/breadcrumb'
 import { Suspense } from 'react'
+import { VideoFilters } from '@/components/video-filters'
+import { VideoCard } from '@/components/video-card'
 
 interface HistoryVideosPageProps {
   params: { locale: string }
@@ -107,7 +107,7 @@ export default async function HistoryVideosPage({
                 <>
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
                     {videosData.map((video) => (
-                      <VideoCard 
+                      <VideoCard
                         key={video.id} 
                         video={video} 
                         locale={locale}
