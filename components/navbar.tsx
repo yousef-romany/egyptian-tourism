@@ -9,12 +9,13 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Menu, X, ChevronDown, Search } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
-import logo from "@/public/logo.png"
+import logo from "@/public/logo_with_text.webp"
 import ModeToggle from "./ModeToggle";
 import MegaMenu from "./mega-menu";
 import { CurrencySelector } from "./currency";
 import { LanguageSwitcher } from "./language";
 import { SearchInput } from "./search-input";
+import { CartSidebar } from "./cart-sidebar";
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -66,6 +67,10 @@ export default function Navbar() {
       href: "/blog",
     },
     {
+      name: "Shop",
+      href: "/shop",
+    },
+    {
       name: "History",
       href: "/history",
       dropdown: [
@@ -73,6 +78,7 @@ export default function Navbar() {
         { name: "Pharaohs & Dynasties", href: "/history/pharaohs" },
         { name: "Temples & Monuments", href: "/history/temples" },
         { name: "Egyptian Gods", href: "/history/egyptian-gods" },
+        { name: "History Videos", href: "/history-videos" },
       ],
     },
     {
@@ -194,6 +200,7 @@ export default function Navbar() {
             >
               <Search className="h-5 w-5" />
             </button>
+            <CartSidebar />
             <ModeToggle />
             <SearchInput
               isOpen={isSearchOpen}

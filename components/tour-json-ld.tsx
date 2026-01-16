@@ -50,7 +50,7 @@ export function OrganizationJsonLd({ url = "https://wonderlandegypt.com" }: Orga
     name: "WanderLand Egypt",
     description: "Award-winning Egyptian tour operator offering expert-guided tours to Egypt's most iconic destinations.",
     url: url,
-    logo: `${url}/logo.png`,
+    logo: `${url}/logo_with_text.webp`,
     image: `${url}/placeholder.svg?height=630&width=1200`,
     telephone: "+20-100-123-4567", // TODO: Update with actual business phone number
     email: "info@wonderlandegypt.com",

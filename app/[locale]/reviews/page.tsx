@@ -222,7 +222,7 @@ export default function ReviewsPage() {
       <section className="relative bg-gradient-to-br from-[#0c1e35] via-[#1a3a5f] to-[#0c1e35] text-white py-24 md:py-32 lg:py-40 overflow-hidden">
         <div className="absolute inset-0 z-0">
           <Image
-            src="/logo.png?height=600&width=1600"
+            src="/logo_with_text.webp"
             alt="Egyptian temples"
             fill
             className="object-cover opacity-20"

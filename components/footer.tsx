@@ -19,16 +19,14 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
           <div>
             <div className="flex items-center gap-2 mb-6">
-              <div className="relative w-12 h-12 overflow-hidden">
+              <div className="relative w-48 h-16 overflow-hidden">
                 <Image
-                  src="/logo.png"
+                  src="/logo_with_text.webp"
                   alt="WanderLand Egypt Logo"
-                  width={48}
-                  height={48}
-                  className="object-contain"
+                  fill
+                  className="object-contain object-left"
                 />
               </div>
-              <span className="text-xl font-heading font-bold tracking-wider text-egyptian-gold">WanderLand Egypt</span>
             </div>
             <p className="text-white/70 mb-6 leading-relaxed">
               Experience the magic of ancient Egypt with our expert-guided tours. From the majestic pyramids to the

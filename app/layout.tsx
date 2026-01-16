@@ -2,6 +2,8 @@ import type React from "react"
 import type { Viewport } from "next"
 import "./globals.css"
 import { defaultMetadata } from "@/lib/metadata"
+import { CartProvider } from "@/hooks/use-cart"
+import { Toaster } from "@/components/ui/toaster"
 
 export const metadata = defaultMetadata
 
@@ -31,7 +33,12 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
         <meta name="apple-mobile-web-app-title" content="Egydise Tours" />
       </head>
-      <body>{children}</body>
+      <body>
+        <CartProvider>
+          {children}
+          <Toaster />
+        </CartProvider>
+      </body>
     </html>
   )
 }

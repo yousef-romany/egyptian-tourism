@@ -372,6 +372,101 @@ export interface PromoCodeValidation {
   promoCodeId?: number
 }
 
+export interface CartItem {
+  productId: number
+  name: string
+  slug: string
+  price: number
+  currency: string
+  quantity: number
+  image?: StrapiMedia
+}
+
+export interface Cart {
+  id: number
+  user?: User
+  items: CartItem[]
+  totalAmount: number
+  currency: string
+  status: 'active' | 'abandoned' | 'converted' | 'expired'
+  sessionId?: string
+  lastModified: string
+  createdAt: string
+  updatedAt: string
+}
+
+export interface PayPalOrder {
+  id: number
+  orderId: string
+  status: 'CREATED' | 'APPROVED' | 'CAPTURED' | 'VOIDED' | 'COMPLETED' | 'PENDING' | 'FAILED'
+  amount: number
+  currency: string
+  booking?: Booking
+  captureId?: string
+  paypalResponse?: any
+  captureResponse?: any
+  createdAt: string
+  updatedAt: string
+}
+
+export interface PayPalCreateOrderResponse {
+  orderId: string
+  status: string
+  approvalUrl?: string
+  createTime?: string
+}
+
+export interface PayPalCaptureResponse {
+  captureId?: string
+  status: string
+  amount?: any
+  createTime?: string
+  payerEmail?: string
+  payerName?: string
+}
+
+export interface ShippingAddress {
+  firstName: string
+  lastName: string
+  street: string
+  city: string
+  state: string
+  postalCode: string
+  country: string
+  phone?: string
+}
+
+export interface Order {
+  id: number
+  orderNumber: string
+  user?: User
+  items: CartItem[]
+  customerName: string
+  customerEmail: string
+  customerPhone?: string
+  shippingAddress: ShippingAddress
+  billingAddress?: ShippingAddress
+  subtotal: number
+  shippingCost: number
+  tax: number
+  total: number
+  currency: string
+  status: 'pending' | 'processing' | 'shipped' | 'delivered' | 'cancelled' | 'refunded'
+  paymentStatus: 'pending' | 'paid' | 'failed' | 'refunded' | 'cod_pending'
+  paymentMethod: 'paypal' | 'cod' | 'stripe' | 'bank_transfer'
+  paypalOrderId?: string
+  paypalCaptureId?: string
+  trackingNumber?: string
+  shippingCarrier?: string
+  notes?: string
+  orderDate: string
+  paidAt?: string
+  shippedAt?: string
+  deliveredAt?: string
+  createdAt: string
+  updatedAt: string
+}
+
 // ============================================================================
 // Helper Functions
 // ============================================================================
@@ -1568,6 +1663,170 @@ export const historyVideos = {
 }
 
 // ============================================================================
+// Shopping Cart API
+// ============================================================================
+
+export const cart = {
+  /**
+   * Get user's cart
+   */
+  async get(): Promise<Cart> {
+    const response = await apiFetch<StrapiResponse<Cart>>('/cart')
+    return response.data
+  },
+
+  /**
+   * Add item to cart
+   */
+  async addItem(productId: number, quantity: number = 1): Promise<Cart> {
+    const response = await apiFetch<StrapiResponse<Cart>>('/cart/add', {
+      method: 'POST',
+      body: JSON.stringify({ productId, quantity }),
+    })
+    return response.data
+  },
+
+  /**
+   * Update item quantity
+   */
+  async updateItem(productId: number, quantity: number): Promise<Cart> {
+    const response = await apiFetch<StrapiResponse<Cart>>('/cart/update', {
+      method: 'PUT',
+      body: JSON.stringify({ productId, quantity }),
+    })
+    return response.data
+  },
+
+  /**
+   * Remove item from cart
+   */
+  async removeItem(productId: number): Promise<Cart> {
+    const response = await apiFetch<StrapiResponse<Cart>>(`/cart/remove/${productId}`, {
+      method: 'DELETE',
+    })
+    return response.data
+  },
+
+  /**
+   * Clear cart
+   */
+  async clear(): Promise<Cart> {
+    const response = await apiFetch<StrapiResponse<Cart>>('/cart/clear', {
+      method: 'DELETE',
+    })
+    return response.data
+  },
+}
+
+// ============================================================================
+// PayPal Payment API
+// ============================================================================
+
+export const paypal = {
+  /**
+   * Create PayPal order
+   */
+  async createOrder(data: {
+    amount: number
+    currency?: string
+    description?: string
+    bookingId: number
+    bookingReference?: string
+  }): Promise<PayPalCreateOrderResponse> {
+    const response = await apiFetch<StrapiResponse<PayPalCreateOrderResponse>>('/paypal/create-order', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    })
+    return response.data
+  },
+
+  /**
+   * Capture PayPal payment
+   */
+  async capturePayment(orderId: string): Promise<{
+    data: PayPalCaptureResponse
+    booking?: Booking
+  }> {
+    return apiFetch('/paypal/capture-payment', {
+      method: 'POST',
+      body: JSON.stringify({ orderId }),
+    })
+  },
+
+  /**
+   * Get PayPal order details
+   */
+  async getOrderDetails(orderId: string): Promise<any> {
+    const response = await apiFetch<StrapiResponse<any>>(`/paypal/order/${orderId}`)
+    return response.data
+  },
+}
+
+// ============================================================================
+// Orders API
+// ============================================================================
+
+export const orders = {
+  /**
+   * Create a new order
+   */
+  async create(data: {
+    items: CartItem[]
+    customerName: string
+    customerEmail: string
+    customerPhone?: string
+    shippingAddress: ShippingAddress
+    billingAddress?: ShippingAddress
+    subtotal: number
+    shippingCost?: number
+    tax?: number
+    total: number
+    currency?: string
+    paymentMethod?: 'paypal' | 'cod' | 'stripe' | 'bank_transfer'
+  }): Promise<Order> {
+    const response = await apiFetch<StrapiResponse<Order>>('/orders', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    })
+    return response.data
+  },
+
+  /**
+   * Track order by order number
+   */
+  async trackOrder(orderNumber: string): Promise<Order> {
+    const response = await apiFetch<StrapiResponse<Order>>(`/orders/track/${orderNumber}`)
+    return response.data
+  },
+
+  /**
+   * Get user's orders
+   */
+  async getMyOrders(): Promise<Order[]> {
+    const response = await apiFetch<StrapiResponse<Order[]>>('/orders/my-orders')
+    return response.data
+  },
+
+  /**
+   * Update order payment status
+   */
+  async updatePayment(
+    orderId: number,
+    data: {
+      paypalOrderId: string
+      paypalCaptureId: string
+      status: string
+    }
+  ): Promise<Order> {
+    const response = await apiFetch<StrapiResponse<Order>>(`/orders/${orderId}/payment`, {
+      method: 'PUT',
+      body: JSON.stringify(data),
+    })
+    return response.data
+  },
+}
+
+// ============================================================================
 // Default Export
 // ============================================================================
 
@@ -1588,6 +1847,9 @@ const strapiAPI = {
   galleries,
   products,
   historyVideos,
+  cart,
+  paypal,
+  orders,
   getMediaUrl,
   getStoredUser,
 }

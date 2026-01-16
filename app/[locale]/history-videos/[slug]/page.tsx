@@ -8,6 +8,7 @@ import { RelatedVideos } from '@/components/related-videos'
 
 interface VideoPageProps {
   params: { locale: string; slug: string }
+  searchParams: { [key: string]: string | string[] | undefined }
 }
 
 export async function generateMetadata({ 

@@ -89,9 +89,9 @@ export function MobileBottomNav() {
                   <SheetContent side="bottom" className="h-[80vh] rounded-t-3xl border-t-2 border-egyptian-gold/30">
                     <div className="flex flex-col h-full">
                       <div className="flex items-center gap-3 mb-6 pb-4 border-b border-egyptian-gold/20">
-                        <div className="relative w-12 h-12 overflow-hidden">
+                        <div className="relative w-12 h-12 overflow-hidden rounded-lg">
                           <Image
-                            src="/logo.png"
+                            src="/logo_without_text.webp"
                             alt="WanderLand Egypt"
                             width={48}
                             height={48}

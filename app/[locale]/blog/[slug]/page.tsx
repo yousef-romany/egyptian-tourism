@@ -334,7 +334,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
               "name": "Egydise Tours",
               "logo": {
                 "@type": "ImageObject",
-                "url": "https://egydisetours.com/logo.png"
+                "url": "https://egydisetours.com/logo_without_text.webp"
               }
             },
             "mainEntityOfPage": {
