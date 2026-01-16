@@ -10,12 +10,15 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Star, MapPin, Clock, Heart, Share2, Search, X, Filter } from "lucide-react"
 import { motion } from "framer-motion"
 import { useWishlist } from "@/hooks/use-wishlist"
+import { useTranslations, useLocale } from "next-intl"
 
 export default function WishlistClient() {
   const [searchQuery, setSearchQuery] = useState("")
   const [showSearch, setShowSearch] = useState(false)
   const [activeCategory, setActiveCategory] = useState("all")
   const { wishlist, removeFromWishlist, isLoaded } = useWishlist()
+  const t = useTranslations('Wishlist')
+  const locale = useLocale()
 
   const filteredItems = wishlist.filter((item) => {
     const matchesSearch =
@@ -53,8 +56,8 @@ export default function WishlistClient() {
 
         <div className="container relative z-10">
           <div className="max-w-2xl">
-            <h1 className="font-heading text-4xl md:text-5xl font-bold mb-4">My Wishlist</h1>
-            <p className="text-lg text-white/80 mb-6">Your saved tours and experiences for future adventures</p>
+            <h1 className="font-heading text-4xl md:text-5xl font-bold mb-4">{t('title')}</h1>
+            <p className="text-lg text-white/80 mb-6">{t('subtitle')}</p>
           </div>
         </div>
       </div>
@@ -63,10 +66,10 @@ export default function WishlistClient() {
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
           <Tabs defaultValue="all" className="w-full md:w-auto" onValueChange={setActiveCategory}>
             <TabsList>
-              <TabsTrigger value="all">All ({getCategoryCount("all")})</TabsTrigger>
-              <TabsTrigger value="historical">Historical ({getCategoryCount("historical")})</TabsTrigger>
-              <TabsTrigger value="adventure">Adventure ({getCategoryCount("adventure")})</TabsTrigger>
-              <TabsTrigger value="cultural">Cultural ({getCategoryCount("cultural")})</TabsTrigger>
+              <TabsTrigger value="all">{t('all')} ({getCategoryCount("all")})</TabsTrigger>
+              <TabsTrigger value="historical">{t('historical')} ({getCategoryCount("historical")})</TabsTrigger>
+              <TabsTrigger value="adventure">{t('adventure')} ({getCategoryCount("adventure")})</TabsTrigger>
+              <TabsTrigger value="cultural">{t('cultural')} ({getCategoryCount("cultural")})</TabsTrigger>
             </TabsList>
           </Tabs>
 
@@ -80,7 +83,7 @@ export default function WishlistClient() {
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                 <input
                   type="text"
-                  placeholder="Search your wishlist..."
+                  placeholder={t('searchPlaceholder')}
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="w-full pl-9 pr-9 py-2 rounded-md border border-input"
@@ -129,7 +132,7 @@ export default function WishlistClient() {
                     <button
                       onClick={() => handleRemove(item.id)}
                       className="h-8 w-8 rounded-full bg-white/80 flex items-center justify-center hover:bg-white hover:scale-110 transition-all duration-200"
-                      aria-label="Remove from wishlist"
+                      aria-label={t('remove')}
                     >
                       <Heart className="h-4 w-4 fill-red-500 text-red-500" />
                     </button>
@@ -138,31 +141,33 @@ export default function WishlistClient() {
                     </button>
                   </div>
                 </div>
+
                 <CardContent className="p-4">
-                  <Link href={`/tours/${item.slug}`}>
+                  <Link href={`/${locale}/tours/${item.slug}`}>
                     <h3 className="text-lg font-bold group-hover:text-egyptian-gold transition-colors">{item.title}</h3>
                   </Link>
                   <div className="flex items-center gap-1 mt-2 text-amber-500">
                     <Star className="h-4 w-4 fill-current" />
                     <span>{item.rating}</span>
-                    <span className="text-muted-foreground text-sm">({item.reviews} reviews)</span>
+                    <span className="text-xs text-muted-foreground">({item.reviews} {t('reviews')})</span>
                   </div>
-                  <div className="flex flex-col gap-2 mt-3">
-                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                  <div className="flex flex-col gap-2 mt-3 text-muted-foreground">
+                    <div className="flex items-center gap-2">
                       <MapPin className="h-4 w-4" />
                       <span>{item.location}</span>
                     </div>
-                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                    <div className="flex items-center gap-2 text-muted-foreground">
                       <Clock className="h-4 w-4" />
                       <span>{item.duration}</span>
                     </div>
                   </div>
+
                   <div className="flex gap-2 mt-4">
                     <Button asChild className="flex-1 bg-egyptian-gold hover:bg-egyptian-gold-dark text-black">
-                      <Link href={`/tours/${item.slug}`}>View Details</Link>
+                      <Link href={`/${locale}/tours/${item.slug}`}>{t('viewDetails')}</Link>
                     </Button>
                     <Button asChild className="flex-1">
-                      <Link href="/book-now">Book Now</Link>
+                      <Link href={`/${locale}/book-now`}>{t('bookNow')}</Link>
                     </Button>
                   </div>
                 </CardContent>
@@ -174,14 +179,14 @@ export default function WishlistClient() {
             <div className="inline-flex h-20 w-20 items-center justify-center rounded-full bg-muted mb-6">
               <Heart className="h-10 w-10 text-muted-foreground" />
             </div>
-            <h2 className="text-2xl font-bold mb-2">No matching items found</h2>
+            <h2 className="text-2xl font-bold mb-2">{t('wishlistEmpty')}</h2>
             <p className="text-muted-foreground mb-6">
               {searchQuery
-                ? `We couldn't find any wishlist items matching "${searchQuery}"`
-                : "Your wishlist is empty. Start exploring tours to add some!"}
+                ? t('noMatchingItems')
+                : t('wishlistEmptyDesc')}
             </p>
             <Button asChild className="bg-egyptian-gold hover:bg-egyptian-gold-dark text-black">
-              <Link href="/tours">Explore Tours</Link>
+              <Link href={`/${locale}/tours`}>{t('exploreTours')}</Link>
             </Button>
           </div>
         )}
@@ -189,4 +194,3 @@ export default function WishlistClient() {
     </div>
   )
 }
-

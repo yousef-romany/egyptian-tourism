@@ -3,8 +3,8 @@ import { Suspense } from "react"
 import SearchResults from "./search-results"
 
 export const metadata: Metadata = {
-  title: "Search Results - Egydise Tours",
-  description: "Search for tours, blog posts, and more on Egydise Tours",
+  title: "Search Results - WanderLand Egypt",
+  description: "Search for tours, blog posts, and more on WanderLand Egypt",
 }
 
 export default function SearchPage() {

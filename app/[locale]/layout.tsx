@@ -102,8 +102,9 @@ export default async function LocaleLayout({
                 </CurrencyProvider>
               </ComparisonProvider>
             </StripeProvider>
-          </AuthProvider>
-        </NextIntlClientProvider>
+            </AuthProvider>
+          </NextIntlClientProvider>
+        </AuthSessionProvider>
       </ThemeProvider>
     </GlobalErrorBoundary>
   )

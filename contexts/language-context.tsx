@@ -183,9 +183,9 @@ export function LanguageProvider({ children }: LanguageProviderProps) {
 
   // Translation function
   const t = (key: string): string => {
-    const langData = languageData[currentLanguage as Language];
-    if (!langData || !langData[key]) return key;
-    return langData[key];
+    const translationData = translations[currentLanguage as Language];
+    if (!translationData || !(key in translationData)) return key;
+    return translationData[key as keyof typeof translationData];
   };
 
   const value: LanguageContextType = {

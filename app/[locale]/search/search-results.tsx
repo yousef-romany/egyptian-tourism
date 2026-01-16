@@ -74,7 +74,7 @@ export default function SearchResults() {
     return (
       <div className="text-center py-12">
         <Search className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
-        <h2 className="text-2xl font-bold mb-2">Search Egydise Tours</h2>
+        <h2 className="text-2xl font-bold mb-2">Search WanderLand Egypt</h2>
         <p className="text-muted-foreground">
           Enter a search term to find tours, blog posts, and more
         </p>

@@ -10,7 +10,7 @@ NEXT_PUBLIC_STRAPI_URL=https://your-production-api.com
 
 # Site Configuration
 NEXT_PUBLIC_SITE_URL=https://your-domain.com
-NEXT_PUBLIC_SITE_NAME=Egydise Tours
+NEXT_PUBLIC_SITE_NAME=WanderLand Egypt
 
 # Google Analytics
 NEXT_PUBLIC_GA_MEASUREMENT_ID=G-XXXXXXXXXX

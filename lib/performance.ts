@@ -3,6 +3,8 @@
  * Helper functions for monitoring and optimizing performance
  */
 
+import { useEffect } from 'react'
+
 /**
  * Measure Web Vitals
  */
@@ -144,7 +146,7 @@ export function prefetchLinks() {
  * Detect if user is on slow connection
  */
 export function isSlowConnection(): boolean {
-  if (typeof navigator === 'undefined' || !navigator.connection) {
+  if (typeof navigator === 'undefined' || !(navigator as any).connection) {
     return false
   }
 
@@ -160,7 +162,7 @@ export function isSlowConnection(): boolean {
  * Get connection speed
  */
 export function getConnectionSpeed(): 'slow' | 'medium' | 'fast' {
-  if (typeof navigator === 'undefined' || !navigator.connection) {
+  if (typeof navigator === 'undefined' || !(navigator as any).connection) {
     return 'fast'
   }
 

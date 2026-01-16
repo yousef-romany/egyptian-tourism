@@ -1,5 +1,4 @@
 import strapiAPI, { Review as StrapiReview } from '@/lib/api/strapi'
-import { sampleReviews } from './sample-data'
 
 // Frontend Review type
 export interface Review {
@@ -40,13 +39,8 @@ export async function getReviews(): Promise<Review[]> {
     return response.data.map(convertStrapiReview)
   } catch (error) {
     console.error('Failed to fetch reviews:', error)
-    // Return all sample reviews when backend is unavailable
-    const allSampleReviews = [
-      ...sampleReviews.tripadvisor,
-      ...sampleReviews.viator,
-      ...sampleReviews.klook
-    ]
-    return allSampleReviews.map(convertStrapiReview)
+    // Return empty array when backend is unavailable
+    return []
   }
 }
 
@@ -61,9 +55,8 @@ export async function getReviewsByPlatform(
     return strapiReviews.map(convertStrapiReview)
   } catch (error) {
     console.error(`Failed to fetch reviews for ${platform}:`, error)
-    // Return sample data when backend is unavailable
-    const sampleData = sampleReviews[platform] || []
-    return sampleData.map(convertStrapiReview)
+    // Return empty array when backend is unavailable
+    return []
   }
 }
 
@@ -76,12 +69,7 @@ export async function getFeaturedReviews(limit: number = 9): Promise<Review[]> {
     return strapiReviews.map(convertStrapiReview)
   } catch (error) {
     console.error('Failed to fetch featured reviews:', error)
-    // Return sample featured reviews when backend is unavailable
-    const allSampleReviews = [
-      ...sampleReviews.tripadvisor.filter(r => r.featured),
-      ...sampleReviews.viator.filter(r => r.featured),
-      ...sampleReviews.klook.filter(r => r.featured)
-    ]
-    return allSampleReviews.slice(0, limit).map(convertStrapiReview)
+    // Return empty array when backend is unavailable
+    return []
   }
 }

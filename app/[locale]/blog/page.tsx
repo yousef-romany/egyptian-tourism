@@ -9,7 +9,7 @@ import Newsletter from "@/components/newsletter"
 import { getAllPosts, getAllCategories } from "@/lib/data/blog"
 
 export const metadata: Metadata = {
-  title: "Blog & Travel Guide - Egydise Tours",
+  title: "Blog & Travel Guide - WanderLand Egypt",
   description: "Discover travel tips, Egyptian culture insights, destination guides, and insider knowledge from our expert team of Egyptologists and travel consultants.",
 }
 

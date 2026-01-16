@@ -8,8 +8,8 @@ import { Star, Quote, Video, Image as ImageIcon } from "lucide-react"
 import Link from "next/link"
 
 export const metadata: Metadata = {
-  title: "Customer Stories & Testimonials - Egydise Tours",
-  description: "Read real stories from travelers who experienced the magic of Egypt with Egydise Tours. Verified reviews, photos, and videos from our satisfied customers.",
+  title: "Customer Stories & Testimonials - WanderLand Egypt",
+  description: "Read real stories from travelers who experienced the magic of Egypt with WanderLand Egypt. Verified reviews, photos, and videos from our satisfied customers.",
 }
 
 export default async function TestimonialsPage() {
@@ -135,7 +135,7 @@ export default async function TestimonialsPage() {
               <Quote className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
               <h3 className="text-xl font-semibold mb-2">No Testimonials Yet</h3>
               <p className="text-muted-foreground mb-6">
-                Be the first to share your experience with Egydise Tours!
+                Be the first to share your experience with WanderLand Egypt!
               </p>
               <Link href="/tours">
                 <Button className="bg-egyptian-gold hover:bg-egyptian-gold-dark text-white">

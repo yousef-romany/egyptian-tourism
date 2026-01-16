@@ -8,7 +8,7 @@ import Newsletter from "@/components/newsletter"
 import { Calendar, MapPin, Scroll, Crown } from "lucide-react"
 
 export const metadata = {
-  title: "Ancient Egypt - Egydise Tours",
+  title: "Ancient Egypt - WanderLand Egypt",
   description: "Explore the fascinating history of Ancient Egypt, from its origins to the legacy that shaped civilization.",
 }
 

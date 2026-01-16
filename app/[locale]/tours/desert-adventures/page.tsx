@@ -8,7 +8,7 @@ import TourCardServer from "@/components/tour-card-server"
 import { getTours } from "@/lib/data/tours"
 
 export const metadata = {
-  title: "Desert Adventures - Egydise Tours",
+  title: "Desert Adventures - WanderLand Egypt",
   description:
     "Experience the magic of Egypt's deserts with camel rides, Bedouin camps, and starlit nights.",
 }

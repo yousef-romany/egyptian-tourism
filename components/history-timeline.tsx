@@ -22,37 +22,37 @@ export default function HistoryTimeline() {
       icon: Pyramid,
       title: "Ancient Egypt",
       period: "3100 - 332 BCE",
-      description: "Discover the cradle of civilization, from the age of pyramids to the reign of pharaohs.",
+      description: "Experience the birthplace of civilization where the Nile River nurtured one of history's most remarkable cultures. Witness the rise of hieroglyphic writing, the development of mathematics and astronomy, and the construction of monuments that have defied time for over 5,000 years.",
       link: "/history/ancient-egypt",
       color: "from-amber-500 to-orange-600",
-      image: "/placeholder.svg?height=300&width=400"
+      image: "/api/placeholder/400/300?text=Great+Pyramid+of+Giza"
     },
     {
       icon: Crown,
       title: "Pharaohs & Dynasties",
       period: "31 Dynasties",
-      description: "Explore the lives and legacies of Egypt's most powerful rulers across 3,000 years.",
+      description: "Walk in the footsteps of legendary rulers like Tutankhamun, Ramses II, and Cleopatra. Discover how these divine kings built empires, commanded armies, and created the magnificent tombs and treasures that continue to captivate the world today.",
       link: "/history/pharaohs",
       color: "from-yellow-500 to-amber-600",
-      image: "/placeholder.svg?height=300&width=400"
+      image: "/api/placeholder/400/300?text=Mask+of+Tutankhamun"
     },
     {
       icon: Sparkles,
       title: "Temples & Monuments",
       period: "5000+ Years",
-      description: "Marvel at the architectural wonders that have stood the test of time.",
+      description: "Stand in awe before the architectural masterpieces of Karnak, Luxor, Abu Simbel, and Philae. These sacred spaces, carved from stone and decorated with intricate hieroglyphs, reveal the profound spiritual beliefs and extraordinary engineering skills of ancient Egyptians.",
       link: "/history/temples",
       color: "from-orange-500 to-red-600",
-      image: "/placeholder.svg?height=300&width=400"
+      image: "/api/placeholder/400/300?text=Karnak+Temple+Complex"
     },
     {
       icon: Scroll,
       title: "Egyptian Gods",
       period: "Pantheon",
-      description: "Meet the gods and goddesses who shaped ancient Egyptian religion and culture.",
+      description: "Explore the divine world of Ra, Isis, Osiris, Anubis, and hundreds of other deities who governed every aspect of Egyptian life. Learn how these gods influenced daily rituals, burial practices, and the eternal quest for immortality that shaped Egyptian civilization.",
       link: "/history/egyptian-gods",
       color: "from-purple-500 to-pink-600",
-      image: "/placeholder.svg?height=300&width=400"
+      image: "/api/placeholder/400/300?text=Anubis+the+God"
     }
   ]
   

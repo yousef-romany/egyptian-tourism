@@ -260,10 +260,10 @@ export function ConfirmationClient() {
           <p>
             Need help? Contact us at{' '}
             <a
-              href="mailto:info@egydise-tours.com"
+              href="mailto:info@WanderLand Egypt.com"
               className="font-medium underline"
             >
-              info@egydise-tours.com
+              info@WanderLand Egypt.com
             </a>
           </p>
         </div>

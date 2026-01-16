@@ -6,14 +6,15 @@ import { Breadcrumb } from '@/components/breadcrumb'
 import { ProductRecommendations } from '@/components/product-recommendations'
 
 interface ProductPageProps {
-  params: { locale: string; slug: string }
+  params: Promise<{ locale: string; slug: string }>
 }
 
-export async function generateMetadata({ 
-  params: { locale, slug } 
-}: { 
-  params: { locale: string; slug: string } 
+export async function generateMetadata({
+  params
+}: {
+  params: Promise<{ locale: string; slug: string }>
 }) {
+  const { locale, slug } = await params
   const t = await getTranslations({ locale, namespace: 'product' })
   
   try {
@@ -43,9 +44,10 @@ export async function generateMetadata({
   }
 }
 
-export default async function ProductPage({ 
-  params: { locale, slug } 
+export default async function ProductPage({
+  params
 }: ProductPageProps) {
+  const { locale, slug } = await params
   const t = await getTranslations({ locale, namespace: 'product' })
   
   try {

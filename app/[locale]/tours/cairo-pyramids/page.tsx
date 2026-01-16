@@ -8,7 +8,7 @@ import TourCardServer from "@/components/tour-card-server"
 import { getTours } from "@/lib/data/tours"
 
 export const metadata = {
-  title: "Cairo & Pyramids Tours - Egydise Tours",
+  title: "Cairo & Pyramids Tours - WanderLand Egypt",
   description:
     "Explore the Pyramids of Giza, the Sphinx, and the treasures of Cairo with our expert-guided tours.",
 }

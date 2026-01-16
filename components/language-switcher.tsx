@@ -14,11 +14,11 @@ import { cn } from '@/lib/utils'
 
 const languages = [
   { code: 'en', name: 'English', flag: '🇺🇸' },
-  { code: 'ar', name: 'العربية', flag: '🇸🇦' },
+  { code: 'ar', name: 'العربية', flag: '🇪🇬' },
   { code: 'fr', name: 'Français', flag: '🇫🇷' },
-  { code: 'zh', name: '中文', flag: '🇨🇳' },
   { code: 'de', name: 'Deutsch', flag: '🇩🇪' },
   { code: 'es', name: 'Español', flag: '🇪🇸' },
+  { code: 'zh', name: '中文', flag: '🇨🇳' },
   { code: 'hi', name: 'हिन्दी', flag: '🇮🇳' },
 ]
 
@@ -30,12 +30,13 @@ export function LanguageSwitcher() {
 
   const handleLanguageChange = (newLocale: string) => {
     // Remove the current locale from pathname
-    const pathWithoutLocale = pathname.replace(`/${locale}`, '') || '/'
-    
+    const pathWithoutLocale = pathname.replace(/^\/[a-z]{2}/, '') || '/'
+
     // Add the new locale to the beginning
     const newPath = `/${newLocale}${pathWithoutLocale}`
-    
+
     router.push(newPath)
+    router.refresh() // Force a refresh to update the UI
   }
 
   return (

@@ -8,7 +8,7 @@ import TourCardServer from "@/components/tour-card-server"
 import { getTours } from "@/lib/data/tours"
 
 export const metadata = {
-  title: "Luxor & Aswan Tours - Egydise Tours",
+  title: "Luxor & Aswan Tours - WanderLand Egypt",
   description:
     "Explore the ancient temples and tombs of Luxor and Aswan with our expert-guided tours.",
 }

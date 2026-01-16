@@ -38,7 +38,7 @@ export default function Home() {
             Discover Egypt Through Our Guests' Eyes
           </h2>
           <p className="max-w-[90%] text-lg leading-relaxed text-muted-foreground sm:text-xl sm:leading-8">
-            Authentic reviews from travelers who experienced the magic of Egypt with Egydise Tours.
+            Authentic reviews from travelers who experienced the magic of Egypt with WanderLand Egypt.
           </p>
         </div>
 
@@ -144,7 +144,7 @@ export default function Home() {
               </Badge>
             </div>
             <h2 className="font-heading text-4xl font-extrabold leading-[1.1] sm:text-5xl md:text-6xl mb-8 bg-gradient-to-r from-foreground via-egyptian-gold to-foreground bg-clip-text text-transparent">
-              Why Choose Egydise Tours?
+              Why Choose WanderLand Egypt?
             </h2>
 
             <EgyptianDivider className="my-8 max-w-xs" />

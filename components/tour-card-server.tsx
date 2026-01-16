@@ -28,7 +28,7 @@ export default function TourCardServer({ tour }: TourCardServerProps) {
           />
           <div className="absolute top-3 right-3 z-20">
             <Badge className="bg-egyptian-gold text-black font-bold text-base px-3 py-1 shadow-lg">
-              <PriceDisplay priceUSD={tour.priceDisplay || tour.price} />
+              <PriceDisplay priceUSD={Number(tour.price)} />
             </Badge>
           </div>
           <WishlistButton tour={tour} />

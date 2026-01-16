@@ -4,8 +4,8 @@ import { Button } from "@/components/ui/button"
 import EgyptianDivider from "@/components/egyptian-divider"
 
 export const metadata = {
-  title: "Terms & Conditions - Egydise Tours",
-  description: "Read our terms and conditions for booking tours and services with Egydise Tours.",
+  title: "Terms & Conditions - WanderLand Egypt",
+  description: "Read our terms and conditions for booking tours and services with WanderLand Egypt.",
 }
 
 export default function TermsPage() {
@@ -26,7 +26,7 @@ export default function TermsPage() {
           <div className="max-w-2xl">
             <h1 className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold mb-4">Terms & Conditions</h1>
             <p className="text-lg text-white/80">
-              Please read these terms carefully before booking with Egydise Tours.
+              Please read these terms carefully before booking with WanderLand Egypt.
             </p>
           </div>
         </div>
@@ -41,12 +41,12 @@ export default function TermsPage() {
 
             <h2 className="font-heading text-2xl font-bold mt-8 mb-4">1. Introduction</h2>
             <p>
-              Welcome to Egydise Tours. These Terms and Conditions govern your use of our website and the booking of our
+              Welcome to WanderLand Egypt. These Terms and Conditions govern your use of our website and the booking of our
               tour services. By accessing our website and/or booking our services, you acknowledge that you have read,
               understood, and agree to be bound by these Terms and Conditions.
             </p>
             <p>
-              Egydise Tours is a registered tour operator based in Cairo, Egypt, specializing in guided tours throughout
+              WanderLand Egypt is a registered tour operator based in Cairo, Egypt, specializing in guided tours throughout
               Egypt. Our company registration number is EGT-12345, and we are licensed by the Egyptian Ministry of
               Tourism (License No. 567890).
             </p>
@@ -95,7 +95,7 @@ export default function TermsPage() {
               circumstances that may require cancellation.
             </p>
 
-            <h3 className="text-xl font-bold mt-6 mb-3">3.2 Cancellation by Egydise Tours</h3>
+            <h3 className="text-xl font-bold mt-6 mb-3">3.2 Cancellation by WanderLand Egypt</h3>
             <p>
               In the rare event that we must cancel a tour due to circumstances beyond our control (such as natural
               disasters, political instability, or insufficient participants for a group tour), you will be offered the
@@ -107,7 +107,7 @@ export default function TermsPage() {
               <li>An alternative tour of lower quality with a price difference refund (if available)</li>
             </ul>
             <p>
-              Egydise Tours is not responsible for any incidental expenses that you may have incurred as a result of
+              WanderLand Egypt is not responsible for any incidental expenses that you may have incurred as a result of
               your booking, such as visas, vaccinations, or non-refundable flights.
             </p>
 
@@ -120,7 +120,7 @@ export default function TermsPage() {
               addition to any price differences resulting from the changes.
             </p>
 
-            <h3 className="text-xl font-bold mt-6 mb-3">4.2 Changes by Egydise Tours</h3>
+            <h3 className="text-xl font-bold mt-6 mb-3">4.2 Changes by WanderLand Egypt</h3>
             <p>
               While we make every effort to operate tours as advertised, we reserve the right to modify itineraries,
               accommodations, and services due to weather conditions, safety concerns, or other circumstances beyond our
@@ -137,7 +137,7 @@ export default function TermsPage() {
             <p>
               It is your responsibility to ensure that you have a valid passport (with at least 6 months validity beyond
               your return date) and the appropriate visas for Egypt and any other countries included in your itinerary.
-              Egydise Tours can provide general information about visa requirements but is not responsible for any
+              WanderLand Egypt can provide general information about visa requirements but is not responsible for any
               issues arising from inadequate travel documentation.
             </p>
 
@@ -158,13 +158,13 @@ export default function TermsPage() {
             <h2 className="font-heading text-2xl font-bold mt-8 mb-4">7. Liability and Responsibility</h2>
             <h3 className="text-xl font-bold mt-6 mb-3">7.1 Limitation of Liability</h3>
             <p>
-              Egydise Tours acts as an intermediary between you and the various service providers (hotels,
+              WanderLand Egypt acts as an intermediary between you and the various service providers (hotels,
               transportation companies, attractions, etc.). While we select these providers with care, we cannot be held
               responsible for any injury, damage, loss, accident, delay, or irregularity that may occur due to the
               actions or omissions of these third-party providers.
             </p>
             <p>
-              Our liability for any claims arising from your tour is limited to the total amount paid to Egydise Tours
+              Our liability for any claims arising from your tour is limited to the total amount paid to WanderLand Egypt
               for your booking. We are not liable for force majeure events, including but not limited to natural
               disasters, acts of government, civil unrest, or other circumstances beyond our reasonable control.
             </p>
@@ -173,13 +173,13 @@ export default function TermsPage() {
             <p>
               You are responsible for your personal safety and the security of your belongings throughout the tour. You
               must comply with local laws and regulations, as well as the instructions of your tour guide regarding
-              safety and conduct. Egydise Tours reserves the right to remove any participant whose conduct is deemed
+              safety and conduct. WanderLand Egypt reserves the right to remove any participant whose conduct is deemed
               incompatible with the interests of the tour group, without refund.
             </p>
 
             <h2 className="font-heading text-2xl font-bold mt-8 mb-4">8. Privacy Policy</h2>
             <p>
-              Egydise Tours collects and processes personal information in accordance with our{" "}
+              WanderLand Egypt collects and processes personal information in accordance with our{" "}
               <Link href="/privacy-policy" className="text-egyptian-gold hover:underline">
                 Privacy Policy
               </Link>
@@ -197,17 +197,17 @@ export default function TermsPage() {
             <p>If you have any questions about these Terms and Conditions, please contact us:</p>
             <ul className="list-none pl-0 space-y-2 mb-4">
               <li>
-                <strong>Egydise Tours</strong>
+                <strong>WanderLand Egypt</strong>
               </li>
               <li>123 Tahrir Square, Cairo, Egypt</li>
               <li>Phone: +20 123 456 7890</li>
-              <li>Email: info@egydise-tours.com</li>
+              <li>Email: info@WanderLand Egypt.com</li>
             </ul>
 
             <EgyptianDivider className="my-8" />
 
             <p className="text-center text-muted-foreground">
-              By booking a tour with Egydise Tours, you acknowledge that you have read, understood, and agree to these
+              By booking a tour with WanderLand Egypt, you acknowledge that you have read, understood, and agree to these
               Terms and Conditions.
             </p>
           </div>

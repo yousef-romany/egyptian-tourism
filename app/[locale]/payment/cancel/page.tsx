@@ -63,7 +63,7 @@ export default function PaymentCancelPage() {
               <li className="flex items-start">
                 <span className="mr-2">•</span>
                 <span>
-                  <strong>Support:</strong> Email us at info@egydise-tours.com for assistance
+                  <strong>Support:</strong> Email us at info@WanderLand Egypt.com for assistance
                 </span>
               </li>
             </ul>

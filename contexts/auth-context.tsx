@@ -2,6 +2,7 @@
 
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react'
 import strapiAPI, { User, AuthResponse } from '@/lib/api/strapi'
+import { getGoogleAuthUrl, getFacebookAuthUrl } from '@/lib/auth'
 
 // ============================================================================
 // Types
@@ -12,6 +13,7 @@ interface AuthContextType {
   isAuthenticated: boolean
   isLoading: boolean
   login: (identifier: string, password: string) => Promise<void>
+  loginWithOAuth: (provider: 'google' | 'facebook') => Promise<void>
   register: (data: RegisterData) => Promise<void>
   logout: () => void
   updateUser: (data: Partial<User>) => Promise<void>
@@ -46,11 +48,11 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<User | null>(null)
   const [isLoading, setIsLoading] = useState(true)
 
-  // Check authentication status on mount
+  // Check authentication status on mount (Strapi only)
   useEffect(() => {
     const initAuth = async () => {
       try {
-        // Check if user is authenticated
+        // Check if user is authenticated via Strapi JWT
         if (strapiAPI.auth.isAuthenticated()) {
           // Try to get fresh user data from API
           const userData = await strapiAPI.auth.getMe()
@@ -76,7 +78,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   }, [])
 
   /**
-   * Login user
+   * Login user with Strapi
    */
   const login = async (identifier: string, password: string) => {
     try {
@@ -90,6 +92,28 @@ export function AuthProvider({ children }: AuthProviderProps) {
       )
     } finally {
       setIsLoading(false)
+    }
+  }
+
+  /**
+   * Login with OAuth provider
+   */
+  const loginWithOAuth = async (provider: 'google' | 'facebook') => {
+    try {
+      setIsLoading(true)
+      
+      // Redirect to OAuth provider
+      if (provider === 'google') {
+        window.location.href = getGoogleAuthUrl()
+      } else if (provider === 'facebook') {
+        window.location.href = getFacebookAuthUrl()
+      }
+    } catch (error: any) {
+      console.error('OAuth login failed:', error)
+      setIsLoading(false)
+      throw new Error(
+        error?.message || `${provider} login failed. Please try again.`
+      )
     }
   }
 
@@ -111,11 +135,18 @@ export function AuthProvider({ children }: AuthProviderProps) {
   }
 
   /**
-   * Logout user
+   * Logout user (Strapi only)
    */
   const logout = () => {
-    strapiAPI.auth.logout()
-    setUser(null)
+    try {
+      // Clear Strapi JWT token from localStorage
+      strapiAPI.auth.logout()
+      setUser(null)
+    } catch (error) {
+      console.error('Logout error:', error)
+      // Still clear user state even if logout fails
+      setUser(null)
+    }
   }
 
   /**
@@ -153,6 +184,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     isAuthenticated: !!user,
     isLoading,
     login,
+    loginWithOAuth,
     register,
     logout,
     updateUser,

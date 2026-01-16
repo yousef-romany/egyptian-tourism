@@ -51,22 +51,22 @@ export async function generateMetadata({
 
   if (!tour) {
     return {
-      title: "Tour Not Found - Egydise Tours",
+      title: "Tour Not Found - WanderLand Egypt",
     }
   }
 
   return {
-    title: `${tour.title} - Egydise Tours`,
+    title: `${tour.title} - WanderLand Egypt`,
     description: tour.description,
     openGraph: {
-      title: `${tour.title} - Egydise Tours`,
+      title: `${tour.title} - WanderLand Egypt`,
       description: tour.description,
       images: tour.images || [tour.image],
       type: "website",
     },
     twitter: {
       card: "summary_large_image",
-      title: `${tour.title} - Egydise Tours`,
+      title: `${tour.title} - WanderLand Egypt`,
       description: tour.description,
       images: tour.images?.[0] || tour.image,
     },

@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
+import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import {
@@ -107,10 +108,10 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             <div className="p-6 hidden lg:block">
               <Link href="/admin" className="flex items-center gap-2">
                 <div className="h-10 w-10 rounded-lg bg-egyptian-gold flex items-center justify-center">
-                  <LayoutDashboard className="h-6 w-6 text-white" />
+                  <Image src="/logo_without_text.webp" alt="WanderLand Egypt" width={24} height={24} />
                 </div>
                 <div>
-                  <h1 className="font-bold text-lg">Egydise Tours</h1>
+                  <h1 className="font-bold text-lg">WanderLand Egypt</h1>
                   <p className="text-xs text-muted-foreground">Admin Panel</p>
                 </div>
               </Link>

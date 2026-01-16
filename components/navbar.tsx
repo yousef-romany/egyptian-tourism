@@ -4,18 +4,29 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import { useLocale, useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Menu, X, ChevronDown, Search } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Menu, Search, X, User, LogOut } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
-import logo from "@/public/logo_with_text.webp"
 import ModeToggle from "./ModeToggle";
 import MegaMenu from "./mega-menu";
 import { CurrencySelector } from "./currency";
-import { LanguageSwitcher } from "./language";
 import { SearchInput } from "./search-input";
 import { CartSidebar } from "./cart-sidebar";
+import { LanguageSwitcher } from "./language-switcher";
+import { useAuth } from "@/contexts/auth-context";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -23,6 +34,13 @@ export default function Navbar() {
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const pathname = usePathname();
+  const locale = useLocale();
+  const t = useTranslations("Navigation");
+  const { user, isAuthenticated, logout } = useAuth();
+
+  const handleSearch = (query: string) => {
+    console.log("Search query:", query);
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -39,365 +57,212 @@ export default function Navbar() {
 
   const navLinks = [
     {
-      name: "Home",
-      href: "/",
+      name: t("home"),
+      href: `/${locale}`,
     },
     {
-      name: "Tours",
-      href: "/tours",
-      dropdown: [
-        { name: "All Tours", href: "/tours" },
-        // { name: "Cairo & Pyramids", href: "/tours/cairo-pyramids" },
-        // { name: "Luxor & Aswan", href: "/tours/luxor-aswan" },
-        // { name: "Nile Cruises", href: "/tours/nile-cruises" },
-        // { name: "Red Sea", href: "/tours/red-sea" },
-        // { name: "Desert Adventures", href: "/tours/desert-adventures" },
-      ],
+      name: t("tours"),
+      href: `/${locale}/tours`,
     },
     {
-      name: "Reviews",
-      href: "/reviews",
+      name: t("cairoPyramids"),
+      href: `/${locale}/tours/cairo-pyramids`,
     },
     {
-      name: "Testimonials",
-      href: "/testimonials",
+      name: t("luxorAswan"),
+      href: `/${locale}/tours/luxor-aswan`,
     },
     {
-      name: "Blog",
-      href: "/blog",
+      name: t("nileCruises"),
+      href: `/${locale}/tours/nile-cruises`,
     },
     {
-      name: "Shop",
-      href: "/shop",
+      name: t("desertAdventures"),
+      href: `/${locale}/tours/desert-adventures`,
     },
     {
-      name: "History",
-      href: "/history",
-      dropdown: [
-        { name: "Ancient Egypt", href: "/history/ancient-egypt" },
-        { name: "Pharaohs & Dynasties", href: "/history/pharaohs" },
-        { name: "Temples & Monuments", href: "/history/temples" },
-        { name: "Egyptian Gods", href: "/history/egyptian-gods" },
-        { name: "History Videos", href: "/history-videos" },
-      ],
+      name: t("history"),
+      href: `/${locale}/history`,
     },
     {
-      name: "About",
-      href: "/about",
+      name: t("gallery"),
+      href: `/${locale}/gallery`,
     },
     {
-      name: "Contact",
-      href: "/contact",
+      name: t("shop"),
+      href: `/${locale}/shop`,
     },
-  ];
-
-  const isActive = (path: string) => {
-    if (path === "/") {
-      return pathname === "/";
-    }
-    return pathname.startsWith(path);
-  };
+    {
+      name: t("reviews"),
+      href: `/${locale}/reviews`,
+    },
+    {
+      name: t("faq"),
+      href: `/${locale}/faq`,
+    },
+    {
+      name: t("about"),
+      href: `locale/contact`,
+    },
+    ];
 
   return (
-    <header
-      className={cn(
-        "sticky top-0 z-50 w-full transition-all duration-300",
-        isScrolled
-          ? "bg-background/95 backdrop-blur-md shadow-md"
-          : "bg-transparent"
-      )}
-    >
-      <div className="container mx-auto px-4 md:px-6">
-        <div className="flex h-16 md:h-20 items-center justify-between">
-          <Link href="/" className="flex items-center justify-center gap-2 z-50">
+    <header className={`sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur-sm transition-all duration-300 ${isScrolled ? 'shadow-md' : ''}`}>
+      <div className="container mx-auto px-4 py-3">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-4">
+            <Link href={`/${locale}`} className="flex items-center gap-2">
               <Image
-                src={logo}
-                alt="WanderLand Egypt Logo"
-                className="object-contain max-w-[180px]"
+                src="/logo.png"
+                alt={t('siteName')}
+                width={40}
+                height={40}
+                className="h-10 w-auto"
               />
-          </Link>
-
-          <nav className="hidden lg:flex items-center gap-4">
-            {navLinks.map((link) => (
-              <div
-                key={link.name}
-                className="relative"
-                onMouseEnter={() =>
-                  link.dropdown && setActiveDropdown(link.name)
-                }
-                onMouseLeave={() => setActiveDropdown(null)}
-              >
-                <Link
-                  href={link.href}
-                  className={cn(
-                    "px-3 py-2 text-sm font-medium rounded-md transition-colors relative group",
-                    isActive(link.href)
-                      ? "text-egyptian-gold"
-                      : "text-foreground hover:text-egyptian-gold"
-                  )}
-                >
-                  <span className="flex items-center gap-1">
-                    {link.name}
-                    {link.dropdown && (
-                      <ChevronDown
-                        className={cn(
-                          "h-4 w-4 transition-transform",
-                          activeDropdown === link.name ? "rotate-180" : ""
-                        )}
-                      />
-                    )}
-                  </span>
-                  {isActive(link.href) && (
-                    <motion.span
-                      layoutId="activeNav"
-                      className="absolute bottom-0 left-0 w-full h-0.5 bg-egyptian-gold"
-                    />
-                  )}
-                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-egyptian-gold transition-all duration-300 group-hover:w-full" />
-                </Link>
-
-                {link.dropdown && link.name !== "Tours" && (
-                  <AnimatePresence>
-                    {activeDropdown === link.name && (
-                      <motion.div
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: 10 }}
-                        transition={{ duration: 0.2 }}
-                        className="absolute top-full left-0 mt-1 w-56 rounded-md bg-background border border-egyptian-gold/20 shadow-lg overflow-hidden z-50"
-                      >
-                        <div className="py-1">
-                          {link.dropdown.map((item) => (
-                            <Link
-                              key={item.name}
-                              href={item.href}
-                              className={cn(
-                                "block px-4 py-2 text-sm transition-colors",
-                                isActive(item.href)
-                                  ? "bg-egyptian-gold/10 text-egyptian-gold"
-                                  : "hover:bg-egyptian-gold/5 hover:text-egyptian-gold"
-                              )}
-                            >
-                              {item.name}
-                            </Link>
-                          ))}
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                )}
+              <div>
+                <span className="text-xl font-bold">{t('siteName')}</span>
               </div>
-            ))}
-          </nav>
+            </Link>
 
-          <div className="hidden lg:flex items-center gap-3">
-            <CurrencySelector />
-            <LanguageSwitcher />
-            <button
-              onClick={() => setIsSearchOpen(!isSearchOpen)}
-              className="p-2 rounded-full hover:bg-egyptian-gold/10 transition-colors"
-              aria-label="Search"
-            >
-              <Search className="h-5 w-5" />
-            </button>
-            <CartSidebar />
-            <ModeToggle />
-            <SearchInput
-              isOpen={isSearchOpen}
-              onClose={() => setIsSearchOpen(false)}
-              variant="desktop"
-            />
+            <div className="hidden md:block">
+              <Button variant="ghost" size="sm" className="md:hidden" aria-label={t('menu')}>
+                <Menu className="h-5 w-5" />
+              </Button>
+            </div>
 
-            <Button
-              asChild
-              variant="outline"
-              className="border-egyptian-gold text-egyptian-gold hover:bg-egyptian-gold/10 hover:text-egyptian-gold-dark"
-            >
-              <Link href="/login">Login</Link>
-            </Button>
-            <Button
-              asChild
-              className="bg-egyptian-gold hover:bg-egyptian-gold-dark text-black"
-            >
-              <Link href="/book-now">Book Now</Link>
-            </Button>
-          </div>
+            {/* Desktop Navigation */}
+            <nav className="hidden md:flex items-center gap-6">
+              {navLinks.map((link) => (
+                <Link
+                  key={link.name}
+                  href={link.href}
+                  className={`text-sm font-medium transition-colors hover:text-egyptian-gold ${
+                    pathname === link.href ? 'text-foreground' : 'text-muted-foreground'
+                  }`}
+                >
+                  {link.name}
+                </Link>
+              ))}
+            </nav>
 
-          <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
-            <SheetTrigger asChild>
+            {/* Mobile Menu */}
+            <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
+              <SheetContent side="right" className="w-full max-w-xs">
+                <div className="flex items-center justify-between py-4 border-b">
+                  <div className="text-sm font-medium">
+                    <span className="text-foreground">{t('hello')} {t('welcome')}</span>
+                  </div>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    <X className="h-5 w-5" />
+                  </Button>
+                </div>
+                <div className="flex items-center gap-2">
+                  <ModeToggle />
+                  <LanguageSwitcher />
+                </div>
+              </SheetContent>
+            </Sheet>
+
+            {/* Search Bar */}
+            <div className="hidden md:block">
               <Button
                 variant="ghost"
-                size="icon"
-                className="lg:hidden"
-                aria-label="Toggle Menu"
+                size="sm"
+                onClick={() => setIsSearchOpen(true)}
+                aria-label={t('search')}
               >
-                {isMobileMenuOpen ? (
-                  <X className="h-6 w-6" />
-                ) : (
-                  <Menu className="h-6 w-6" />
-                )}
+                <Search className="h-5 w-5" />
               </Button>
-            </SheetTrigger>
-            <SheetContent
-              side="right"
-              className="w-[80vw] sm:w-[350px] border-l border-egyptian-gold/20 p-0"
-            >
-              <div className="flex flex-col h-full">
-                <div className="p-6 border-b border-egyptian-gold/10">
-                  <div className="flex items-center gap-2">
-                    <div className="relative w-8 h-8 overflow-hidden">
-                      <Image
-                        src="/placeholder.svg?height=32&width=32"
-                        alt="WanderLand Egypt Logo"
-                        width={32}
-                        height={32}
-                        className="object-contain"
-                      />
-                    </div>
-                    <span className="text-lg font-heading font-bold tracking-wider text-egyptian-gold">
-                      WanderLand Egypt
-                    </span>
-                  </div>
-                </div>
+            </div>
 
-                <div className="p-4">
-                  <div className="mb-4">
-                    <SearchInput
-                      isOpen={true}
-                      onClose={() => {}}
-                      variant="mobile"
-                    />
-                  </div>
-                </div>
-
-                <nav className="flex-1 overflow-auto py-2 px-4">
-                  <ul className="space-y-1">
-                    {navLinks.map((link) => (
-                      <li key={link.name}>
-                        {link.dropdown ? (
-                          <div className="mb-1">
-                            <button
-                              onClick={() =>
-                                setActiveDropdown(
-                                  activeDropdown === link.name
-                                    ? null
-                                    : link.name
-                                )
-                              }
-                              className={cn(
-                                "flex items-center justify-between w-full px-3 py-2 text-sm font-medium rounded-md transition-colors",
-                                isActive(link.href)
-                                  ? "bg-egyptian-gold/10 text-egyptian-gold"
-                                  : "hover:bg-egyptian-gold/5 hover:text-egyptian-gold"
-                              )}
-                            >
-                              <span>{link.name}</span>
-                              <ChevronDown
-                                className={cn(
-                                  "h-4 w-4 transition-transform",
-                                  activeDropdown === link.name
-                                    ? "rotate-180"
-                                    : ""
-                                )}
-                              />
-                            </button>
-
-                            <AnimatePresence>
-                              {activeDropdown === link.name && (
-                                <motion.ul
-                                  initial={{ height: 0, opacity: 0 }}
-                                  animate={{ height: "auto", opacity: 1 }}
-                                  exit={{ height: 0, opacity: 0 }}
-                                  transition={{ duration: 0.2 }}
-                                  className="overflow-hidden ml-4 mt-1 border-l-2 border-egyptian-gold/20 pl-4"
-                                >
-                                  {link.dropdown.map((item) => (
-                                    <li key={item.name}>
-                                      <Link
-                                        href={item.href}
-                                        onClick={() =>
-                                          setIsMobileMenuOpen(false)
-                                        }
-                                        className={cn(
-                                          "block px-3 py-2 text-sm rounded-md transition-colors",
-                                          isActive(item.href)
-                                            ? "bg-egyptian-gold/10 text-egyptian-gold"
-                                            : "hover:bg-egyptian-gold/5 hover:text-egyptian-gold"
-                                        )}
-                                      >
-                                        {item.name}
-                                      </Link>
-                                    </li>
-                                  ))}
-                                </motion.ul>
-                              )}
-                            </AnimatePresence>
-                          </div>
-                        ) : (
-                          <Link
-                            href={link.href}
-                            onClick={() => setIsMobileMenuOpen(false)}
-                            className={cn(
-                              "block px-3 py-2 text-sm font-medium rounded-md transition-colors",
-                              isActive(link.href)
-                                ? "bg-egyptian-gold/10 text-egyptian-gold"
-                                : "hover:bg-egyptian-gold/5 hover:text-egyptian-gold"
-                            )}
-                          >
-                            {link.name}
-                          </Link>
-                        )}
-                      </li>
-                    ))}
-                  </ul>
-                </nav>
-
-                <div className="p-6 border-t border-egyptian-gold/10">
-                  <div className="grid grid-cols-2 gap-4">
-                    <Button
-                      asChild
-                      variant="outline"
-                      className="w-full border-egyptian-gold text-egyptian-gold hover:bg-egyptian-gold/10 hover:text-egyptian-gold-dark"
-                    >
-                      <Link
-                        href="/login"
-                        onClick={() => setIsMobileMenuOpen(false)}
-                      >
-                        Login
-                      </Link>
+            {/* Right side actions */}
+            <div className="flex items-center gap-4">
+              <CartSidebar />
+              
+              {/* User Authentication */}
+              {isAuthenticated && user ? (
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" className="relative h-8 w-8 rounded-full">
+                      <Avatar className="h-8 w-8">
+                        <AvatarImage src={user.avatar?.url || ''} alt={user.username} />
+                        <AvatarFallback>
+                          {user.firstName?.[0] || user.username?.[0] || 'U'}
+                        </AvatarFallback>
+                      </Avatar>
                     </Button>
-                    <Button
-                      asChild
-                      className="w-full bg-egyptian-gold hover:bg-egyptian-gold-dark text-black"
-                    >
-                      <Link
-                        href="/book-now"
-                        onClick={() => setIsMobileMenuOpen(false)}
-                      >
-                        Book Now
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="w-56" align="end" forceMount>
+                    <DropdownMenuLabel className="font-normal">
+                      <div className="flex flex-col space-y-1">
+                        <p className="text-sm font-medium leading-none">
+                          {user.firstName && user.lastName
+                            ? `${user.firstName} ${user.lastName}`
+                            : user.username || user.email}
+                        </p>
+                        <p className="text-xs leading-none text-muted-foreground">
+                          {user.email}
+                        </p>
+                      </div>
+                    </DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem asChild>
+                      <Link href={`/${locale}/profile`} className="w-full cursor-pointer">
+                        <User className="mr-2 h-4 w-4" />
+                        <span>{t('profile')}</span>
                       </Link>
-                    </Button>
-                  </div>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link href={`/${locale}/wishlist`} className="w-full cursor-pointer">
+                        <User className="mr-2 h-4 w-4" />
+                        <span>{t('wishlist')}</span>
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link href={`/${locale}/track-order`} className="w-full cursor-pointer">
+                        <User className="mr-2 h-4 w-4" />
+                        <span>{t('trackOrder')}</span>
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem onClick={logout} className="cursor-pointer">
+                      <LogOut className="mr-2 h-4 w-4" />
+                      <span>{t('logout')}</span>
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              ) : (
+                <div className="flex items-center gap-2">
+                  <Button variant="ghost" asChild>
+                    <Link href={`/${locale}/login`}>
+                      {t('login')}
+                    </Link>
+                  </Button>
+                  <Button asChild>
+                    <Link href={`/${locale}/register`}>
+                      {t('register')}
+                    </Link>
+                  </Button>
                 </div>
-              </div>
-            </SheetContent>
-          </Sheet>
+              )}
+              
+              <ModeToggle />
+              <LanguageSwitcher />
+            </div>
+          </div>
         </div>
       </div>
-
-      {/* Mega Menu for Tours */}
-      <div className="relative">
-        <AnimatePresence>
-          {activeDropdown === "Tours" && (
-            <div
-              onMouseEnter={() => setActiveDropdown("Tours")}
-              onMouseLeave={() => setActiveDropdown(null)}
-            >
-              <MegaMenu isOpen={true} />
-            </div>
-          )}
-        </AnimatePresence>
-      </div>
+      
+      {/* Search Overlay */}
+      <SearchInput
+        isOpen={isSearchOpen}
+        onClose={() => setIsSearchOpen(false)}
+        variant="desktop"
+      />
     </header>
-  );
+  )
 }

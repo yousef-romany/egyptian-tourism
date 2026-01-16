@@ -17,12 +17,12 @@ export type SortOption =
   | 'duration'
   | 'popular';
 
-interface SortOption {
+interface SortOptionItem {
   value: SortOption;
   label: string;
 }
 
-const SORT_OPTIONS: SortOption[] = [
+const SORT_OPTIONS: SortOptionItem[] = [
   { value: 'featured', label: 'Featured' },
   { value: 'price-low', label: 'Price: Low to High' },
   { value: 'price-high', label: 'Price: High to Low' },

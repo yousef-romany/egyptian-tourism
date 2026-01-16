@@ -2,12 +2,12 @@
  * Performance Monitoring Hook
  */
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 interface PerformanceMetrics {
   fcp?: number
   lcp?: number
-  fid?: number
+  inp?: number // Replaced FID with INP (Interaction to Next Paint)
   cls?: number
   ttfb?: number
 }
@@ -21,7 +21,7 @@ export function usePerformanceMonitor() {
 
     const measureMetrics = async () => {
       try {
-        const { getCLS, getFID, getFCP, getLCP, getTTFB } = await import('web-vitals')
+        const { onCLS, onINP, onFCP, onLCP, onTTFB } = await import('web-vitals')
 
         const logMetric = (name: string, value: number) => {
           console.log(`[Performance] ${name}:`, value)
@@ -36,11 +36,11 @@ export function usePerformanceMonitor() {
           }
         }
 
-        getCLS((metric) => logMetric('CLS', metric.value))
-        getFID((metric) => logMetric('FID', metric.value))
-        getFCP((metric) => logMetric('FCP', metric.value))
-        getLCP((metric) => logMetric('LCP', metric.value))
-        getTTFB((metric) => logMetric('TTFB', metric.value))
+        onCLS((metric) => logMetric('CLS', metric.value))
+        onINP((metric) => logMetric('INP', metric.value)) // FID is replaced by INP in web-vitals v3+
+        onFCP((metric) => logMetric('FCP', metric.value))
+        onLCP((metric) => logMetric('LCP', metric.value))
+        onTTFB((metric) => logMetric('TTFB', metric.value))
 
         hasMeasured.current = true
       } catch (error) {
@@ -58,8 +58,8 @@ export function usePerformanceMonitor() {
  * Hook to measure component render time
  */
 export function useRenderTime(componentName: string) {
-  const renderStart = useRef<number>()
-  const renderEnd = useRef<number>()
+  const renderStart = useRef<number>(0)
+  const renderEnd = useRef<number>(0)
 
   useEffect(() => {
     renderStart.current = performance.now()

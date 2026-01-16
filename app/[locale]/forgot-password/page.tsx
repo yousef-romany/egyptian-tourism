@@ -68,13 +68,13 @@ export default function ForgotPasswordPage() {
                 <div className="relative w-10 h-10 overflow-hidden">
                   <Image
                     src="/placeholder.svg?height=40&width=40"
-                    alt="Egydise Tours Logo"
+                    alt="WanderLand Egypt Logo"
                     width={40}
                     height={40}
                     className="object-contain"
                   />
                 </div>
-                <span className="text-xl font-heading font-bold tracking-wider text-egyptian-gold">Egydise Tours</span>
+                <span className="text-xl font-heading font-bold tracking-wider text-egyptian-gold">WanderLand Egypt</span>
               </div>
             </Link>
           </div>
@@ -130,13 +130,13 @@ export default function ForgotPasswordPage() {
               <div className="relative w-10 h-10 overflow-hidden">
                 <Image
                   src="/placeholder.svg?height=40&width=40"
-                  alt="Egydise Tours Logo"
+                  alt="WanderLand Egypt Logo"
                   width={40}
                   height={40}
                   className="object-contain"
                 />
               </div>
-              <span className="text-xl font-heading font-bold tracking-wider text-egyptian-gold">Egydise Tours</span>
+              <span className="text-xl font-heading font-bold tracking-wider text-egyptian-gold">WanderLand Egypt</span>
             </div>
           </Link>
           <h1 className="text-2xl font-heading font-bold mb-2">Forgot your password?</h1>

@@ -121,7 +121,7 @@ export default function ProfileClient() {
       
       toast({
         title: t('Common.success'),
-        description: "Your profile has been updated successfully.",
+        description: t('profileUpdated'),
       })
     } catch (error: any) {
       console.error("Failed to update profile:", error)
@@ -140,7 +140,7 @@ export default function ProfileClient() {
     // This would open a password change dialog/modal
     toast({
       title: t('ProfilePage.settings'),
-      description: "Password change functionality will be available soon.",
+      description: t('Common.error'),
     })
   }
 

@@ -106,7 +106,7 @@ export default async function PaymentSuccessPage({
               <li className="flex items-start">
                 <span className="mr-2 font-bold">✓</span>
                 <span>
-                  Need help? Contact us at info@egydise-tours.com
+                  Need help? Contact us at info@WanderLand Egypt.com
                 </span>
               </li>
             </ul>

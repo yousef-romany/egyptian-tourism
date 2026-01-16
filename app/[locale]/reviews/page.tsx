@@ -7,6 +7,7 @@ import { Star, Quote, MessageSquare, ChevronRight } from "lucide-react";
 import EgyptianDivider from "@/components/egyptian-divider";
 import Newsletter from "@/components/newsletter";
 import WidgetTripadvisor from "./components/WidgetTripadvisor";
+import { getFeaturedReviews, getReviewsByPlatform } from "@/lib/data/reviews";
 
 export const metadata = {
   title: "Customer Reviews - Egydise Tours",
@@ -14,207 +15,23 @@ export const metadata = {
     "Read authentic reviews from travelers who experienced the magic of Egypt with Egydise Tours.",
 };
 
-export default function ReviewsPage() {
-  const featuredReviews = [
-    {
-      name: "Sarah Johnson",
-      location: "London, UK",
-      avatar: "/placeholder.svg?height=80&width=80",
-      rating: 5,
-      text: "Our 10-day trip to Egypt with Egydise Tours was absolutely incredible! From the moment we landed in Cairo until our departure, everything was perfectly organized. Our guide Ahmed was exceptional - his knowledge of Egyptian history made the experience so much more meaningful. The accommodations were excellent, and the itinerary was perfectly balanced between famous sites and hidden gems. I can't recommend Egydise Tours enough!",
-      tour: "Complete Egypt Experience",
-      date: "March 15, 2024",
-    },
-    {
-      name: "Michael Chen",
-      location: "Toronto, Canada",
-      avatar: "/placeholder.svg?height=80&width=80",
-      rating: 5,
-      text: "The 3-day Nile cruise exceeded all expectations. The boat was luxurious, food was excellent, and the stops along the way were fascinating. Our guide Fatima made the history come alive with her passionate storytelling and extensive knowledge. Watching the sunset over the Nile from the deck of our cruise ship is a memory I'll cherish forever. This was truly a once-in-a-lifetime experience!",
-      tour: "Luxury Nile Cruise",
-      date: "February 8, 2024",
-    },
-    {
-      name: "Emma Wilson",
-      location: "Sydney, Australia",
-      avatar: "/placeholder.svg?height=80&width=80",
-      rating: 5,
-      text: "As a solo female traveler, I was initially hesitant about visiting Egypt, but Egydise Tours made me feel safe and comfortable throughout my entire trip. The attention to detail was impressive, and they were always responsive to my questions and requests. Seeing the pyramids at sunrise with no crowds around was magical! I've already recommended them to all my friends and family.",
-      tour: "Cairo & Luxor Explorer",
-      date: "April 22, 2024",
-    },
-  ];
+export default async function ReviewsPage() {
+  try {
+    // Fetch featured reviews from the backend
+    const featuredReviews = await getFeaturedReviews(3);
+    
+    // Fetch reviews by platform from the backend
+    const [tripadvisorReviews, viatorReviews, klookReviews] = await Promise.all([
+      getReviewsByPlatform('tripadvisor'),
+      getReviewsByPlatform('viator'),
+      getReviewsByPlatform('klook')
+    ]);
 
-  const platformReviews = {
-    tripadvisor: [
-      {
-        name: "David Miller",
-        location: "Chicago, USA",
-        avatar: "/placeholder.svg?height=60&width=60",
-        rating: 5,
-        text: "The Valley of the Kings was breathtaking. Our guide Mahmoud was exceptional - his knowledge of Egyptian history made the experience so much more meaningful. The lunch included was delicious too!",
-        tour: "Luxor Day Trip",
-        date: "January 2024",
-      },
-      {
-        name: "Sophia Garcia",
-        location: "Madrid, Spain",
-        avatar: "/placeholder.svg?height=60&width=60",
-        rating: 5,
-        text: "Alexandria was beautiful and so different from Cairo. The Catacombs were fascinating and the Mediterranean views were stunning. Our guide was friendly and professional.",
-        tour: "Alexandria Day Tour",
-        date: "December 2022",
-      },
-      {
-        name: "James Wilson",
-        location: "Melbourne, Australia",
-        avatar: "/placeholder.svg?height=60&width=60",
-        rating: 5,
-        text: "The White Desert is unlike anything I've ever seen. Camping under the stars was magical. The only improvement would be more comfortable transportation for the long drive.",
-        tour: "White Desert Overnight",
-        date: "February 2024",
-      },
-      {
-        name: "Olivia Brown",
-        location: "New York, USA",
-        avatar: "/placeholder.svg?height=60&width=60",
-        rating: 5,
-        text: "The Egyptian Museum tour was fascinating. Our guide had an incredible depth of knowledge and made the ancient artifacts come to life with his stories.",
-        tour: "Cairo Museum Tour",
-        date: "March 2024",
-      },
-      {
-        name: "Liam Johnson",
-        location: "Vancouver, Canada",
-        avatar: "/placeholder.svg?height=60&width=60",
-        rating: 5,
-        text: "The hot air balloon ride over Luxor was the highlight of our trip. Seeing the temples and Valley of the Kings from above as the sun rose was absolutely breathtaking.",
-        tour: "Luxor Hot Air Balloon",
-        date: "January 2024",
-      },
-      {
-        name: "Isabella Martinez",
-        location: "Buenos Aires, Argentina",
-        avatar: "/placeholder.svg?height=60&width=60",
-        rating: 5,
-        text: "The Pyramids Sound and Light Show was a unique experience. The narration was informative and seeing the monuments illuminated at night was spectacular.",
-        tour: "Pyramids Sound & Light Show",
-        date: "April 2024",
-      },
-    ],
-    viator: [
-      {
-        name: "Hiroshi Tanaka",
-        location: "Tokyo, Japan",
-        avatar: "/placeholder.svg?height=60&width=60",
-        rating: 5,
-        text: "Seeing Luxor from a hot air balloon at sunrise was the highlight of our trip to Egypt. The views were spectacular and the pilot was very skilled. Worth every penny!",
-        tour: "Luxor Hot Air Balloon",
-        date: "March 2024",
-      },
-      {
-        name: "Priya Patel",
-        location: "Mumbai, India",
-        avatar: "/placeholder.svg?height=60&width=60",
-        rating: 5,
-        text: "The Pyramids Sound and Light Show was magical! Seeing the Sphinx and Pyramids illuminated at night while learning about their history was an unforgettable experience.",
-        tour: "Pyramids Sound & Light Show",
-        date: "January 2024",
-      },
-      {
-        name: "Thomas Schmidt",
-        location: "Berlin, Germany",
-        avatar: "/placeholder.svg?height=60&width=60",
-        rating: 4,
-        text: "The Red Sea snorkeling was amazing with beautiful coral and fish. The boat was comfortable and the crew was friendly. Lunch could have been better, but overall a great day.",
-        tour: "Hurghada Snorkeling Trip",
-        date: "February 2024",
-      },
-      {
-        name: "Sophie Dubois",
-        location: "Paris, France",
-        avatar: "/placeholder.svg?height=60&width=60",
-        rating: 5,
-        text: "Our day trip to Luxor was perfectly organized. The Valley of the Kings, Karnak Temple, and Hatshepsut Temple were all incredible. Our guide's knowledge was impressive.",
-        tour: "Luxor Day Trip",
-        date: "December 2022",
-      },
-      {
-        name: "Carlos Rodriguez",
-        location: "Mexico City, Mexico",
-        avatar: "/placeholder.svg?height=60&width=60",
-        rating: 5,
-        text: "The Abu Simbel temples were worth the early morning start. These massive structures are even more impressive in person than in photos. Our guide provided fascinating historical context.",
-        tour: "Abu Simbel Day Trip",
-        date: "March 2024",
-      },
-      {
-        name: "Anna Kowalski",
-        location: "Warsaw, Poland",
-        avatar: "/placeholder.svg?height=60&width=60",
-        rating: 4,
-        text: "The Cairo food tour was a delightful experience. We tried so many delicious Egyptian dishes and our guide shared interesting cultural insights about the cuisine.",
-        tour: "Cairo Food Tour",
-        date: "January 2024",
-      },
-    ],
-    klook: [
-      {
-        name: "Wei Chen",
-        location: "Shanghai, China",
-        avatar: "/placeholder.svg?height=60&width=60",
-        rating: 5,
-        text: "The Nile dinner cruise exceeded our expectations. The food was delicious, and the entertainment with traditional dancing was very enjoyable. Beautiful views of Cairo at night.",
-        tour: "Nile Dinner Cruise",
-        date: "February 2024",
-      },
-      {
-        name: "Akira Tanaka",
-        location: "Osaka, Japan",
-        avatar: "/placeholder.svg?height=60&width=60",
-        rating: 5,
-        text: "Our guide for the Giza Pyramids tour was extremely knowledgeable and spoke excellent English. He took great photos for us and was very patient with all our questions.",
-        tour: "Giza Pyramids & Sphinx",
-        date: "March 2024",
-      },
-      {
-        name: "Ji-Yeon Kim",
-        location: "Seoul, South Korea",
-        avatar: "/placeholder.svg?height=60&width=60",
-        rating: 4,
-        text: "The Islamic Cairo walking tour was fascinating. The mosques and markets were beautiful, and our guide provided excellent historical and cultural context.",
-        tour: "Islamic Cairo Tour",
-        date: "January 2024",
-      },
-      {
-        name: "Raj Patel",
-        location: "Delhi, India",
-        avatar: "/placeholder.svg?height=60&width=60",
-        rating: 5,
-        text: "The Pyramids of Giza were even more impressive than I imagined. Our guide was very knowledgeable and took us to the best spots for photos. The camel ride was a fun addition to the experience.",
-        tour: "Giza Pyramids & Sphinx",
-        date: "April 2024",
-      },
-      {
-        name: "Liu Wei",
-        location: "Beijing, China",
-        avatar: "/placeholder.svg?height=60&width=60",
-        rating: 5,
-        text: "The Alexandria day trip was excellent. The Library of Alexandria and the catacombs were fascinating. Our guide was very informative and the seafood lunch was delicious.",
-        tour: "Alexandria Day Trip",
-        date: "February 2024",
-      },
-      {
-        name: "Siti Rahman",
-        location: "Kuala Lumpur, Malaysia",
-        avatar: "/placeholder.svg?height=60&width=60",
-        rating: 4,
-        text: "The Luxor temples tour was amazing. Karnak Temple is enormous and impressive. The guide's explanations helped us understand the historical significance of everything we saw.",
-        tour: "Luxor Temples Tour",
-        date: "March 2024",
-      },
-    ],
-  };
+    const platformReviews = {
+      tripadvisor: tripadvisorReviews,
+      viator: viatorReviews,
+      klook: klookReviews
+    };
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -366,12 +183,12 @@ export default function ReviewsPage() {
                 </div>
 
                 <p className="text-muted-foreground mb-6 italic leading-relaxed text-base">
-                  "{review.text}"
+                  "{review.content}"
                 </p>
 
                 <div className="text-sm text-muted-foreground pt-4 border-t-2 border-egyptian-gold/10">
                   <span className="font-semibold text-foreground">Tour:</span>{" "}
-                  <span className="text-egyptian-gold">{review.tour}</span> • {review.date}
+                  <span className="text-egyptian-gold">{review.tourName}</span> • {review.date}
                 </div>
               </CardContent>
             </Card>
@@ -476,14 +293,14 @@ export default function ReviewsPage() {
                         </div>
 
                         <p className="text-sm text-muted-foreground mb-4 italic leading-relaxed">
-                          "{review.text}"
+                          "{review.content}"
                         </p>
 
                         <div className="text-xs text-muted-foreground pt-4 border-t-2 border-egyptian-gold/10">
                           <span className="font-semibold text-foreground">
                             Tour:
                           </span>{" "}
-                          <span className="text-egyptian-gold">{review.tour}</span>
+                          <span className="text-egyptian-gold">{review.tourName}</span>
                         </div>
                       </CardContent>
                     </Card>
@@ -585,11 +402,11 @@ export default function ReviewsPage() {
                   bestRating: "5",
                   worstRating: "1",
                 },
-                reviewBody: review.text,
+                reviewBody: review.content,
                 datePublished: review.date,
                 itemReviewed: {
                   "@type": "TouristTrip",
-                  name: review.tour || "Egypt Tour",
+                  name: review.tourName || "Egypt Tour",
                 },
               })),
             ],
@@ -598,4 +415,37 @@ export default function ReviewsPage() {
       />
     </div>
   );
+
+  } catch (error) {
+    // Handle error gracefully
+    console.error('Error loading reviews:', error);
+    
+    return (
+      <div className="flex min-h-screen flex-col items-center justify-center">
+        <div className="text-center p-8 max-w-2xl">
+          <h1 className="text-3xl font-bold text-red-600 mb-4">Something went wrong</h1>
+          <p className="text-lg text-gray-600 mb-6">
+            We couldn't load the reviews at the moment. Please try again later.
+          </p>
+          <p className="text-sm text-gray-500 mb-8">
+            Error: {error instanceof Error ? error.message : 'Unknown error'}
+          </p>
+          <button
+            onClick={() => window.location.reload()}
+            className="px-6 py-3 bg-egyptian-gold text-black font-semibold rounded-lg hover:bg-egyptian-gold-dark transition-colors"
+          >
+            Try Again
+          </button>
+          {process.env.NODE_ENV === 'development' && (
+            <details className="mt-8 text-left">
+              <summary className="cursor-pointer text-sm text-gray-500">Error Details</summary>
+              <pre className="mt-2 p-4 bg-gray-100 rounded text-xs overflow-auto">
+                {error instanceof Error ? error.stack : String(error)}
+              </pre>
+            </details>
+          )}
+        </div>
+      </div>
+    );
+  }
 }

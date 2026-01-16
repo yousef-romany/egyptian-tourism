@@ -8,7 +8,7 @@ import TourCardServer from "@/components/tour-card-server"
 import { getTours } from "@/lib/data/tours"
 
 export const metadata = {
-  title: "Nile Cruises - Egydise Tours",
+  title: "Nile Cruises - WanderLand Egypt",
   description:
     "Experience Egypt from the deck of a luxury Nile cruise, visiting ancient temples and monuments along the way.",
 }

@@ -33,12 +33,12 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
 
   if (!post) {
     return {
-      title: "Post Not Found - Egydise Tours",
+      title: "Post Not Found - WanderLand Egypt",
     }
   }
 
   return {
-    title: `${post.title} - Egydise Tours Blog`,
+    title: `${post.title} - WanderLand Egypt Blog`,
     description: post.excerpt,
     authors: [{ name: post.author.name }],
     keywords: post.tags,
@@ -331,7 +331,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             },
             "publisher": {
               "@type": "Organization",
-              "name": "Egydise Tours",
+              "name": "WanderLand Egypt",
               "logo": {
                 "@type": "ImageObject",
                 "url": "https://egydisetours.com/logo_without_text.webp"

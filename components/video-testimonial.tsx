@@ -108,7 +108,7 @@ export function VideoTestimonial({ testimonial }: VideoTestimonialProps) {
             )}
           </div>
           {testimonial.verified && (
-            <CheckCircle className="h-5 w-5 text-green-500" title="Verified Customer" />
+            <CheckCircle className="h-5 w-5 text-green-500" />
           )}
         </div>
 

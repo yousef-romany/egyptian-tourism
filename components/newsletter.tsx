@@ -46,10 +46,10 @@ export default function Newsletter() {
   const onSubmit = async (data: NewsletterFormData) => {
     try {
       // Import Strapi API
-      const strapiAPI = (await import('@/lib/api/strapi')).default
-
+      const { newsletter } = await import('@/lib/api/strapi')
+      
       // Subscribe to newsletter via Strapi
-      await strapiAPI.newsletter.subscribe(data.email, 'website-footer')
+      await newsletter.subscribe(data.email, 'website-footer')
 
       // Newsletter subscription successful
 

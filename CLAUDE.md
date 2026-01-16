@@ -388,7 +388,7 @@ These can be uncommented and implemented when backend filtering/pagination is re
 Each route can export metadata:
 ```tsx
 export const metadata = {
-  title: "Page Title - Egydise Tours",
+  title: "Page Title - WanderLand Egypt",
   description: "Page description",
   generator: 'v0.dev'
 }
@@ -469,7 +469,7 @@ Every tour detail page automatically generates optimized metadata:
 export async function generateMetadata({ params }): Promise<Metadata> {
   const tour = getTourBySlug(params.slug)
   return {
-    title: `${tour.title} - Egydise Tours`,
+    title: `${tour.title} - WanderLand Egypt`,
     description: tour.description,
     openGraph: { /* Open Graph tags */ },
     twitter: { /* Twitter Card tags */ },

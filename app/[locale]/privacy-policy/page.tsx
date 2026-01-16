@@ -4,8 +4,8 @@ import { Button } from "@/components/ui/button"
 import EgyptianDivider from "@/components/egyptian-divider"
 
 export const metadata = {
-  title: "Privacy Policy - Egydise Tours",
-  description: "Learn how Egydise Tours collects, uses, and protects your personal information.",
+  title: "Privacy Policy - WanderLand Egypt",
+  description: "Learn how WanderLand Egypt collects, uses, and protects your personal information.",
 }
 
 export default function PrivacyPolicyPage() {
@@ -39,7 +39,7 @@ export default function PrivacyPolicyPage() {
 
             <h2 className="font-heading text-2xl font-bold mt-8 mb-4">1. Introduction</h2>
             <p>
-              At Egydise Tours, we respect your privacy and are committed to protecting your personal data. This privacy
+              At WanderLand Egypt, we respect your privacy and are committed to protecting your personal data. This privacy
               policy explains how we collect, use, and safeguard your information when you visit our website, book our
               tours, or interact with us in any way.
             </p>
@@ -285,11 +285,11 @@ export default function PrivacyPolicyPage() {
             <p>If you have any questions about this privacy policy or our privacy practices, please contact us:</p>
             <ul className="list-none pl-0 space-y-2 mb-4">
               <li>
-                <strong>Egydise Tours</strong>
+                <strong>WanderLand Egypt</strong>
               </li>
               <li>123 Tahrir Square, Cairo, Egypt</li>
               <li>Phone: +20 123 456 7890</li>
-              <li>Email: privacy@egydise-tours.com</li>
+              <li>Email: privacy@WanderLand Egypt.com</li>
             </ul>
             <p>
               If you have unresolved concerns, you may also have the right to make a complaint to your local data

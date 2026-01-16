@@ -5,14 +5,7 @@ import React, { useEffect, useRef } from 'react';
 // Add TypeScript declarations for Google Maps
 declare global {
   interface Window {
-    google: {
-      maps: {
-        Map: any;
-        Marker: any;
-        Animation: any;
-        Geocoder: any;
-      };
-    };
+    google: any;
   }
 }
 

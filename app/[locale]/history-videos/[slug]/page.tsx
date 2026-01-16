@@ -7,15 +7,16 @@ import { Breadcrumb } from '@/components/breadcrumb'
 import { RelatedVideos } from '@/components/related-videos'
 
 interface VideoPageProps {
-  params: { locale: string; slug: string }
-  searchParams: { [key: string]: string | string[] | undefined }
+  params: Promise<{ locale: string; slug: string }>
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }
 
-export async function generateMetadata({ 
-  params: { locale, slug } 
-}: { 
-  params: { locale: string; slug: string } 
+export async function generateMetadata({
+  params
+}: {
+  params: Promise<{ locale: string; slug: string }>
 }) {
+  const { locale, slug } = await params
   const t = await getTranslations({ locale, namespace: 'video' })
   
   try {
@@ -45,9 +46,10 @@ export async function generateMetadata({
   }
 }
 
-export default async function VideoPage({ 
-  params: { locale, slug } 
+export default async function VideoPage({
+  params
 }: VideoPageProps) {
+  const { locale, slug } = await params
   const t = await getTranslations({ locale, namespace: 'video' })
   
   try {

@@ -11,26 +11,7 @@ import { Badge } from '@/components/ui/badge'
 import { ShoppingCart, Search, Filter } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
-
-const categories = [
-  { value: 'all', label: 'All Categories' },
-  { value: 'souvenirs', label: 'Souvenirs' },
-  { value: 'jewelry', label: 'Jewelry' },
-  { value: 'papyrus', label: 'Papyrus Art' },
-  { value: 'statues', label: 'Statues' },
-  { value: 'textiles', label: 'Textiles' },
-  { value: 'home-decor', label: 'Home Decor' },
-  { value: 'clothing', label: 'Clothing' },
-  { value: 'books', label: 'Books' },
-  { value: 'art', label: 'Art' },
-]
-
-const sortOptions = [
-  { value: 'newest', label: 'Newest First' },
-  { value: 'price-asc', label: 'Price: Low to High' },
-  { value: 'price-desc', label: 'Price: High to Low' },
-  { value: 'name', label: 'Name: A-Z' },
-]
+import { useTranslations, useLocale } from 'next-intl'
 
 interface ShopClientProps {
   initialProducts: Product[]
@@ -43,6 +24,25 @@ export function ShopClient({ initialProducts }: ShopClientProps) {
   const [sortBy, setSortBy] = useState('newest')
   const [searchQuery, setSearchQuery] = useState('')
   const { addItem } = useCart()
+  const t = useTranslations('Shop')
+  const locale = useLocale()
+
+  // Filter and sort options
+  const categories = [
+    { value: 'all', label: t('allCategories') },
+    { value: 'souvenirs', label: t('souvenirs') },
+    { value: 'jewelry', label: t('jewelry') },
+    { value: 'papyrus', label: t('papyrus') },
+    { value: 'clothing', label: t('clothing') },
+    { value: 'statues', label: t('statues') },
+  ]
+
+  const sortOptions = [
+    { value: 'newest', label: t('newest') },
+    { value: 'price-asc', label: t('priceLowHigh') },
+    { value: 'price-desc', label: t('priceHighLow') },
+    { value: 'name', label: t('name') },
+  ]
 
   // Filter and sort products
   useEffect(() => {
@@ -97,7 +97,7 @@ export function ShopClient({ initialProducts }: ShopClientProps) {
           <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
           <Input
             type="text"
-            placeholder="Search products..."
+            placeholder={t('searchPlaceholder')}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="pl-10"
@@ -109,7 +109,7 @@ export function ShopClient({ initialProducts }: ShopClientProps) {
           <Select value={selectedCategory} onValueChange={setSelectedCategory}>
             <SelectTrigger className="w-[180px]">
               <Filter className="mr-2 h-4 w-4" />
-              <SelectValue placeholder="Category" />
+              <SelectValue placeholder={t('category')} />
             </SelectTrigger>
             <SelectContent>
               {categories.map((cat) => (
@@ -122,7 +122,7 @@ export function ShopClient({ initialProducts }: ShopClientProps) {
 
           <Select value={sortBy} onValueChange={setSortBy}>
             <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="Sort by" />
+              <SelectValue placeholder={t('sortBy')} />
             </SelectTrigger>
             <SelectContent>
               {sortOptions.map((option) => (
@@ -138,7 +138,7 @@ export function ShopClient({ initialProducts }: ShopClientProps) {
       {/* Products Grid */}
       {filteredProducts.length === 0 ? (
         <div className="py-12 text-center">
-          <p className="text-lg text-gray-500">No products found</p>
+          <p className="text-lg text-gray-500">{t('noProductsFound')}</p>
           <Button
             onClick={() => {
               setSelectedCategory('all')
@@ -147,7 +147,7 @@ export function ShopClient({ initialProducts }: ShopClientProps) {
             variant="outline"
             className="mt-4"
           >
-            Clear Filters
+            {t('clearFilters')}
           </Button>
         </div>
       ) : (
@@ -155,7 +155,7 @@ export function ShopClient({ initialProducts }: ShopClientProps) {
           {filteredProducts.map((product) => (
             <Card key={product.id} className="group overflow-hidden transition-shadow hover:shadow-lg">
               {/* Product Image */}
-              <Link href={`/shop/${product.slug}`}>
+              <Link href={`/${locale}/shop/${product.slug}`}>
                 <div className="relative aspect-square overflow-hidden bg-gray-100">
                   <Image
                     src={getMediaUrl(product.images?.[0])}
@@ -164,20 +164,20 @@ export function ShopClient({ initialProducts }: ShopClientProps) {
                     className="object-cover transition-transform group-hover:scale-105"
                   />
                   {product.featured && (
-                    <Badge className="absolute left-2 top-2 bg-[#d4af37]">Featured</Badge>
+                    <Badge className="absolute left-2 top-2 bg-[#d4af37]">{t('featured')}</Badge>
                   )}
                   {!product.inStock && (
-                    <Badge className="absolute right-2 top-2 bg-red-500">Out of Stock</Badge>
+                    <Badge className="absolute right-2 top-2 bg-red-500">{t('outOfStock')}</Badge>
                   )}
                   {product.originalPrice && product.originalPrice > product.price && (
-                    <Badge className="absolute right-2 top-2 bg-green-500">Sale</Badge>
+                    <Badge className="absolute right-2 top-2 bg-green-500">{t('sale')}</Badge>
                   )}
                 </div>
               </Link>
 
               {/* Product Info */}
               <CardHeader className="pb-3">
-                <Link href={`/shop/${product.slug}`}>
+                <Link href={`/${locale}/shop/${product.slug}`}>
                   <h3 className="line-clamp-2 text-lg font-semibold text-gray-900 transition-colors group-hover:text-[#d4af37]">
                     {product.name}
                   </h3>
@@ -213,10 +213,10 @@ export function ShopClient({ initialProducts }: ShopClientProps) {
                   {product.inStock ? (
                     <>
                       <ShoppingCart className="mr-2 h-4 w-4" />
-                      Add to Cart
+                      {t('addToCart')}
                     </>
                   ) : (
-                    'Out of Stock'
+                    t('outOfStock')
                   )}
                 </Button>
               </CardFooter>
@@ -227,7 +227,10 @@ export function ShopClient({ initialProducts }: ShopClientProps) {
 
       {/* Show count */}
       <div className="mt-8 text-center text-sm text-gray-500">
-        Showing {filteredProducts.length} of {products.length} products
+        {t('showingResults', { 
+          current: filteredProducts.length, 
+          total: products.length 
+        })}
       </div>
     </div>
   )

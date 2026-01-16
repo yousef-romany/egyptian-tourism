@@ -8,7 +8,7 @@ import Newsletter from "@/components/newsletter"
 import { MapPin, Star, Calendar, Columns } from "lucide-react"
 
 export const metadata = {
-  title: "Temples & Monuments - Egydise Tours",
+  title: "Temples & Monuments - WanderLand Egypt",
   description: "Discover the magnificent temples and monuments of Ancient Egypt that have endured for thousands of years.",
 }
 

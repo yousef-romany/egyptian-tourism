@@ -8,7 +8,7 @@ import TourCardServer from "@/components/tour-card-server"
 import { getTours } from "@/lib/data/tours"
 
 export const metadata = {
-  title: "Red Sea Tours - Egydise Tours",
+  title: "Red Sea Tours - WanderLand Egypt",
   description:
     "Dive into the crystal-clear waters of the Red Sea and explore vibrant coral reefs and marine life.",
 }

@@ -107,7 +107,7 @@ export function ComparisonBar() {
                           {tour.title}
                         </h4>
                         <Badge className="bg-egyptian-gold text-white text-xs">
-                          {tour.priceDisplay || tour.price}
+                          {tour.price}
                         </Badge>
                       </div>
                     </Card>

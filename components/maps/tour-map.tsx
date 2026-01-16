@@ -6,6 +6,13 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { MapPin, Navigation, ExternalLink, Loader2 } from 'lucide-react';
 
+// Declare Google Maps types for window object
+declare global {
+  interface Window {
+    google: any;
+  }
+}
+
 export interface TourLocation {
   name: string;
   address: string;

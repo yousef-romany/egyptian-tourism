@@ -7,17 +7,17 @@ import { VideoFilters } from '@/components/video-filters'
 import { VideoCard } from '@/components/video-card'
 
 interface HistoryVideosPageProps {
-  params: { locale: string }
-  searchParams: {
+  params: Promise<{ locale: string }>
+  searchParams: Promise<{
     page?: string
     category?: string
     language?: string
     sort?: string
     featured?: string
-  }
+  }>
 }
 
-export async function generateMetadata({ params }: { params: { locale: string } }) {
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params
   const t = await getTranslations({ locale, namespace: 'historyVideos' })
   

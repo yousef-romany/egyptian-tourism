@@ -203,13 +203,13 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
   if (!content) {
     return {
-      title: "History Topic Not Found - Egydise Tours",
+      title: "History Topic Not Found - WanderLand Egypt",
       description: "The requested history topic could not be found.",
     }
   }
 
   return {
-    title: `${content.title} - Egyptian History - Egydise Tours`,
+    title: `${content.title} - Egyptian History - WanderLand Egypt`,
     description: content.description,
   }
 }

@@ -7,18 +7,19 @@ import { Breadcrumb } from '@/components/breadcrumb'
 import { Suspense } from 'react'
 
 interface ProductsPageProps {
-  params: { locale: string }
-  searchParams: {
+  params: Promise<{ locale: string }>
+  searchParams: Promise<{
     page?: string
     category?: string
     minPrice?: string
     maxPrice?: string
     sort?: string
     featured?: string
-  }
+  }>
 }
 
-export async function generateMetadata({ params: { locale } }: { params: { locale: string } }) {
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params
   const t = await getTranslations({ locale, namespace: 'products' })
   
   return {
@@ -33,19 +34,21 @@ export async function generateMetadata({ params: { locale } }: { params: { local
   }
 }
 
-export default async function ProductsPage({ 
-  params: { locale }, 
-  searchParams 
+export default async function ProductsPage({
+  params,
+  searchParams
 }: ProductsPageProps) {
+  const { locale } = await params
+  const resolvedSearchParams = await searchParams
   const t = await getTranslations({ locale, namespace: 'products' })
-  
+
   // Parse search params
-  const page = parseInt(searchParams.page || '1')
-  const category = searchParams.category
-  const minPrice = searchParams.minPrice ? parseFloat(searchParams.minPrice) : undefined
-  const maxPrice = searchParams.maxPrice ? parseFloat(searchParams.maxPrice) : undefined
-  const sort = searchParams.sort || 'name:asc'
-  const featured = searchParams.featured === 'true'
+  const page = parseInt(resolvedSearchParams.page || '1')
+  const category = resolvedSearchParams.category
+  const minPrice = resolvedSearchParams.minPrice ? parseFloat(resolvedSearchParams.minPrice) : undefined
+  const maxPrice = resolvedSearchParams.maxPrice ? parseFloat(resolvedSearchParams.maxPrice) : undefined
+  const sort = resolvedSearchParams.sort || 'name:asc'
+  const featured = resolvedSearchParams.featured === 'true'
 
   try {
     // Fetch products with filters
@@ -122,7 +125,7 @@ export default async function ProductsPage({
                         currentPage={page}
                         totalPages={meta.pagination.pageCount}
                         baseUrl={`/${locale}/products`}
-                        searchParams={searchParams}
+                        searchParams={resolvedSearchParams}
                       />
                     </div>
                   )}

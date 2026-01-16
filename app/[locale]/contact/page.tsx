@@ -15,9 +15,9 @@ import ContactForm from "@/components/contact-form";
 import { Button } from "@/components/ui/button";
 
 export const metadata = {
-  title: "Contact Us - Egydise Tours",
+  title: "Contact Us - WanderLand Egypt",
   description:
-    "Get in touch with Egydise Tours to plan your Egyptian adventure or ask any questions about our tours and services.",
+    "Get in touch with WanderLand Egypt to plan your Egyptian adventure or ask any questions about our tours and services.",
 };
 
 export default function ContactPage() {
@@ -141,10 +141,10 @@ export default function ContactPage() {
                   <div>
                     <h4 className="font-bold text-lg mb-2">Email</h4>
                     <p className="text-muted-foreground">
-                      info@egydise-tours.com
+                      info@WanderLand Egypt.com
                     </p>
                     <p className="text-muted-foreground">
-                      bookings@egydise-tours.com
+                      bookings@WanderLand Egypt.com
                     </p>
                   </div>
                 </div>
@@ -209,7 +209,7 @@ export default function ContactPage() {
                 <div className="bg-background/95 backdrop-blur-md p-6 rounded-2xl shadow-2xl border border-egyptian-gold/30 transform transition-transform hover:scale-105">
                   <div className="flex items-center gap-3 mb-2">
                     <MapPin className="h-6 w-6 text-egyptian-gold" />
-                    <p className="font-bold text-lg">Egydise Tours Office</p>
+                    <p className="font-bold text-lg">WanderLand Egypt Office</p>
                   </div>
                   <p className="text-sm text-muted-foreground">
                     123 Tahrir Square, Cairo, Egypt

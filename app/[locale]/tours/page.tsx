@@ -8,7 +8,7 @@ import { getTours } from "@/lib/data/tours"
 import ToursFilterClient from "@/components/tours-filter-client"
 
 export const metadata = {
-  title: "Tours - Egydise Tours",
+  title: "Tours - WanderLand Egypt",
   description:
     "Explore our wide range of Egyptian tours, from the pyramids of Giza to the temples of Luxor and beyond.",
 }

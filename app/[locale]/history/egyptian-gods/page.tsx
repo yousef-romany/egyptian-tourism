@@ -8,7 +8,7 @@ import Newsletter from "@/components/newsletter"
 import { Sun, Moon, Feather, Heart } from "lucide-react"
 
 export const metadata = {
-  title: "Egyptian Gods - Egydise Tours",
+  title: "Egyptian Gods - WanderLand Egypt",
   description: "Discover the fascinating pantheon of Ancient Egyptian gods and goddesses who shaped Egyptian religion and culture.",
 }
 

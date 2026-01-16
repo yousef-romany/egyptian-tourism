@@ -82,7 +82,7 @@ This document explains how the frontend connects to the Strapi backend.
 NEXT_PUBLIC_API_URL=http://localhost:1337/api
 NEXT_PUBLIC_STRAPI_URL=http://localhost:1337
 NEXT_PUBLIC_SITE_URL=http://localhost:3000
-NEXT_PUBLIC_SITE_NAME=Egydise Tours
+NEXT_PUBLIC_SITE_NAME=WanderLand Egypt
 ```
 
 ### Backend (.env)

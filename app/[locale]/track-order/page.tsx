@@ -2,7 +2,7 @@ import { Metadata } from 'next'
 import { TrackOrderClient } from './track-order-client'
 
 export const metadata: Metadata = {
-  title: 'Track Your Order | Egydise Tours',
+  title: 'Track Your Order | WanderLand Egypt',
   description: 'Track your order status and shipping information',
 }
 

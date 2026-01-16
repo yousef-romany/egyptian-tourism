@@ -34,7 +34,7 @@ export default function AnimatedHero() {
       opacity: 1,
       transition: {
         duration: 0.8,
-        ease: [0.4, 0.0, 0.2, 1],
+        ease: [0.4, 0.0, 0.2, 1] as any,
       },
     },
   };
@@ -46,7 +46,7 @@ export default function AnimatedHero() {
       scale: 1,
       transition: {
         duration: 1.2,
-        ease: [0.4, 0.0, 0.2, 1],
+        ease: [0.4, 0.0, 0.2, 1] as any,
       },
     },
   };
@@ -57,7 +57,7 @@ export default function AnimatedHero() {
       opacity: [0, 0.2, 0.4, 0.6, 0.8, 1],
       transition: {
         duration: 2,
-        ease: "easeInOut",
+        ease: "easeInOut" as any,
       },
     },
   };
@@ -67,8 +67,8 @@ export default function AnimatedHero() {
     transition: {
       duration: 4,
       repeat: Number.POSITIVE_INFINITY,
-      repeatType: "reverse",
-      ease: "easeInOut",
+      repeatType: "reverse" as any,
+      ease: "easeInOut" as any,
     },
   };
 
@@ -224,13 +224,28 @@ export default function AnimatedHero() {
               </select>
             </div>
             <div>
-              <label className="text-sm font-medium mb-2 block opacity-0">
+              <label htmlFor="hero-search" className="text-sm font-medium mb-2 block">
                 Search
               </label>
-              <Button className="bg-[#d4af37] hover:bg-[#c09c2c] text-black w-full sm:w-auto">
-                <Search className="h-4 w-4 mr-2" />
-                Search
-              </Button>
+              <form onSubmit={(e) => {
+                e.preventDefault()
+                const formData = new FormData(e.currentTarget)
+                const query = formData.get('search') as string
+                if (query?.trim()) {
+                  window.location.href = `/search?q=${encodeURIComponent(query.trim())}`
+                }
+              }} className="flex gap-2">
+                <input
+                  id="hero-search"
+                  type="text"
+                  name="search"
+                  placeholder="Search tours, destinations..."
+                  className="flex-1 h-10 px-3 rounded-md border border-white/20 bg-white/10 text-white placeholder:text-white/60 focus:border-white/40 focus:outline-none"
+                />
+                <Button type="submit" className="bg-[#d4af37] hover:bg-[#c09c2c] text-black px-4">
+                  <Search className="h-4 w-4" />
+                </Button>
+              </form>
             </div>
           </div>
         </motion.div>

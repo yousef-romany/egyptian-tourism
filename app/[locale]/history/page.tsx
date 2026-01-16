@@ -35,7 +35,7 @@ const historyTopics = [
 ]
 
 export const metadata = {
-  title: "Egyptian History - Egydise Tours",
+  title: "Egyptian History - WanderLand Egypt",
   description:
     "Explore the rich history of ancient Egypt, from the pyramids and pharaohs to gods and daily life in the ancient civilization.",
 }

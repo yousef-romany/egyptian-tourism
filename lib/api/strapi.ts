@@ -467,6 +467,21 @@ export interface Order {
   updatedAt: string
 }
 
+export interface FAQ {
+  id: number
+  question: string
+  answer: string
+  category: string
+  tags?: string[]
+  helpful?: number
+  views?: number
+  featured?: boolean
+  lastUpdated?: string
+  createdAt: string
+  updatedAt: string
+  publishedAt: string
+}
+
 // ============================================================================
 // Helper Functions
 // ============================================================================
@@ -1827,6 +1842,67 @@ export const orders = {
 }
 
 // ============================================================================
+// FAQ API
+// ============================================================================
+
+export const faqs = {
+  /**
+   * Get all FAQ categories
+   */
+  async getCategories(): Promise<{ data: string[] }> {
+    const response = await apiFetch<StrapiResponse<string[]>>('/faqs/categories')
+    return { data: response.data }
+  },
+
+  /**
+   * Get FAQs by category
+   */
+  async getByCategory(category?: string): Promise<FAQ[]> {
+    const query = category ? `?category=${category}` : ''
+    const response = await apiFetch<StrapiResponse<any[]>>(`/faqs${query}`)
+    return transformStrapiData<FAQ[]>(response.data)
+  },
+
+  /**
+   * Search FAQs
+   */
+  async search(query: string, category?: string): Promise<FAQ[]> {
+    const params = new URLSearchParams({ q: query })
+    if (category) params.append('category', category)
+    const response = await apiFetch<StrapiResponse<any[]>>(`/faqs/search?${params.toString()}`)
+    return transformStrapiData<FAQ[]>(response.data)
+  },
+
+  /**
+   * Get featured FAQs
+   */
+  async getFeatured(limit: number = 10): Promise<FAQ[]> {
+    const params = new URLSearchParams({
+      limit: limit.toString(),
+    })
+    const response = await apiFetch<StrapiResponse<any[]>>(`/faqs/featured?${params.toString()}`)
+    return transformStrapiData<FAQ[]>(response.data)
+  },
+
+  /**
+   * Increment FAQ view count
+   */
+  async incrementView(id: string): Promise<void> {
+    await apiFetch(`/faqs/${id}/view`, { method: 'POST' })
+  },
+
+  /**
+   * Mark FAQ as helpful
+   */
+  async markHelpful(id: string, helpful: boolean): Promise<void> {
+    await apiFetch(`/faqs/${id}/helpful`, {
+      method: 'POST',
+      body: JSON.stringify({ helpful }),
+    })
+  },
+}
+
+// ============================================================================
 // Default Export
 // ============================================================================
 
@@ -1850,6 +1926,7 @@ const strapiAPI = {
   cart,
   paypal,
   orders,
+  faqs,
   getMediaUrl,
   getStoredUser,
 }

@@ -1,5 +1,4 @@
 import strapiAPI, { Tour as StrapiTour, getMediaUrl } from '@/lib/api/strapi'
-import { sampleTours } from './sample-data'
 
 // Re-export Tour type from API for backward compatibility
 export type Tour = {
@@ -108,8 +107,8 @@ export async function getFeaturedTours(limit: number = 7, locale?: string): Prom
     return strapiTours.map(convertStrapiTour)
   } catch (error) {
     console.error('Failed to fetch featured tours:', error)
-    // Return sample data when backend is unavailable
-    return sampleTours.slice(0, limit)
+    // Return empty array when backend is unavailable
+    return []
   }
 }
 

@@ -8,7 +8,7 @@ import Newsletter from "@/components/newsletter"
 import { CheckCircle, Calendar, Users, MapPin } from "lucide-react"
 
 export const metadata = {
-  title: "Custom Tours - Egydise Tours",
+  title: "Custom Tours - WanderLand Egypt",
   description:
     "Create your perfect Egyptian adventure with our customizable tour packages tailored to your interests.",
 }

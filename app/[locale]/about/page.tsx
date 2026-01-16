@@ -8,9 +8,9 @@ import EgyptianDivider from "@/components/egyptian-divider"
 import Newsletter from "@/components/newsletter"
 
 export const metadata = {
-  title: "About Us - Egydise Tours",
+  title: "About Us - WanderLand Egypt",
   description:
-    "Learn about Egydise Tours, our mission, values, and the passionate team behind our Egyptian adventures.",
+    "Learn about WanderLand Egypt, our mission, values, and the passionate team behind our Egyptian adventures.",
 }
 
 export default function AboutPage() {
@@ -18,7 +18,7 @@ export default function AboutPage() {
     {
       name: "Ahmed Hassan",
       role: "Founder & CEO",
-      bio: "With over 20 years of experience in Egyptian tourism, Ahmed founded Egydise Tours to share his passion for Egypt's rich history and culture with travelers from around the world.",
+      bio: "With over 20 years of experience in Egyptian tourism, Ahmed founded WanderLand Egypt to share his passion for Egypt's rich history and culture with travelers from around the world.",
       image: "/placeholder.svg?height=400&width=400",
     },
     {
@@ -160,10 +160,10 @@ export default function AboutPage() {
               </span>
             </div>
             <h1 className="font-heading text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-extrabold mb-8 bg-gradient-to-r from-white via-egyptian-gold to-white bg-clip-text text-transparent leading-tight">
-              About Egydise Tours
+              About WanderLand Egypt
             </h1>
             <p className="text-xl md:text-2xl lg:text-3xl text-white/90 mb-10 leading-relaxed max-w-3xl mx-auto">
-              Discover the passionate team behind Egydise Tours and our commitment to creating unforgettable Egyptian
+              Discover the passionate team behind WanderLand Egypt and our commitment to creating unforgettable Egyptian
               experiences.
             </p>
             <EgyptianDivider className="my-10 bg-egyptian-gold/70 mx-auto" variant="elaborate" />
@@ -189,7 +189,7 @@ export default function AboutPage() {
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-heading font-extrabold mb-8 bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text">Our Story</h2>
             <div className="space-y-6 text-muted-foreground text-lg leading-relaxed">
               <p>
-                Egydise Tours was founded in 2005 by Ahmed Hassan, an Egyptologist with a passion for sharing the
+                WanderLand Egypt was founded in 2005 by Ahmed Hassan, an Egyptologist with a passion for sharing the
                 wonders of his homeland with travelers from around the world. What began as a small operation with just
                 two guides has grown into one of Egypt's most respected tour companies, while maintaining our commitment
                 to personalized service and authentic experiences.
@@ -243,7 +243,7 @@ export default function AboutPage() {
             <div className="absolute inset-0 bg-gradient-to-br from-egyptian-gold/20 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
             <Image
               src="/placeholder.svg?height=600&width=500"
-              alt="Egydise Tours team"
+              alt="WanderLand Egypt team"
               width={500}
               height={600}
               className="rounded-2xl object-cover h-[500px] w-full relative z-10 shadow-2xl border-2 border-egyptian-gold/20 group-hover:border-egyptian-gold/40 transition-all duration-500"
@@ -273,7 +273,7 @@ export default function AboutPage() {
             </div>
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-heading font-extrabold mb-6">Our Core Values</h2>
             <p className="text-lg text-muted-foreground leading-relaxed">
-              At Egydise Tours, our core values guide everything we do, from planning your itinerary to ensuring every
+              At WanderLand Egypt, our core values guide everything we do, from planning your itinerary to ensuring every
               detail of your journey exceeds expectations.
             </p>
             <EgyptianDivider className="my-8 mx-auto" />
@@ -361,7 +361,7 @@ export default function AboutPage() {
                   Why Choose Us
                 </Badge>
               </div>
-              <h2 className="font-heading text-4xl md:text-5xl lg:text-6xl font-extrabold mb-8 text-egyptian-gold">Why Choose Egydise Tours?</h2>
+              <h2 className="font-heading text-4xl md:text-5xl lg:text-6xl font-extrabold mb-8 text-egyptian-gold">Why Choose WanderLand Egypt?</h2>
               <div className="space-y-8">
                 <div className="flex items-start gap-4 p-4 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 hover:border-egyptian-gold/30 transition-all duration-300 group">
                   <div className="mt-1 h-10 w-10 rounded-full bg-egyptian-gold/10 flex items-center justify-center flex-shrink-0 group-hover:bg-egyptian-gold/20 transition-colors">

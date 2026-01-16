@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { useTranslations, useLocale } from 'next-intl'
 import strapiAPI, { Order } from '@/lib/api/strapi'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -14,14 +15,16 @@ export function TrackOrderClient() {
   const [order, setOrder] = useState<Order | null>(null)
   const [isLoading, setIsLoading] = useState(false)
   const { toast } = useToast()
+  const t = useTranslations('TrackOrder')
+  const locale = useLocale()
 
   const handleTrack = async (e: React.FormEvent) => {
     e.preventDefault()
 
     if (!orderNumber.trim()) {
       toast({
-        title: 'Invalid Order Number',
-        description: 'Please enter a valid order number',
+        title: t('invalidOrderNumber'),
+        description: t('invalidOrderNumber'),
         variant: 'destructive',
       })
       return
@@ -35,8 +38,8 @@ export function TrackOrderClient() {
     } catch (error: any) {
       console.error('Track order error:', error)
       toast({
-        title: 'Order Not Found',
-        description: 'No order found with that number. Please check and try again.',
+        title: t('orderNotFound'),
+        description: t('orderNotFound'),
         variant: 'destructive',
       })
       setOrder(null)
@@ -80,9 +83,9 @@ export function TrackOrderClient() {
   return (
     <div className="container mx-auto px-4 max-w-3xl">
       <div className="mb-8 text-center">
-        <h1 className="mb-2 text-3xl font-bold text-gray-900">Track Your Order</h1>
+        <h1 className="mb-2 text-3xl font-bold text-gray-900">{t('title')}</h1>
         <p className="text-gray-600">
-          Enter your order number to check your order status
+          {t('subtitle')}
         </p>
       </div>
 
@@ -92,12 +95,12 @@ export function TrackOrderClient() {
           <form onSubmit={handleTrack} className="flex gap-3">
             <div className="flex-1">
               <Label htmlFor="orderNumber" className="sr-only">
-                Order Number
+                {t('orderNumber')}
               </Label>
               <Input
                 id="orderNumber"
                 type="text"
-                placeholder="Enter your order number (e.g., ORD-1234567890)"
+                placeholder={t('orderNumberPlaceholder')}
                 value={orderNumber}
                 onChange={(e) => setOrderNumber(e.target.value)}
                 className="h-11"
@@ -109,7 +112,7 @@ export function TrackOrderClient() {
               ) : (
                 <>
                   <Search className="mr-2 h-5 w-5" />
-                  Track
+                  {t('track')}
                 </>
               )}
             </Button>
@@ -125,19 +128,19 @@ export function TrackOrderClient() {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 {getStatusIcon(order.status)}
-                Order Status
+                {t('orderStatus')}
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="flex items-center justify-between">
-                <span className="text-sm font-medium text-gray-600">Order Number</span>
+                <span className="text-sm font-medium text-gray-600">{t('orderNumberLabel')}</span>
                 <span className="font-mono text-sm font-bold text-gray-900">
                   {order.orderNumber}
                 </span>
               </div>
 
               <div className="flex items-center justify-between">
-                <span className="text-sm font-medium text-gray-600">Status</span>
+                <span className="text-sm font-medium text-gray-600">{t('status')}</span>
                 <span
                   className={`rounded-full px-3 py-1 text-sm font-medium ${getStatusColor(
                     order.status
@@ -148,7 +151,7 @@ export function TrackOrderClient() {
               </div>
 
               <div className="flex items-center justify-between">
-                <span className="text-sm font-medium text-gray-600">Order Date</span>
+                <span className="text-sm font-medium text-gray-600">{t('orderDate')}</span>
                 <span className="text-sm text-gray-900">
                   {new Date(order.orderDate).toLocaleDateString()}
                 </span>
@@ -157,7 +160,7 @@ export function TrackOrderClient() {
               {order.trackingNumber && (
                 <>
                   <div className="flex items-center justify-between">
-                    <span className="text-sm font-medium text-gray-600">Tracking Number</span>
+                    <span className="text-sm font-medium text-gray-600">{t('trackingNumber')}</span>
                     <span className="font-mono text-sm font-medium text-gray-900">
                       {order.trackingNumber}
                     </span>
@@ -165,7 +168,7 @@ export function TrackOrderClient() {
 
                   {order.shippingCarrier && (
                     <div className="flex items-center justify-between">
-                      <span className="text-sm font-medium text-gray-600">Carrier</span>
+                      <span className="text-sm font-medium text-gray-600">{t('carrier')}</span>
                       <span className="text-sm text-gray-900">{order.shippingCarrier}</span>
                     </div>
                   )}
@@ -174,7 +177,7 @@ export function TrackOrderClient() {
 
               {order.shippedAt && (
                 <div className="flex items-center justify-between">
-                  <span className="text-sm font-medium text-gray-600">Shipped Date</span>
+                  <span className="text-sm font-medium text-gray-600">{t('shippedDate')}</span>
                   <span className="text-sm text-gray-900">
                     {new Date(order.shippedAt).toLocaleDateString()}
                   </span>
@@ -183,7 +186,7 @@ export function TrackOrderClient() {
 
               {order.deliveredAt && (
                 <div className="flex items-center justify-between">
-                  <span className="text-sm font-medium text-gray-600">Delivered Date</span>
+                  <span className="text-sm font-medium text-gray-600">{t('deliveredDate')}</span>
                   <span className="text-sm text-gray-900">
                     {new Date(order.deliveredAt).toLocaleDateString()}
                   </span>
@@ -195,7 +198,7 @@ export function TrackOrderClient() {
           {/* Order Items */}
           <Card className="mb-6">
             <CardHeader>
-              <CardTitle>Order Items</CardTitle>
+              <CardTitle>{t('orderItems')}</CardTitle>
             </CardHeader>
             <CardContent className="space-y-3">
               {order.items.map((item, index) => (
@@ -205,25 +208,25 @@ export function TrackOrderClient() {
                 >
                   <div>
                     <p className="font-medium text-gray-900">{item.name}</p>
-                    <p className="text-sm text-gray-500">Quantity: {item.quantity}</p>
+                    <p className="text-sm text-gray-500">{t('quantity')}: {item.quantity}</p>
                   </div>
                   <p className="font-semibold text-gray-900">
                     ${(item.price * item.quantity).toFixed(2)}
                   </p>
                 </div>
               ))}
-
-              <div className="flex justify-between border-t border-gray-200 pt-3 text-base font-bold">
-                <span>Total</span>
-                <span>${order.total.toFixed(2)}</span>
-              </div>
             </CardContent>
+
+            <div className="flex justify-between border-t border-gray-200 pt-3 text-base font-bold">
+              <span>{t('total')}</span>
+              <span>${order.total.toFixed(2)}</span>
+            </div>
           </Card>
 
           {/* Shipping Address */}
           <Card>
             <CardHeader>
-              <CardTitle>Shipping Address</CardTitle>
+              <CardTitle>{t('shippingAddress')}</CardTitle>
             </CardHeader>
             <CardContent>
               <address className="not-italic text-gray-700">
@@ -244,12 +247,12 @@ export function TrackOrderClient() {
       {/* Help Text */}
       <div className="mt-8 rounded-md bg-blue-50 p-4 text-center text-sm text-blue-800">
         <p>
-          Need help? Contact us at{' '}
+          {t('needHelp')}{' '}
           <a
-            href="mailto:info@egydise-tours.com"
+            href="mailto:info@WanderLand Egypt.com"
             className="font-medium underline"
           >
-            info@egydise-tours.com
+            info@WanderLand Egypt.com
           </a>
         </p>
       </div>

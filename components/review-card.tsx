@@ -16,6 +16,8 @@ interface ReviewCardProps {
   content: string
   tourName: string
   avatar: string
+  verified?: boolean
+  helpfulCount?: number
 }
 
 export default function ReviewCard({

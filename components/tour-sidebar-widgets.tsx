@@ -14,7 +14,7 @@ export function TourSidebarWidgets({ tour }: TourSidebarWidgetsProps) {
       {/* Availability Calendar */}
       <div className="mt-8">
         <AvailabilityCalendar
-          tourId={tour.id}
+          tourId={String(tour.id)}
           onDateSelect={(date) => console.log('Selected date:', date)}
         />
       </div>

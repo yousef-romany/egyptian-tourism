@@ -46,7 +46,9 @@ export function TestimonialCard({ testimonial }: TestimonialCardProps) {
             )}
           </div>
           {testimonial.verified && (
-            <CheckCircle className="h-5 w-5 text-green-500" title="Verified Customer" />
+            <div title="Verified Customer">
+              <CheckCircle className="h-5 w-5 text-green-500" />
+            </div>
           )}
         </div>
 

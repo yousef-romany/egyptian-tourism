@@ -8,7 +8,7 @@ import Newsletter from "@/components/newsletter"
 import { Crown, Star, Shield, Swords } from "lucide-react"
 
 export const metadata = {
-  title: "Pharaohs & Dynasties - Egydise Tours",
+  title: "Pharaohs & Dynasties - WanderLand Egypt",
   description: "Meet the legendary rulers of Ancient Egypt and learn about the dynasties that shaped Egyptian civilization.",
 }
 
